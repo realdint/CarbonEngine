@@ -7053,7 +7053,7 @@ function MobileReload(_, _, _)
         if xa.FieldOfView ~= 70 then
             Ja:Create(xa, TweenInfo.new(0.5, Enum.EasingStyle.Quad), {FieldOfView = 70}):Play()
         end
-        if not ja and Ka.Ammo < Ka.curConfig.Ammo then
+        if not ja and Ka and Ka.Ammo and Ka.curConfig and Ka.curConfig.Ammo and Ka.Ammo < Ka.curConfig.Ammo then
             Aa = Ka.CanShoot
             Ka.CanShoot = false
             if Ka.Ammo > 0 then
