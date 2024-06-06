@@ -5,89 +5,89 @@ local Ba = game.Players.LocalPlayer
 local Fa = Ba.Character
 local xa = workspace.CurrentCamera
 local U = Ba:GetMouse()
-local d = game.ReplicatedStorage:WaitForChild("\x43\x61\x72\x62\x6F\x6E\x52\x65\x73\x6F\x75\x72\x63\x65")
-local f = d:WaitForChild("\x45\x76\x65\x6E\x74\x73")
-local ra = d:WaitForChild("\x46\x58")
-local _ = d:WaitForChild("\x4D\x6F\x64\x65\x6C\x73")
-local p = _:WaitForChild("\x43\x6C\x69\x65\x6E\x74")
-local _ = _:WaitForChild("\x53\x65\x72\x76\x65\x72")
-local c = d:WaitForChild("\x48\x55\x44")
-local a = d:WaitForChild("\x47\x6C\x6F\x62\x61\x6C")
-local e = d:WaitForChild("\x4D\x6F\x64\x75\x6C\x65\x73")
-local b = d:WaitForChild("\x41\x63\x63\x65\x73\x73\x6F\x72\x69\x65\x73")
-local _ = b:WaitForChild("\x41\x72\x6D\x73")
-local _ = b:WaitForChild("\x57\x65\x61\x72\x61\x62\x6C\x65")
+local d = game.ReplicatedStorage:WaitForChild("CarbonResource")
+local f = d:WaitForChild("Events")
+local ra = d:WaitForChild("FX")
+local _ = d:WaitForChild("Models")
+local p = _:WaitForChild("Client")
+local _ = _:WaitForChild("Server")
+local c = d:WaitForChild("HUD")
+local a = d:WaitForChild("Global")
+local e = d:WaitForChild("Modules")
+local b = d:WaitForChild("Accessories")
+local _ = b:WaitForChild("Arms")
+local _ = b:WaitForChild("Wearable")
 local ca
 local _a = nil
 local S = CFrame.Angles(0, 0, 0)
 local _ =
-	script:FindFirstChild("\x44\x61\x74\x61\x53\x74\x6F\x72\x61\x67\x65") or Instance.new("\x46\x6F\x6C\x64\x65\x72")
-_.Name = "\x44\x61\x74\x61\x53\x74\x6F\x72\x61\x67\x65"
+	script:FindFirstChild("DataStorage") or Instance.new("Folder")
+_.Name = "DataStorage"
 _.Parent = script
-local s = game.ReplicatedStorage:FindFirstChild("\x4D\x65\x6E\x75\x5F\x53\x74\x6F\x72\x61\x67\x65") or nil
+local s = game.ReplicatedStorage:FindFirstChild("Menu_Storage") or nil
 local t
 local o
 local _
 if s then
-	t = s:WaitForChild("\x41\x74\x74\x61\x63\x68\x6D\x65\x6E\x74\x73")
-	o = s:WaitForChild("\x45\x76\x65\x6E\x74\x73")
-	_ = game.ReplicatedStorage:WaitForChild("\x54\x6F\x6F\x6C\x53\x74\x6F\x72\x61\x67\x65")
+	t = s:WaitForChild("Attachments")
+	o = s:WaitForChild("Events")
+	_ = game.ReplicatedStorage:WaitForChild("ToolStorage")
 else
-	t = d:WaitForChild("\x41\x74\x74\x61\x63\x68\x6D\x65\x6E\x74\x73")
+	t = d:WaitForChild("Attachments")
 end
-local Ja = game:GetService("\x54\x77\x65\x65\x6E\x53\x65\x72\x76\x69\x63\x65")
-local B = game:GetService("\x52\x75\x6E\x53\x65\x72\x76\x69\x63\x65").RenderStepped
-local ua = game:GetService("\x55\x73\x65\x72\x49\x6E\x70\x75\x74\x53\x65\x72\x76\x69\x63\x65")
-local sa = game:GetService("\x43\x6F\x6E\x74\x65\x78\x74\x41\x63\x74\x69\x6F\x6E\x53\x65\x72\x76\x69\x63\x65")
+local Ja = game:GetService("TweenService")
+local B = game:GetService("RunService").RenderStepped
+local ua = game:GetService("UserInputService")
+local sa = game:GetService("ContextActionService")
 local _
 local _
 local Da = {
-	head = Fa:WaitForChild("\x48\x65\x61\x64"),
-	torso = Fa:WaitForChild("\x54\x6F\x72\x73\x6F"),
-	rightArm = Fa:WaitForChild("\x52\x69\x67\x68\x74\x20\x41\x72\x6D"),
-	leftArm = Fa:WaitForChild("\x4C\x65\x66\x74\x20\x41\x72\x6D"),
-	rightLeg = Fa:WaitForChild("\x52\x69\x67\x68\x74\x20\x4C\x65\x67"),
-	leftLeg = Fa:WaitForChild("\x4C\x65\x66\x74\x20\x4C\x65\x67"),
-	rootPart = Fa:WaitForChild("\x48\x75\x6D\x61\x6E\x6F\x69\x64\x52\x6F\x6F\x74\x50\x61\x72\x74"),
-	humanoid = Fa:WaitForChild("\x48\x75\x6D\x61\x6E\x6F\x69\x64"),
-	neck = Fa.Torso:WaitForChild("\x4E\x65\x63\x6B"),
-	rightShoulder = Fa.Torso:WaitForChild("\x52\x69\x67\x68\x74\x20\x53\x68\x6F\x75\x6C\x64\x65\x72"),
-	leftShoulder = Fa.Torso:WaitForChild("\x4C\x65\x66\x74\x20\x53\x68\x6F\x75\x6C\x64\x65\x72"),
-	rightHip = Fa.Torso:WaitForChild("\x52\x69\x67\x68\x74\x20\x48\x69\x70"),
-	leftHip = Fa.Torso:WaitForChild("\x4C\x65\x66\x74\x20\x48\x69\x70"),
-	rootJoint = Fa.HumanoidRootPart:WaitForChild("\x52\x6F\x6F\x74\x4A\x6F\x69\x6E\x74")
+	head = Fa:WaitForChild("Head"),
+	torso = Fa:WaitForChild("Torso"),
+	rightArm = Fa:WaitForChild("Right Arm"),
+	leftArm = Fa:WaitForChild("Left Arm"),
+	rightLeg = Fa:WaitForChild("Right Leg"),
+	leftLeg = Fa:WaitForChild("Left Leg"),
+	rootPart = Fa:WaitForChild("HumanoidRootPart"),
+	humanoid = Fa:WaitForChild("Humanoid"),
+	neck = Fa.Torso:WaitForChild("Neck"),
+	rightShoulder = Fa.Torso:WaitForChild("Right Shoulder"),
+	leftShoulder = Fa.Torso:WaitForChild("Left Shoulder"),
+	rightHip = Fa.Torso:WaitForChild("Right Hip"),
+	leftHip = Fa.Torso:WaitForChild("Left Hip"),
+	rootJoint = Fa.HumanoidRootPart:WaitForChild("RootJoint")
 }
 local Ia = {
-	globalConfig = require(a:WaitForChild("\x47\x6C\x6F\x62\x61\x6C\x43\x6F\x6E\x66\x69\x67")),
-	ignoreModule = require(e:WaitForChild("\x49\x67\x6E\x6F\x72\x65\x4D\x6F\x64\x75\x6C\x65")),
-	ragdollModule = require(e:WaitForChild("\x52\x61\x67\x64\x6F\x6C\x6C")),
-	setupModule = require(e:WaitForChild("\x53\x65\x74\x75\x70\x4D\x6F\x64\x75\x6C\x65")),
-	springModule = require(e:WaitForChild("\x53\x70\x72\x69\x6E\x67")),
-	utilitiesModule = require(e:WaitForChild("\x55\x74\x69\x6C\x69\x74\x69\x65\x73")),
-	codeArchive = require(e:WaitForChild("\x43\x6F\x64\x65\x41\x72\x63\x68\x69\x76\x65")),
-	tableContainer = require(e:WaitForChild("\x54\x61\x62\x6C\x65\x43\x6F\x6E\x74\x61\x69\x6E\x65\x72")),
-	attachmentAPI = require(e:WaitForChild("\x41\x74\x74\x61\x63\x68\x6D\x65\x6E\x74\x41\x50\x49"))
+	globalConfig = require(a:WaitForChild("GlobalConfig")),
+	ignoreModule = require(e:WaitForChild("IgnoreModule")),
+	ragdollModule = require(e:WaitForChild("Ragdoll")),
+	setupModule = require(e:WaitForChild("SetupModule")),
+	springModule = require(e:WaitForChild("Spring")),
+	utilitiesModule = require(e:WaitForChild("Utilities")),
+	codeArchive = require(e:WaitForChild("CodeArchive")),
+	tableContainer = require(e:WaitForChild("TableContainer")),
+	attachmentAPI = require(e:WaitForChild("AttachmentAPI"))
 }
 local Ea = {
-	equipEvent = f:WaitForChild("\x45\x71\x75\x69\x70"),
-	updateCharEvent = f:WaitForChild("\x55\x70\x64\x61\x74\x65\x43\x68\x61\x72"),
-	halfStepEvent = f:WaitForChild("\x48\x61\x6C\x66\x53\x74\x65\x70"),
-	damageEvent = f:WaitForChild("\x44\x61\x6D\x61\x67\x65\x45\x76\x65\x6E\x74"),
-	whizEvent = f:WaitForChild("\x57\x68\x69\x7A\x45\x76\x65\x6E\x74"),
-	hitEvent = f:WaitForChild("\x48\x69\x74\x45\x76\x65\x6E\x74"),
-	flybyEvent = f:WaitForChild("\x66\x6C\x79\x62\x79\x45\x76\x65\x6E\x74"),
-	serverFXEvent = f:WaitForChild("\x53\x65\x72\x76\x65\x72\x46\x58\x45\x76\x65\x6E\x74"),
-	storeDataEvent = f:WaitForChild("\x53\x74\x6F\x72\x65\x44\x61\x74\x61"),
-	createOwnerEvent = f:WaitForChild("\x43\x72\x65\x61\x74\x65\x4F\x77\x6E\x65\x72"),
-	manipEvent = f:WaitForChild("\x4D\x61\x6E\x69\x70\x45\x76\x65\x6E\x74"),
-	resupplyEvent = f:WaitForChild("\x52\x65\x73\x75\x70\x70\x6C\x79\x45\x76\x65\x6E\x74"),
-	medEvent = f:WaitForChild("\x4D\x65\x64\x45\x76\x65\x6E\x74"),
-	explosiveEvent = f:WaitForChild("\x45\x78\x70\x6C\x6F\x73\x69\x76\x65\x45\x76\x65\x6E\x74"),
-	connectionEvent = f:WaitForChild("\x45\x76\x65\x6E\x74\x43\x6F\x6E\x6E\x65\x63\x74\x69\x6F\x6E"),
-	nadeEvent = f:WaitForChild("\x4E\x61\x64\x65\x45\x76\x65\x6E\x74"),
-	placeC4Event = f:WaitForChild("\x50\x6C\x61\x63\x65\x43\x34"),
-	attachmentEvent = f:WaitForChild("\x41\x74\x74\x61\x63\x68\x6D\x65\x6E\x74\x45\x76\x65\x6E\x74"),
-	clearAttchEvent = f:WaitForChild("\x43\x6C\x65\x61\x72\x41\x74\x74\x61\x63\x68\x6D\x65\x6E\x74")
+	equipEvent = f:WaitForChild("Equip"),
+	updateCharEvent = f:WaitForChild("UpdateChar"),
+	halfStepEvent = f:WaitForChild("HalfStep"),
+	damageEvent = f:WaitForChild("DamageEvent"),
+	whizEvent = f:WaitForChild("WhizEvent"),
+	hitEvent = f:WaitForChild("HitEvent"),
+	flybyEvent = f:WaitForChild("flybyEvent"),
+	serverFXEvent = f:WaitForChild("ServerFXEvent"),
+	storeDataEvent = f:WaitForChild("StoreData"),
+	createOwnerEvent = f:WaitForChild("CreateOwner"),
+	manipEvent = f:WaitForChild("ManipEvent"),
+	resupplyEvent = f:WaitForChild("ResupplyEvent"),
+	medEvent = f:WaitForChild("MedEvent"),
+	explosiveEvent = f:WaitForChild("ExplosiveEvent"),
+	connectionEvent = f:WaitForChild("EventConnection"),
+	nadeEvent = f:WaitForChild("NadeEvent"),
+	placeC4Event = f:WaitForChild("PlaceC4"),
+	attachmentEvent = f:WaitForChild("AttachmentEvent"),
+	clearAttchEvent = f:WaitForChild("ClearAttachment")
 }
 
 local function prnt(txt)
@@ -259,9 +259,9 @@ local ta = false
 local Aa = false
 local H = false
 local T = false
-local h = Fa:WaitForChild("\x48\x75\x6D\x61\x6E\x6F\x69\x64").Health
+local h = Fa:WaitForChild("Humanoid").Health
 local f = false
-local X = "\x4F\x70\x74\x69\x6F\x6E"
+local X = "Option"
 local O = false
 local A = false
 local q = false
@@ -300,187 +300,187 @@ local j = 10000
 local Y
 local _ = false
 local C = false
-local N = "\x52\x61\x64\x69\x61\x6C\x5F\x43\x65\x6E\x74\x65\x72"
-local _ = "\x4E\x6F\x6E\x65"
+local N = "Radial_Center"
+local _ = "None"
 local D
 local ga
 local e
 local J
-Ka.hud = c:WaitForChild("\x57\x65\x61\x70\x6F\x6E\x48\x55\x44"):clone()
+Ka.hud = c:WaitForChild("WeaponHUD"):clone()
 Ka.hud.Parent = Ba.PlayerGui
 for _, _ in pairs(Ka.hud:GetDescendants()) do
 	if _ then
-		if _.Name == "\x4D\x61\x69\x6E\x46\x72\x61\x6D\x65" then
+		if _.Name == "MainFrame" then
 			Ka.mainFrame = _
 			Ka.mainFrame.Visible = false
-		elseif _.Name == "\x4D\x6F\x64\x65\x31" then
+		elseif _.Name == "Mode1" then
 			Ka.mode1 = _
-		elseif _.Name == "\x4D\x6F\x64\x65\x32" then
+		elseif _.Name == "Mode2" then
 			Ka.mode2 = _
-		elseif _.Name == "\x4D\x6F\x64\x65\x33" then
+		elseif _.Name == "Mode3" then
 			Ka.mode3 = _
-		elseif _.Name == "\x4D\x6F\x64\x65\x34" then
+		elseif _.Name == "Mode4" then
 			Ka.mode4 = _
-		elseif _.Name == "\x4D\x6F\x64\x65\x35" then
+		elseif _.Name == "Mode5" then
 			Ka.mode5 = _
-		elseif _.Name == "\x41\x6D\x6D\x6F" then
+		elseif _.Name == "Ammo" then
 			Ka.ammoDisplay = _
-		elseif _.Name == "\x4D\x61\x67\x43\x6F\x75\x6E\x74" then
+		elseif _.Name == "MagCount" then
 			Ka.magCountDisplay = _
-		elseif _.Name == "\x54\x69\x74\x6C\x65" then
+		elseif _.Name == "Title" then
 			Ka.title = _
-		elseif _.Name == "\x53\x74\x61\x6E\x63\x65\x73" then
+		elseif _.Name == "Stances" then
 			Ka.stanceDisplay = _
-		elseif _.Name == "\x57\x65\x61\x70\x44\x69\x73\x70\x6C\x61\x79" then
+		elseif _.Name == "WeapDisplay" then
 			Ka.weapDisplay = _
-		elseif _.Name == "\x49\x6E\x74\x65\x6E\x73\x65" then
+		elseif _.Name == "Intense" then
 			Ka.intenseShade = _
-		elseif _.Name == "\x50\x61\x69\x6E" then
+		elseif _.Name == "Pain" then
 			Ka.painShade = _
-		elseif _.Name == "\x53\x65\x6E\x73\x69\x74\x69\x76\x69\x74\x79" then
+		elseif _.Name == "Sensitivity" then
 			Ka.sensDisplay = _
-		elseif _.Name == "\x50\x72\x6F\x67\x72\x65\x73\x73" then
+		elseif _.Name == "Progress" then
 			Ka.progressBar = _
 			Ka.progressBar.Size = UDim2.new(1, 0, 1, -4)
-		elseif _.Name == "\x4D\x65\x6E\x75\x46\x72\x61\x6D\x65" then
+		elseif _.Name == "MenuFrame" then
 			Ka.menuFrame = _
-		elseif _.Name == "\x4F\x70\x74\x69\x6F\x6E\x42\x75\x74\x74\x6F\x6E" then
+		elseif _.Name == "OptionButton" then
 			Ka.optionButton = _
-		elseif _.Name == "\x4B\x65\x79\x62\x69\x6E\x64\x42\x75\x74\x74\x6F\x6E" then
+		elseif _.Name == "KeybindButton" then
 			Ka.keybindButton = _
-		elseif _.Name == "\x50\x61\x74\x63\x68\x42\x75\x74\x74\x6F\x6E" then
+		elseif _.Name == "PatchButton" then
 			Ka.patchButton = _
-		elseif _.Name == "\x53\x74\x6F\x72\x65\x42\x75\x74\x74\x6F\x6E" then
+		elseif _.Name == "StoreButton" then
 			Ka.storeButton = _
-		elseif _.Name == "\x52\x61\x64\x69\x61\x6C\x5F\x4D\x65\x6E\x75" then
+		elseif _.Name == "Radial_Menu" then
 			Ka.radialFrame = _
-		elseif _.Name == "\x52\x61\x64\x69\x61\x6C\x5F\x4F\x75\x74\x74\x65\x72" then
+		elseif _.Name == "Radial_Outter" then
 			Ka.radialOutter = _
-		elseif _.Name == "\x52\x61\x64\x69\x61\x6C\x5F\x49\x6E\x6E\x65\x72" then
+		elseif _.Name == "Radial_Inner" then
 			Ka.radialInner = _
-		elseif _.Name == "\x52\x61\x64\x69\x61\x6C\x5F\x54\x6F\x70" then
+		elseif _.Name == "Radial_Top" then
 			Ka.radialTop = _
-		elseif _.Name == "\x52\x61\x64\x69\x61\x6C\x5F\x52\x69\x67\x68\x74" then
+		elseif _.Name == "Radial_Right" then
 			Ka.radialRight = _
-		elseif _.Name == "\x52\x61\x64\x69\x61\x6C\x5F\x42\x6F\x74\x74\x6F\x6D" then
+		elseif _.Name == "Radial_Bottom" then
 			Ka.radialBottom = _
-		elseif _.Name == "\x52\x61\x64\x69\x61\x6C\x5F\x4C\x65\x66\x74" then
+		elseif _.Name == "Radial_Left" then
 			Ka.radialLeft = _
-		elseif _.Name == "\x52\x61\x64\x69\x61\x6C\x5F\x43\x65\x6E\x74\x65\x72" then
+		elseif _.Name == "Radial_Center" then
 			Ka.radialCenter = _
-		elseif _.Name == "\x43\x68\x61\x72\x56\x69\x65\x77" then
+		elseif _.Name == "CharView" then
 			Ka.charView = _
-			D = Instance.new("\x43\x61\x6D\x65\x72\x61")
+			D = Instance.new("Camera")
 			D.Parent = Ka.charView
 			Ka.charView.CurrentCamera = D
 			D.CFrame = CFrame.new(10, 10, 10) * CFrame.Angles(10, 10, 10)
-			ga = Instance.new("\x4D\x6F\x64\x65\x6C")
+			ga = Instance.new("Model")
 			ga.Parent = Ka.charView
 			ga.Name = ""
-			e = Instance.new("\x48\x75\x6D\x61\x6E\x6F\x69\x64")
+			e = Instance.new("Humanoid")
 			e.Parent = ga
-			J = Instance.new("\x50\x61\x72\x74")
+			J = Instance.new("Part")
 			J.Size = Vector3.new(2, 2, 1)
-			J.Name = "\x54\x6F\x72\x73\x6F"
+			J.Name = "Torso"
 			J.Parent = ga
 			J.CanCollide = false
 			J.BrickColor =
-				BrickColor.new("\x49\x6E\x73\x74\x69\x74\x75\x74\x69\x6F\x6E\x61\x6C\x20\x77\x68\x69\x74\x65")
-			local _ = Instance.new("\x50\x61\x72\x74")
+				BrickColor.new("Institutional white")
+			local _ = Instance.new("Part")
 			_.Size = Vector3.new(2, 1, 1)
-			_.Name = "\x48\x65\x61\x64"
+			_.Name = "Head"
 			_.Parent = ga
 			_.CanCollide = false
 			_.Position = Vector3.new(0, 1.5, 0)
-			Fa:WaitForChild("\x48\x65\x61\x64"):WaitForChild("\x4D\x65\x73\x68"):Clone().Parent = _
+			Fa:WaitForChild("Head"):WaitForChild("Mesh"):Clone().Parent = _
 			_.BrickColor =
-				BrickColor.new("\x49\x6E\x73\x74\x69\x74\x75\x74\x69\x6F\x6E\x61\x6C\x20\x77\x68\x69\x74\x65")
-			local _ = Instance.new("\x50\x61\x72\x74")
+				BrickColor.new("Institutional white")
+			local _ = Instance.new("Part")
 			_.Size = Vector3.new(1, 2, 1)
-			_.Name = "\x52\x69\x67\x68\x74\x20\x41\x72\x6D"
+			_.Name = "Right Arm"
 			_.Parent = ga
 			_.CanCollide = false
 			_.Position = Vector3.new(1.5, 0, 0)
 			_.BrickColor =
-				BrickColor.new("\x49\x6E\x73\x74\x69\x74\x75\x74\x69\x6F\x6E\x61\x6C\x20\x77\x68\x69\x74\x65")
-			local _ = Instance.new("\x50\x61\x72\x74")
+				BrickColor.new("Institutional white")
+			local _ = Instance.new("Part")
 			_.Size = Vector3.new(1, 2, 1)
-			_.Name = "\x4C\x65\x66\x74\x20\x41\x72\x6D"
+			_.Name = "Left Arm"
 			_.Parent = ga
 			_.CanCollide = false
 			_.Position = Vector3.new(-1.5, 0, 0)
 			_.BrickColor =
-				BrickColor.new("\x49\x6E\x73\x74\x69\x74\x75\x74\x69\x6F\x6E\x61\x6C\x20\x77\x68\x69\x74\x65")
-			local _ = Instance.new("\x50\x61\x72\x74")
+				BrickColor.new("Institutional white")
+			local _ = Instance.new("Part")
 			_.Size = Vector3.new(1, 2, 1)
-			_.Name = "\x52\x69\x67\x68\x74\x20\x4C\x65\x67"
+			_.Name = "Right Leg"
 			_.Parent = ga
 			_.CanCollide = false
 			_.Position = Vector3.new(0.5, -2, 0)
 			_.BrickColor =
-				BrickColor.new("\x49\x6E\x73\x74\x69\x74\x75\x74\x69\x6F\x6E\x61\x6C\x20\x77\x68\x69\x74\x65")
-			local _ = Instance.new("\x50\x61\x72\x74")
+				BrickColor.new("Institutional white")
+			local _ = Instance.new("Part")
 			_.Size = Vector3.new(1, 2, 1)
-			_.Name = "\x4C\x65\x66\x74\x20\x4C\x65\x67"
+			_.Name = "Left Leg"
 			_.Parent = ga
 			_.CanCollide = false
 			_.Position = Vector3.new(-0.5, -2, 0)
 			_.BrickColor =
-				BrickColor.new("\x49\x6E\x73\x74\x69\x74\x75\x74\x69\x6F\x6E\x61\x6C\x20\x77\x68\x69\x74\x65")
-			ga.PrimaryPart = ga:WaitForChild("\x54\x6F\x72\x73\x6F")
-		elseif _.Name == "\x4D\x65\x6E\x75\x42\x75\x74\x74\x6F\x6E" then
+				BrickColor.new("Institutional white")
+			ga.PrimaryPart = ga:WaitForChild("Torso")
+		elseif _.Name == "MenuButton" then
 			Ka.menuButton = _
-		elseif _.Name == "\x4F\x76\x65\x72\x6C\x61\x79" then
+		elseif _.Name == "Overlay" then
 			Ka.overlay = _
-		elseif _.Name == "\x4D\x61\x69\x6E\x46\x72\x61\x6D\x65\x32" then
+		elseif _.Name == "MainFrame2" then
 			Ka.mainFrame2 = _
-		elseif _.Name == "\x41\x69\x6D\x5F\x42\x75\x74\x74\x6F\x6E" then
+		elseif _.Name == "Aim_Button" then
 			Ka.aimButton = _
-		elseif _.Name == "\x42\x6F\x6C\x74\x5F\x42\x75\x74\x74\x6F\x6E" then
+		elseif _.Name == "Bolt_Button" then
 			Ka.boltButton = _
-		elseif _.Name == "\x43\x72\x6F\x75\x63\x68\x5F\x42\x75\x74\x74\x6F\x6E" then
+		elseif _.Name == "Crouch_Button" then
 			Ka.crouchButton = _
-		elseif _.Name == "\x4A\x75\x6D\x70\x5F\x42\x75\x74\x74\x6F\x6E" then
+		elseif _.Name == "Jump_Button" then
 			Ka.jumpButton = _
-		elseif _.Name == "\x50\x72\x6F\x6E\x65\x5F\x42\x75\x74\x74\x6F\x6E" then
+		elseif _.Name == "Prone_Button" then
 			Ka.proneButton = _
-		elseif _.Name == "\x52\x65\x6C\x6F\x61\x64\x5F\x42\x75\x74\x74\x6F\x6E" then
+		elseif _.Name == "Reload_Button" then
 			Ka.reloadButton = _
-		elseif _.Name == "\x53\x68\x6F\x6F\x74\x5F\x42\x75\x74\x74\x6F\x6E" then
+		elseif _.Name == "Shoot_Button" then
 			Ka.shootButton = _
-		elseif _.Name == "\x4D\x6F\x62\x69\x6C\x65\x5F\x41\x6D\x6D\x6F" then
+		elseif _.Name == "Mobile_Ammo" then
 			Ka.mobileAmmo = _
-		elseif _.Name == "\x46\x69\x72\x65\x53\x65\x6C\x65\x63\x74\x5F\x42\x75\x74\x74\x6F\x6E" then
+		elseif _.Name == "FireSelect_Button" then
 			Ka.fireSelectButton = _
-		elseif _.Name == "\x53\x70\x72\x69\x6E\x74\x5F\x42\x75\x74\x74\x6F\x6E" then
+		elseif _.Name == "Sprint_Button" then
 			Ka.sprintButton = _
-		elseif _.Name == "\x54\x65\x6D\x70\x6C\x61\x74\x65\x46\x6F\x6C\x64\x65\x72" then
+		elseif _.Name == "TemplateFolder" then
 			Ka.tempFolder = _
-		elseif _.Name == "\x41\x74\x74\x61\x63\x68\x6D\x65\x6E\x74\x5F\x46\x72\x61\x6D\x65" then
+		elseif _.Name == "Attachment_Frame" then
 			Ka.attachFrame = _
 		end
 	end
 end
 Ka.cc =
-	game.Lighting:FindFirstChild("\x4E\x56\x47\x43\x6F\x6C\x6F\x72") or
-	Instance.new("\x43\x6F\x6C\x6F\x72\x43\x6F\x72\x72\x65\x63\x74\x69\x6F\x6E\x45\x66\x66\x65\x63\x74")
+	game.Lighting:FindFirstChild("NVGColor") or
+	Instance.new("ColorCorrectionEffect")
 Ka.cc.Parent = game.Lighting
-Ka.cc.Name = "\x4E\x56\x47\x43\x6F\x6C\x6F\x72"
-Ka.noise = Ka.hud:WaitForChild("\x4E\x6F\x69\x73\x65")
+Ka.cc.Name = "NVGColor"
+Ka.noise = Ka.hud:WaitForChild("Noise")
 k = Ia.globalConfig.CanHeal
 local _ =
-	game.ReplicatedStorage:FindFirstChild(Ba.UserId .. "\x53\x65\x6E\x73\x69") or
-	Instance.new("\x46\x6F\x6C\x64\x65\x72")
-_.Name = Ba.UserId .. "\x53\x65\x6E\x73\x69"
+	game.ReplicatedStorage:FindFirstChild(Ba.UserId .. "Sensi") or
+	Instance.new("Folder")
+_.Name = Ba.UserId .. "Sensi"
 _.Parent = game.ReplicatedStorage
 local e =
-	_:FindFirstChild("\x42\x61\x73\x65\x53\x65\x6E\x73") or Instance.new("\x4E\x75\x6D\x62\x65\x72\x56\x61\x6C\x75\x65")
+	_:FindFirstChild("BaseSens") or Instance.new("NumberValue")
 e.Parent = _
-e.Name = "\x42\x61\x73\x65\x53\x65\x6E\x73"
+e.Name = "BaseSens"
 local c =
-	_:FindFirstChild("\x41\x69\x6D\x53\x65\x6E\x73") or Instance.new("\x4E\x75\x6D\x62\x65\x72\x56\x61\x6C\x75\x65")
+	_:FindFirstChild("AimSens") or Instance.new("NumberValue")
 c.Parent = _
-c.Name = "\x41\x69\x6D\x53\x65\x6E\x73"
+c.Name = "AimSens"
 if e.Value ~= 0 then
 	Ka.baseSens = e.Value
 else
@@ -491,12 +491,12 @@ if c.Value ~= 0 then
 else
 	c.Value = Ka.aimSens
 end
-Ka.menuFrame:WaitForChild("\x50\x61\x67\x65\x73\x46\x72\x61\x6D\x65"):WaitForChild("\x4F\x70\x74\x69\x6F\x6E"):WaitForChild(
-"\x42\x61\x73\x65\x53\x65\x6E\x73"
-):WaitForChild("\x43\x6F\x6E\x74\x65\x78\x74").Text = Ka.baseSens
-Ka.menuFrame:WaitForChild("\x50\x61\x67\x65\x73\x46\x72\x61\x6D\x65"):WaitForChild("\x4F\x70\x74\x69\x6F\x6E"):WaitForChild(
-"\x41\x69\x6D\x53\x65\x6E\x73"
-):WaitForChild("\x43\x6F\x6E\x74\x65\x78\x74").Text = Ka.aimSens
+Ka.menuFrame:WaitForChild("PagesFrame"):WaitForChild("Option"):WaitForChild(
+"BaseSens"
+):WaitForChild("Context").Text = Ka.baseSens
+Ka.menuFrame:WaitForChild("PagesFrame"):WaitForChild("Option"):WaitForChild(
+"AimSens"
+):WaitForChild("Context").Text = Ka.aimSens
 for _, _ in pairs(Ea) do
 	if _ then
 		table.insert(r, _.Name)
@@ -513,116 +513,116 @@ function EquipModel(_)
 	va = true
 	Ka.mainFrame.Visible = true
 	ca =
-		workspace:WaitForChild("\x42\x75\x6C\x6C\x65\x74\x4D\x6F\x64\x65\x6C") or
-		Instance.new("\x46\x6F\x6C\x64\x65\x72")
-	ca.Name = "\x42\x75\x6C\x6C\x65\x74\x4D\x6F\x64\x65\x6C"
+		workspace:WaitForChild("BulletModel") or
+		Instance.new("Folder")
+	ca.Name = "BulletModel"
 	ca.Parent = workspace
 	table.insert(ha, ca)
 	Ba.CameraMaxZoomDistance = 0.5
 	U.TargetFilter = workspace
 	ua.MouseBehavior = Enum.MouseBehavior.LockCenter
 	ua.MouseIconEnabled = false
-	sa:BindAction("\x53\x68\x6F\x6F\x74", MobileShoot, true)
-	sa:SetPosition("\x53\x68\x6F\x6F\x74", UDim2.new(1, -85, 1, -75))
+	sa:BindAction("Shoot", MobileShoot, true)
+	sa:SetPosition("Shoot", UDim2.new(1, -85, 1, -75))
 	sa:SetImage(
-		"\x53\x68\x6F\x6F\x74",
-		"\x72\x62\x78\x61\x73\x73\x65\x74\x69\x64\x3A\x2F\x2F\x35\x38\x36\x31\x38\x39\x39\x36\x35\x38"
+		"Shoot",
+		"rbxassetid://5861899658"
 	)
 	if
-		Ba:WaitForChild("\x50\x6C\x61\x79\x65\x72\x47\x75\x69"):FindFirstChild(
-		"\x43\x6F\x6E\x74\x65\x78\x74\x41\x63\x74\x69\x6F\x6E\x47\x75\x69"
+		Ba:WaitForChild("PlayerGui"):FindFirstChild(
+		"ContextActionGui"
 		)
 	then
-		Ba:WaitForChild("\x50\x6C\x61\x79\x65\x72\x47\x75\x69"):WaitForChild(
-		"\x43\x6F\x6E\x74\x65\x78\x74\x41\x63\x74\x69\x6F\x6E\x47\x75\x69"
-		):WaitForChild("\x43\x6F\x6E\x74\x65\x78\x74\x42\x75\x74\x74\x6F\x6E\x46\x72\x61\x6D\x65"):WaitForChild(
-		"\x43\x6F\x6E\x74\x65\x78\x74\x41\x63\x74\x69\x6F\x6E\x42\x75\x74\x74\x6F\x6E"
+		Ba:WaitForChild("PlayerGui"):WaitForChild(
+		"ContextActionGui"
+		):WaitForChild("ContextButtonFrame"):WaitForChild(
+		"ContextActionButton"
 		).Size = UDim2.new(0, 72, 0, 72)
-		Ba:WaitForChild("\x50\x6C\x61\x79\x65\x72\x47\x75\x69"):WaitForChild(
-		"\x43\x6F\x6E\x74\x65\x78\x74\x41\x63\x74\x69\x6F\x6E\x47\x75\x69"
-		):WaitForChild("\x43\x6F\x6E\x74\x65\x78\x74\x42\x75\x74\x74\x6F\x6E\x46\x72\x61\x6D\x65"):WaitForChild(
-		"\x43\x6F\x6E\x74\x65\x78\x74\x41\x63\x74\x69\x6F\x6E\x42\x75\x74\x74\x6F\x6E"
+		Ba:WaitForChild("PlayerGui"):WaitForChild(
+		"ContextActionGui"
+		):WaitForChild("ContextButtonFrame"):WaitForChild(
+		"ContextActionButton"
 		).Active = false
 	end
-	sa:BindAction("\x53\x65\x6C\x65\x63\x74\x46\x69\x72\x65", MobileSelectFire, true)
-	sa:SetPosition("\x53\x65\x6C\x65\x63\x74\x46\x69\x72\x65", UDim2.new(1, -162, 1, -140))
+	sa:BindAction("SelectFire", MobileSelectFire, true)
+	sa:SetPosition("SelectFire", UDim2.new(1, -162, 1, -140))
 	sa:SetImage(
-		"\x53\x65\x6C\x65\x63\x74\x46\x69\x72\x65",
-		"\x72\x62\x78\x61\x73\x73\x65\x74\x69\x64\x3A\x2F\x2F\x35\x38\x36\x32\x32\x38\x39\x36\x36\x37"
+		"SelectFire",
+		"rbxassetid://5862289667"
 	)
-	sa:BindAction("\x42\x6F\x6C\x74", MobileBolt, true)
-	sa:SetPosition("\x42\x6F\x6C\x74", UDim2.new(1, -118, 1, -102))
+	sa:BindAction("Bolt", MobileBolt, true)
+	sa:SetPosition("Bolt", UDim2.new(1, -118, 1, -102))
 	sa:SetImage(
-		"\x42\x6F\x6C\x74",
-		"\x72\x62\x78\x61\x73\x73\x65\x74\x69\x64\x3A\x2F\x2F\x35\x38\x36\x31\x39\x35\x39\x37\x38\x30"
+		"Bolt",
+		"rbxassetid://5861959780"
 	)
-	sa:BindAction("\x52\x65\x6C\x6F\x61\x64", MobileReload, true)
-	sa:SetPosition("\x52\x65\x6C\x6F\x61\x64", UDim2.new(1, -130, 1, -55))
+	sa:BindAction("Reload", MobileReload, true)
+	sa:SetPosition("Reload", UDim2.new(1, -130, 1, -55))
 	sa:SetImage(
-		"\x52\x65\x6C\x6F\x61\x64",
-		"\x72\x62\x78\x61\x73\x73\x65\x74\x69\x64\x3A\x2F\x2F\x35\x38\x36\x31\x39\x31\x37\x38\x30\x33"
+		"Reload",
+		"rbxassetid://5861917803"
 	)
-	sa:BindAction("\x4A\x75\x6D\x70", MobileJump, true)
-	sa:SetPosition("\x4A\x75\x6D\x70", UDim2.new(1, -165, 1, -90))
+	sa:BindAction("Jump", MobileJump, true)
+	sa:SetPosition("Jump", UDim2.new(1, -165, 1, -90))
 	sa:SetImage(
-		"\x4A\x75\x6D\x70",
-		"\x72\x62\x78\x61\x73\x73\x65\x74\x69\x64\x3A\x2F\x2F\x35\x38\x36\x31\x39\x36\x33\x38\x30\x31"
+		"Jump",
+		"rbxassetid://5861963801"
 	)
-	sa:BindAction("\x50\x72\x6F\x6E\x65", MobileProne, true)
-	sa:SetPosition("\x50\x72\x6F\x6E\x65", UDim2.new(1, -112, 1, -152))
+	sa:BindAction("Prone", MobileProne, true)
+	sa:SetPosition("Prone", UDim2.new(1, -112, 1, -152))
 	sa:SetImage(
-		"\x50\x72\x6F\x6E\x65",
-		"\x72\x62\x78\x61\x73\x73\x65\x74\x69\x64\x3A\x2F\x2F\x35\x38\x36\x31\x39\x36\x39\x33\x39\x38"
+		"Prone",
+		"rbxassetid://5861969398"
 	)
-	sa:BindAction("\x4E\x65\x77\x43\x72\x6F\x75\x63\x68", MobileCrouch, true)
-	sa:SetPosition("\x4E\x65\x77\x43\x72\x6F\x75\x63\x68", UDim2.new(1, -70, 1, -175))
+	sa:BindAction("NewCrouch", MobileCrouch, true)
+	sa:SetPosition("NewCrouch", UDim2.new(1, -70, 1, -175))
 	sa:SetImage(
-		"\x4E\x65\x77\x43\x72\x6F\x75\x63\x68",
-		"\x72\x62\x78\x61\x73\x73\x65\x74\x69\x64\x3A\x2F\x2F\x35\x38\x36\x31\x39\x36\x38\x37\x34\x39"
+		"NewCrouch",
+		"rbxassetid://5861968749"
 	)
 	Ka.tool = _
-	Ka.ArmModel = xa:FindFirstChild("\x41\x72\x6D\x4D\x6F\x64\x65\x6C") or Instance.new("\x4D\x6F\x64\x65\x6C")
-	Ka.ArmModel.Name = "\x41\x72\x6D\x4D\x6F\x64\x65\x6C"
+	Ka.ArmModel = xa:FindFirstChild("ArmModel") or Instance.new("Model")
+	Ka.ArmModel.Name = "ArmModel"
 	Ka.ArmModel.Parent = xa
-	Ka.BasePart = Instance.new("\x50\x61\x72\x74")
-	Ka.BasePart.Name = "\x42\x61\x73\x65\x50\x61\x72\x74"
+	Ka.BasePart = Instance.new("Part")
+	Ka.BasePart.Name = "BasePart"
 	Ka.BasePart.Parent = Ka.ArmModel
 	Ka.BasePart.Anchored = true
 	Ka.BasePart.CanCollide = false
 	Ka.BasePart.Transparency = 1
 	Ka.BasePart.Size = Vector3.new(0.1, 0.1, 0.1)
-	Ka.PrimeAnimBase = Instance.new("\x50\x61\x72\x74")
-	Ka.PrimeAnimBase.Name = "\x50\x72\x69\x6D\x65\x41\x6E\x69\x6D\x42\x61\x73\x65"
+	Ka.PrimeAnimBase = Instance.new("Part")
+	Ka.PrimeAnimBase.Name = "PrimeAnimBase"
 	Ka.PrimeAnimBase.Parent = Ka.ArmModel
 	Ka.PrimeAnimBase.Anchored = true
 	Ka.PrimeAnimBase.CanCollide = false
 	Ka.PrimeAnimBase.Transparency = 1
 	Ka.PrimeAnimBase.Size = Vector3.new(0.1, 0.1, 0.1)
-	Ka.PrimeAnimBaseW = Instance.new("\x4D\x6F\x74\x6F\x72\x36\x44")
+	Ka.PrimeAnimBaseW = Instance.new("Motor6D")
 	Ka.PrimeAnimBaseW.Parent = Ka.PrimeAnimBase
-	Ka.PrimeAnimBaseW.Name = "\x50\x72\x69\x6D\x65\x41\x6E\x69\x6D\x42\x61\x73\x65\x57"
+	Ka.PrimeAnimBaseW.Name = "PrimeAnimBaseW"
 	Ka.PrimeAnimBaseW.Part0 = Ka.PrimeAnimBase
 	Ka.PrimeAnimBaseW.Part1 = Ka.BasePart
 	Ka.PrimeAnimBase.Anchored = false
-	Ka.AnimBase = Instance.new("\x50\x61\x72\x74")
-	Ka.AnimBase.Name = "\x41\x6E\x69\x6D\x42\x61\x73\x65"
+	Ka.AnimBase = Instance.new("Part")
+	Ka.AnimBase.Name = "AnimBase"
 	Ka.AnimBase.Parent = Ka.ArmModel
 	Ka.AnimBase.Anchored = true
 	Ka.AnimBase.CanCollide = false
 	Ka.AnimBase.Transparency = 1
 	Ka.AnimBase.Size = Vector3.new(0.1, 0.1, 0.1)
-	Ka.AnimBaseW = Instance.new("\x4D\x6F\x74\x6F\x72\x36\x44")
+	Ka.AnimBaseW = Instance.new("Motor6D")
 	Ka.AnimBaseW.Parent = Ka.AnimBase
-	Ka.AnimBaseW.Name = "\x41\x6E\x69\x6D\x42\x61\x73\x65\x57"
+	Ka.AnimBaseW.Name = "AnimBaseW"
 	Ka.AnimBaseW.Part0 = Ka.AnimBase
 	Ka.AnimBaseW.Part1 = Ka.PrimeAnimBase
 	Ka.AnimBase.Anchored = false
 	Ka.curModel = p:WaitForChild(_.Name):clone()
 	if s then
-		local _, _, a, b = o:WaitForChild("\x44\x61\x74\x61\x52\x65\x71\x75\x65\x73\x74"):InvokeServer()
+		local _, _, a, b = o:WaitForChild("DataRequest"):InvokeServer()
 		local _ = a
 		local _ = b
-		local _, c = o:WaitForChild("\x41\x74\x74\x63\x68\x51\x75\x65\x75\x65"):InvokeServer()
+		local _, c = o:WaitForChild("AttchQueue"):InvokeServer()
 		if Ka.curModel.Name == a and _[1] then
 			AttachAttachment(Ka.curModel, _)
 		elseif Ka.curModel.Name == b and c[1] then
@@ -632,80 +632,80 @@ function EquipModel(_)
 	Ka.curModel.Parent = Ka.ArmModel
 	Ka.curConfig =
 		require(
-			Ka.tool:WaitForChild("\x43\x6F\x6E\x66\x69\x67\x4D\x6F\x64\x73"):WaitForChild("\x43\x43\x6F\x6E\x66\x69\x67")
+			Ka.tool:WaitForChild("ConfigMods"):WaitForChild("CConfig")
 		)
 	local _ = {}
 	for _, _ in pairs(Ka.curModel:GetChildren()) do
-		if _:IsA("\x42\x61\x73\x65\x50\x61\x72\x74") and _.Name ~= "\x47\x72\x69\x70" then
+		if _:IsA("BasePart") and _.Name ~= "Grip" then
 			local a
-			if string.match(_.Name, "\x48\x69\x6E\x67\x65") then
+			if string.match(_.Name, "Hinge") then
 				a = Ka.curModel:FindFirstChild(string.sub(_.Name, 6, string.len(_.Name)))
 			end
 			if a then
-				if Ka.curModel:FindFirstChild("\x48\x69\x6E\x67\x65" .. a.Name) then
-					Ia.utilitiesModule.Weld(a, Ka.curModel:WaitForChild("\x48\x69\x6E\x67\x65" .. a.Name))
+				if Ka.curModel:FindFirstChild("Hinge" .. a.Name) then
+					Ia.utilitiesModule.Weld(a, Ka.curModel:WaitForChild("Hinge" .. a.Name))
 				else
-					Ia.utilitiesModule.Weld(a, Ka.curModel:WaitForChild("\x47\x72\x69\x70"))
+					Ia.utilitiesModule.Weld(a, Ka.curModel:WaitForChild("Grip"))
 				end
 			end
 		end
 	end
 	for _, a in pairs(Ka.curModel:GetChildren()) do
-		if a and not a:FindFirstChild(a.Name) and a:IsA("\x42\x61\x73\x65\x50\x61\x72\x74") then
-			Ia.utilitiesModule.Weld(a, Ka.curModel:WaitForChild("\x47\x72\x69\x70"))
+		if a and not a:FindFirstChild(a.Name) and a:IsA("BasePart") then
+			Ia.utilitiesModule.Weld(a, Ka.curModel:WaitForChild("Grip"))
 		end
 		if
-			a and a.Name ~= "\x4E\x6F\x57\x65\x6C\x64" and
-			(a:IsA("\x4D\x6F\x64\x65\x6C") or a:IsA("\x46\x6F\x6C\x64\x65\x72"))
+			a and a.Name ~= "NoWeld" and
+			(a:IsA("Model") or a:IsA("Folder"))
 		then
-			if a.Name ~= "\x53\x68\x69\x65\x6C\x64" then
+			if a.Name ~= "Shield" then
 				for _, _ in pairs(a:GetDescendants()) do
-					if _ and _:IsA("\x42\x61\x73\x65\x50\x61\x72\x74") then
-						Ia.utilitiesModule.Weld(_, Ka.curModel:WaitForChild("\x47\x72\x69\x70"))
+					if _ and _:IsA("BasePart") then
+						Ia.utilitiesModule.Weld(_, Ka.curModel:WaitForChild("Grip"))
 					end
 				end
-			elseif a.Name == "\x53\x68\x69\x65\x6C\x64" then
+			elseif a.Name == "Shield" then
 				for _, _ in pairs(a:GetDescendants()) do
-					if _ and _:IsA("\x42\x61\x73\x65\x50\x61\x72\x74") and _.Name ~= "\x47\x72\x69\x70" then
-						Ia.utilitiesModule.Weld(_, a:WaitForChild("\x47\x72\x69\x70"))
+					if _ and _:IsA("BasePart") and _.Name ~= "Grip" then
+						Ia.utilitiesModule.Weld(_, a:WaitForChild("Grip"))
 					end
 				end
 			end
 		end
 	end
 	for _, _ in pairs(Ka.curModel:GetDescendants()) do
-		if _:IsA("\x42\x61\x73\x65\x50\x61\x72\x74") and _.Name ~= "\x47\x72\x69\x70" then
+		if _:IsA("BasePart") and _.Name ~= "Grip" then
 			_.Anchored = false
 			_.CanCollide = false
 		end
 	end
-	Ka.NeckCW = Instance.new("\x4D\x6F\x74\x6F\x72\x36\x44")
-	Ka.NeckCW.Name = "\x43\x6C\x6F\x6E\x65"
+	Ka.NeckCW = Instance.new("Motor6D")
+	Ka.NeckCW.Name = "Clone"
 	Ka.NeckCW.Parent = Da.torso
 	Ka.NeckCW.Part0 = Da.rootPart
 	Ka.NeckCW.Part1 = Da.head
 	Ka.NeckCW.C0 = Da.neck.C0
 	Ka.NeckCW.C1 = Da.neck.C1
-	Ka.AimPart = Ka.curModel:WaitForChild("\x41\x69\x6D\x50\x61\x72\x74")
-	Ka.AimPart2 = Ka.curModel:FindFirstChild("\x41\x69\x6D\x50\x61\x72\x74\x32") or nil
+	Ka.AimPart = Ka.curModel:WaitForChild("AimPart")
+	Ka.AimPart2 = Ka.curModel:FindFirstChild("AimPart2") or nil
 	Ka.CurAimPart = Ka.AimPart
 	Ka.lastAimPart = Ka.AimPart
-	Ka.FirePart = Ka.curModel:WaitForChild("\x46\x69\x72\x65\x50\x61\x72\x74")
-	Ka.Bolt = Ka.curModel:WaitForChild("\x42\x6F\x6C\x74")
-	Ka.BoltW = Ka.Bolt:WaitForChild("\x42\x6F\x6C\x74")
-	Ka.Mag = Ka.curModel:WaitForChild("\x4D\x61\x67")
-	Ka.FirePart2 = Ka.curModel:FindFirstChild("\x46\x69\x72\x65\x50\x61\x72\x74\x32") or nil
-	local _ = ra:WaitForChild("\x45\x71\x75\x69\x70\x53\x6F\x75\x6E\x64"):clone()
+	Ka.FirePart = Ka.curModel:WaitForChild("FirePart")
+	Ka.Bolt = Ka.curModel:WaitForChild("Bolt")
+	Ka.BoltW = Ka.Bolt:WaitForChild("Bolt")
+	Ka.Mag = Ka.curModel:WaitForChild("Mag")
+	Ka.FirePart2 = Ka.curModel:FindFirstChild("FirePart2") or nil
+	local _ = ra:WaitForChild("EquipSound"):clone()
 	_.Parent = Ba.PlayerGui
 	_:Play()
 	game.Debris:AddItem(_, _.TimeLength)
-	Ka.aimSFX = Ba.PlayerGui:FindFirstChild("\x41\x69\x6D\x53\x46\x58") or Instance.new("\x53\x6F\x75\x6E\x64")
-	Ka.aimSFX.Name = "\x41\x69\x6D\x53\x46\x58"
+	Ka.aimSFX = Ba.PlayerGui:FindFirstChild("AimSFX") or Instance.new("Sound")
+	Ka.aimSFX.Name = "AimSFX"
 	Ka.aimSFX.Parent = Ba.PlayerGui
 	Ka.HopUp = Ka.curConfig.BulletHopUpMult
 	local n, e, f, d, b, _, _, c, a, l, _, g, m, h, i, k, j =
 		Ea.storeDataEvent:InvokeServer(
-			"\x52\x65\x74\x72\x69\x65\x76\x65",
+			"Retrieve",
 			Ka.tool.Name,
 			Ka.curConfig.Ammo,
 			(Ka.curConfig.StoredAmmo * Ka.curConfig.MagCount),
@@ -715,7 +715,7 @@ function EquipModel(_)
 			1,
 			nil,
 			nil,
-			"\x41\x75\x74\x68"
+			"Auth"
 		)
 	if n then
 		Ka.Ammo = e
@@ -771,29 +771,29 @@ function EquipModel(_)
 		Ia.setupModule(Ka.ArmModel, Fa, Ka.AnimBase, Ka.curConfig, Ka.curModel, K, F)
 	local b = p:WaitForChild(Ka.curModel.Name):clone()
 	b.Parent = Ka.weapDisplay
-	b.PrimaryPart = b:WaitForChild("\x47\x72\x69\x70")
+	b.PrimaryPart = b:WaitForChild("Grip")
 	for _, _ in pairs(b:GetDescendants()) do
-		if _ and _:IsA("\x54\x65\x78\x74\x75\x72\x65") or _:IsA("\x44\x65\x63\x61\x6C") then
+		if _ and _:IsA("Texture") or _:IsA("Decal") then
 			_:Destroy()
-		elseif _ and _:IsA("\x55\x6E\x69\x6F\x6E\x4F\x70\x65\x72\x61\x74\x69\x6F\x6E") then
+		elseif _ and _:IsA("UnionOperation") then
 			_.UsePartColor = true
 			_.Material = Enum.Material.SmoothPlastic
-		elseif _ and _:IsA("\x4D\x65\x73\x68\x50\x61\x72\x74") then
+		elseif _ and _:IsA("MeshPart") then
 			_.TextureID = ""
 			_.Material = Enum.Material.SmoothPlastic
 		end
 	end
 	for _, _ in pairs(b:GetDescendants()) do
-		if _ and _:IsA("\x42\x61\x73\x65\x50\x61\x72\x74") then
+		if _ and _:IsA("BasePart") then
 			_.BrickColor =
-				BrickColor.new("\x49\x6E\x73\x74\x69\x74\x75\x74\x69\x6F\x6E\x61\x6C\x20\x77\x68\x69\x74\x65")
+				BrickColor.new("Institutional white")
 			_.Material = Enum.Material.SmoothPlastic
-			if _:IsA("\x55\x6E\x69\x6F\x6E\x4F\x70\x65\x72\x61\x74\x69\x6F\x6E") then
+			if _:IsA("UnionOperation") then
 				_.UsePartColor = true
 			end
 		end
 	end
-	local _ = Instance.new("\x43\x61\x6D\x65\x72\x61")
+	local _ = Instance.new("Camera")
 	Ka.weapDisplay.CurrentCamera = _
 	_.Parent = Ka.weapDisplay
 	_.CFrame = CFrame.new(10, 10, 10) * CFrame.Angles(10, 10, 10)
@@ -812,22 +812,22 @@ function EquipModel(_)
 	end
 	UpdateAmmo()
 	if
-		Ba and Ba:FindFirstChild("\x50\x6C\x61\x79\x65\x72\x47\x75\x69") and
-		Ba.PlayerGui:FindFirstChild("\x54\x6F\x75\x63\x68\x47\x75\x69")
+		Ba and Ba:FindFirstChild("PlayerGui") and
+		Ba.PlayerGui:FindFirstChild("TouchGui")
 	then
 		Ka.mainFrame.Visible = false
 		Ka.mainFrame2.Visible = true
-		Ba.PlayerGui:FindFirstChild("\x54\x6F\x75\x63\x68\x47\x75\x69"):WaitForChild(
-		"\x54\x6F\x75\x63\x68\x43\x6F\x6E\x74\x72\x6F\x6C\x46\x72\x61\x6D\x65"
-		):WaitForChild("\x4A\x75\x6D\x70\x42\x75\x74\x74\x6F\x6E").Visible = false
+		Ba.PlayerGui:FindFirstChild("TouchGui"):WaitForChild(
+		"TouchControlFrame"
+		):WaitForChild("JumpButton").Visible = false
 	end
 	local _ =
 		require(
-			Ka.tool:WaitForChild("\x43\x6F\x6E\x66\x69\x67\x4D\x6F\x64\x73"):WaitForChild("\x53\x43\x6F\x6E\x66\x69\x67")
+			Ka.tool:WaitForChild("ConfigMods"):WaitForChild("SConfig")
 		)
 	Ea.equipEvent:FireServer(
 		true,
-		"\x41\x75\x74\x68",
+		"Auth",
 		Ka.tool.Name,
 		_.RightArmPos,
 		_.LeftArmPos,
@@ -847,27 +847,27 @@ function EquipModel(_)
 	end
 end
 function SpawnIso(a, b, _, _)
-	local c = b:FindFirstChild("\x49\x73\x6F\x53\x6F\x75\x6E\x64") or Instance.new("\x53\x6F\x75\x6E\x64")
+	local c = b:FindFirstChild("IsoSound") or Instance.new("Sound")
 	c.Volume = 1
-	c.Name = "\x49\x73\x6F\x53\x6F\x75\x6E\x64"
+	c.Name = "IsoSound"
 	c.Parent = b
 	c.SoundId = a
 	c.PlaybackSpeed = _
 	local a
 	local _ =
-		(b.Position - Fa:WaitForChild("\x48\x75\x6D\x61\x6E\x6F\x69\x64\x52\x6F\x6F\x74\x50\x61\x72\x74").Position).magnitude
+		(b.Position - Fa:WaitForChild("HumanoidRootPart").Position).magnitude
 	if _ > 10 then
 		a =
-			c:FindFirstChild("\x49\x73\x6F\x6C\x61\x74\x69\x6F\x6E") or
-			Instance.new("\x45\x71\x75\x61\x6C\x69\x7A\x65\x72\x53\x6F\x75\x6E\x64\x45\x66\x66\x65\x63\x74")
+			c:FindFirstChild("Isolation") or
+			Instance.new("EqualizerSoundEffect")
 		a.Enabled = true
-		a.Name = "\x49\x73\x6F\x6C\x61\x74\x69\x6F\x6E"
+		a.Name = "Isolation"
 		a.Parent = c
 		a.HighGain = (-0.03 * _)
 		a.MidGain = (-0.03 * _)
 		a.LowGain = (_ / 100)
 	else
-		if c:FindFirstChild("\x49\x73\x6F\x6C\x61\x74\x69\x6F\x6E") then
+		if c:FindFirstChild("Isolation") then
 			c.Isolation.Enabled = false
 		end
 	end
@@ -888,7 +888,7 @@ function UnequipModel()
 		Ka.mainFrame.Visible = false
 		Ka.mainFrame2.Visible = false
 		Ka.weapDisplay:ClearAllChildren()
-		local _ = ra:WaitForChild("\x55\x6E\x65\x71\x75\x69\x70\x53\x6F\x75\x6E\x64"):clone()
+		local _ = ra:WaitForChild("UnequipSound"):clone()
 		_.Parent = Ba.PlayerGui
 		_:Play()
 		game.Debris:AddItem(_, _.TimeLength)
@@ -906,13 +906,13 @@ function UnequipModel()
 		Ka.Grip = nil
 		Ka.GripW:Destroy()
 		Ka.aimSFX:Destroy()
-		sa:UnbindAction("\x53\x68\x6F\x6F\x74")
-		sa:UnbindAction("\x53\x65\x6C\x65\x63\x74\x46\x69\x72\x65")
-		sa:UnbindAction("\x42\x6F\x6C\x74")
-		sa:UnbindAction("\x52\x65\x6C\x6F\x61\x64")
-		sa:UnbindAction("\x4A\x75\x6D\x70")
-		sa:UnbindAction("\x50\x72\x6F\x6E\x65")
-		sa:UnbindAction("\x4E\x65\x77\x43\x72\x6F\x75\x63\x68")
+		sa:UnbindAction("Shoot")
+		sa:UnbindAction("SelectFire")
+		sa:UnbindAction("Bolt")
+		sa:UnbindAction("Reload")
+		sa:UnbindAction("Jump")
+		sa:UnbindAction("Prone")
+		sa:UnbindAction("NewCrouch")
 		za = false
 		ya = false
 		ea = false
@@ -935,7 +935,7 @@ function UnequipModel()
 		end
 		Ja:Create(xa, TweenInfo.new(0.1, Enum.EasingStyle.Quad), {FieldOfView = 70}):Play()
 		Ea.storeDataEvent:InvokeServer(
-			"\x53\x74\x6F\x72\x65",
+			"Store",
 			Ka.tool.Name,
 			Ka.Ammo,
 			Ka.StoredAmmo,
@@ -945,7 +945,7 @@ function UnequipModel()
 			0,
 			Ka.CanShoot,
 			ta,
-			"\x41\x75\x74\x68",
+			"Auth",
 			G,
 			Q,
 			ia,
@@ -957,13 +957,13 @@ function UnequipModel()
 		)
 		local _ =
 			require(
-				Ka.tool:WaitForChild("\x43\x6F\x6E\x66\x69\x67\x4D\x6F\x64\x73"):WaitForChild(
-				"\x53\x43\x6F\x6E\x66\x69\x67"
+				Ka.tool:WaitForChild("ConfigMods"):WaitForChild(
+				"SConfig"
 				)
 			)
 		Ea.equipEvent:FireServer(
 			false,
-			"\x41\x75\x74\x68",
+			"Auth",
 			Ka.tool.Name,
 			_.RightArmPos,
 			_.LeftArmPos,
@@ -993,18 +993,18 @@ function UnequipModel()
 		end
 		wa = false
 		na = false
-		for _, _ in pairs(Ka.hud:WaitForChild("\x52\x61\x6E\x67\x65\x46\x72\x61\x6D\x65"):GetChildren()) do
+		for _, _ in pairs(Ka.hud:WaitForChild("RangeFrame"):GetChildren()) do
 			if _ then
 				_.Visible = false
 			end
 		end
 		if
-			Ba and Ba:FindFirstChild("\x50\x6C\x61\x79\x65\x72\x47\x75\x69") and
-			Ba.PlayerGui:FindFirstChild("\x54\x6F\x75\x63\x68\x47\x75\x69")
+			Ba and Ba:FindFirstChild("PlayerGui") and
+			Ba.PlayerGui:FindFirstChild("TouchGui")
 		then
-			Ba.PlayerGui:FindFirstChild("\x54\x6F\x75\x63\x68\x47\x75\x69"):WaitForChild(
-			"\x54\x6F\x75\x63\x68\x43\x6F\x6E\x74\x72\x6F\x6C\x46\x72\x61\x6D\x65"
-			):WaitForChild("\x4A\x75\x6D\x70\x42\x75\x74\x74\x6F\x6E").Visible = true
+			Ba.PlayerGui:FindFirstChild("TouchGui"):WaitForChild(
+			"TouchControlFrame"
+			):WaitForChild("JumpButton").Visible = true
 		end
 		ia = false
 		K = false
@@ -1020,13 +1020,13 @@ function ChangeReady()
 		end
 		if Ka.readyMode == 0 then
 			da = false
-			Ea.updateCharEvent:FireServer("\x49\x64\x6C\x65", true, "\x41\x75\x74\x68")
+			Ea.updateCharEvent:FireServer("Idle", true, "Auth")
 			Ka.CanShoot = true
 			W = false
 		elseif Ka.readyMode == 1 then
 			da = true
 			Ja:Create(Ka.AnimBaseW, TweenInfo.new(0.5, Enum.EasingStyle.Quad), {C1 = Ka.curConfig.ReadyHighPos}):Play()
-			Ea.updateCharEvent:FireServer("\x52\x65\x61\x64\x79\x48\x69\x67\x68", true, "\x41\x75\x74\x68")
+			Ea.updateCharEvent:FireServer("ReadyHigh", true, "Auth")
 			if oa then
 				oa = false
 			end
@@ -1034,7 +1034,7 @@ function ChangeReady()
 		elseif Ka.readyMode == -1 then
 			da = true
 			Ja:Create(Ka.AnimBaseW, TweenInfo.new(0.5, Enum.EasingStyle.Quad), {C1 = Ka.curConfig.ReadyLowPos}):Play()
-			Ea.updateCharEvent:FireServer("\x52\x65\x61\x64\x79\x4C\x6F\x77", true, "\x41\x75\x74\x68")
+			Ea.updateCharEvent:FireServer("ReadyLow", true, "Auth")
 			if oa then
 				oa = false
 			end
@@ -1057,20 +1057,20 @@ function Aim(_, a)
 					oa = false
 				end
 				if a then
-					Ea.updateCharEvent:FireServer("\x41\x69\x6D", true, "\x41\x75\x74\x68")
+					Ea.updateCharEvent:FireServer("Aim", true, "Auth")
 				end
 				if
-					Fa:WaitForChild("\x43\x61\x72\x62\x6F\x6E\x56\x61\x6C\x75\x65\x73"):WaitForChild(
-					"\x4E\x56\x47\x41\x63\x74\x69\x76\x65"
+					Fa:WaitForChild("CarbonValues"):WaitForChild(
+					"NVGActive"
 					).Value == true and
-						Ka.curModel:FindFirstChild("\x41\x69\x6D\x50\x61\x72\x74\x33") and
+						Ka.curModel:FindFirstChild("AimPart3") and
 						O and
 						Ka.CurAimPart ~= Ka.curModel.AimPart3
 				then
 					Ka.lastAimPart = Ka.CurAimPart
 					Ka.CurAimPart = Ka.curModel.AimPart3
 				end
-				Ka.aimSFX.SoundId = "\x72\x62\x78\x61\x73\x73\x65\x74\x69\x64\x3A\x2F\x2F" .. u[math.random(1, #u)]
+				Ka.aimSFX.SoundId = "rbxassetid://" .. u[math.random(1, #u)]
 				Ka.aimSFX:Play()
 				Ja:Create(
 					xa,
@@ -1085,8 +1085,8 @@ function Aim(_, a)
 		else
 			Ka.aimWalkSpeed = 9
 			Ka.CurAimPart = Ka.lastAimPart
-			Ea.updateCharEvent:FireServer("\x41\x69\x6D", false, "\x41\x75\x74\x68")
-			Ka.aimSFX.SoundId = "\x72\x62\x78\x61\x73\x73\x65\x74\x69\x64\x3A\x2F\x2F" .. v[math.random(1, #v)]
+			Ea.updateCharEvent:FireServer("Aim", false, "Auth")
+			Ka.aimSFX.SoundId = "rbxassetid://" .. v[math.random(1, #v)]
 			Ka.aimSFX:Play()
 			Ja:Create(xa, TweenInfo.new(Ka.curConfig.AimZoomSpeed, Enum.EasingStyle.Quad), {FieldOfView = 70}):Play()
 			za = false
@@ -1114,7 +1114,7 @@ function Sprint(_)
 			if oa then
 				oa = false
 			end
-			Ea.updateCharEvent:FireServer("\x53\x70\x72\x69\x6E\x74", true, "\x41\x75\x74\x68")
+			Ea.updateCharEvent:FireServer("Sprint", true, "Auth")
 			if Ka.curConfig.sprintAnim then
 				sprintAnim()
 			end
@@ -1122,7 +1122,7 @@ function Sprint(_)
 			Ga.walkAnimIntensity = Ka.curConfig.SprintWalkIntensity
 			Ga.walkAnimSpeed = Ka.curConfig.SprintWalkAnimSpeed
 		else
-			Ea.updateCharEvent:FireServer("\x53\x70\x72\x69\x6E\x74", false, "\x41\x75\x74\x68")
+			Ea.updateCharEvent:FireServer("Sprint", false, "Auth")
 			ya = false
 			if Ka.curConfig.unsprintAnim then
 				unsprintAnim()
@@ -1280,12 +1280,12 @@ function CalculateCamShake()
 		return _
 	end
 end
-function Shoot()
+function Shoot() -- why broccoli bob is getting canceled for eating mac and cheese (EMOTIONAL) (EXPOSED) (COPS CALLED) (DELETED VIDEO) NOT CLICKBAIT, 1440p copyright dintisepic 2027
 	prnt("Shoot")
 	if Ca and Ka.CanShoot and not ya and not ma and not da and not oa and not ea and not la then
-		if (xa.CFrame.Position - Fa:WaitForChild("\x48\x65\x61\x64").Position).magnitude > 10 then
+		if (xa.CFrame.Position - Fa:WaitForChild("Head").Position).magnitude > 10 then
 			Ba:Kick(
-				"\x45\x78\x70\x6C\x6F\x69\x74\x69\x6E\x67\x20\x69\x73\x20\x61\x20\x62\x61\x6E\x6E\x61\x62\x6C\x65\x20\x6F\x66\x66\x65\x6E\x73\x65\x2E\x20\x54\x68\x69\x73\x20\x61\x63\x74\x69\x6F\x6E\x20\x6C\x6F\x67\x20\x68\x61\x73\x20\x62\x65\x65\x6E\x20\x73\x75\x62\x6D\x69\x74\x74\x65\x64\x20\x74\x6F\x20\x52\x4F\x42\x4C\x4F\x58\x2E"
+				"Exploiting is a bannable offense. This action log has been submitted to ROBLOX."
 			)
 		end
 		if not ja then
@@ -1326,7 +1326,7 @@ function Shoot()
 	end
 end
 function Update()
-	if Fa:WaitForChild("\x48\x75\x6D\x61\x6E\x6F\x69\x64").Health > 0 and Ca then
+	if Fa:WaitForChild("Humanoid").Health > 0 and Ca then
 		local d = Ha.recoilSpring2.p
 		local _ = CFrame.new(0, 0, d.z / 5)
 		local a = CFrame.fromAxisAngle(Vector3.new(1, 0, 0), d.x / 10)
@@ -1354,7 +1354,7 @@ function changeStance()
 				Da.humanoid.WalkSpeed = 16
 			end
 			Lean()
-			Ea.updateCharEvent:FireServer("\x53\x74\x61\x6E\x63\x65", true, "\x41\x75\x74\x68", Ka.StanceIndex)
+			Ea.updateCharEvent:FireServer("Stance", true, "Auth", Ka.StanceIndex)
 		elseif Ka.StanceIndex == 1 and not Da.humanoid.Sit then
 			qa = true
 			Ja:Create(
@@ -1409,7 +1409,7 @@ function changeStance()
 				UpdateAmmo()
 			end
 			Lean()
-			Ea.updateCharEvent:FireServer("\x53\x74\x61\x6E\x63\x65", true, "\x41\x75\x74\x68", Ka.StanceIndex)
+			Ea.updateCharEvent:FireServer("Stance", true, "Auth", Ka.StanceIndex)
 		elseif Ka.StanceIndex == 2 and not Da.humanoid.Sit then
 			if Ca and Ka.curConfig then
 				Ha.dirPeek = 0
@@ -1483,14 +1483,14 @@ function changeStance()
 			):Play()
 			Ka.camC0 = Vector3.new(0, -2.5, 0)
 			Ja:Create(
-				Fa:WaitForChild("\x48\x75\x6D\x61\x6E\x6F\x69\x64"),
+				Fa:WaitForChild("Humanoid"),
 				TweenInfo.new(0.5),
 				{CameraOffset = Vector3.new(0, -3, 0)}
 			):Play()
 			if Ca then
 				UpdateAmmo()
 			end
-			Ea.updateCharEvent:FireServer("\x53\x74\x61\x6E\x63\x65", true, "\x41\x75\x74\x68", Ka.StanceIndex)
+			Ea.updateCharEvent:FireServer("Stance", true, "Auth", Ka.StanceIndex)
 		end
 	end
 end
@@ -1618,7 +1618,7 @@ function Lean()
 		elseif Ka.StanceIndex == 2 then
 			Ha.dirPeek = 0
 			Ja:Create(
-				Fa:WaitForChild("\x48\x75\x6D\x61\x6E\x6F\x69\x64"),
+				Fa:WaitForChild("Humanoid"),
 				TweenInfo.new(0.5),
 				{CameraOffset = Vector3.new(0, -3, 0)}
 			):Play()
@@ -1626,17 +1626,17 @@ function Lean()
 			Ja:Create(Da.rightHip, TweenInfo.new(0.6), {C1 = CFrame.new(0.5, 1, 0, 0, 0, 1, 0, 1, -0, -1, 0, 0)}):Play()
 			Ja:Create(Da.leftHip, TweenInfo.new(0.6), {C1 = CFrame.new(-0.5, 1, 0, 0, 0, -1, 0, 1, 0, 1, 0, 0)}):Play()
 		end
-		Ea.updateCharEvent:FireServer("\x4C\x65\x61\x6E", true, "\x41\x75\x74\x68", Ka.StanceIndex, Ha.dirPeek)
+		Ea.updateCharEvent:FireServer("Lean", true, "Auth", Ka.StanceIndex, Ha.dirPeek)
 	end
 end
 function HalfStepFunc(_)
 	if Ka.HalfStep then
-		Ea.halfStepEvent:FireServer("\x41\x75\x74\x68", _, Ca)
+		Ea.halfStepEvent:FireServer("Auth", _, Ca)
 	end
 	Ka.HalfStep = not Ka.HalfStep
 end
 function SpawnTracer(c, b, _, a)
-	local a = Instance.new("\x54\x72\x61\x69\x6C", a)
+	local a = Instance.new("Trail", a)
 	a.Attachment0 = b
 	a.Attachment1 = _
 	a.Transparency = NumberSequence.new(c.TracerTransparency)
@@ -1644,7 +1644,7 @@ function SpawnTracer(c, b, _, a)
 	a.TextureLength = c.TracerTextureLength
 	a.LightInfluence = 0
 	a.Texture =
-		"\x68\x74\x74\x70\x3A\x2F\x2F\x77\x77\x77\x2E\x72\x6F\x62\x6C\x6F\x78\x2E\x63\x6F\x6D\x2F\x61\x73\x73\x65\x74\x2F\x3F\x69\x64\x3D\x34\x35\x32\x38\x30\x31\x31\x35\x35\x35"
+		"http://www.roblox.com/asset/?id=4528011555"
 	a.Lifetime = c.TracerLifetime
 	a.FaceCamera = c.TracerFaceCamera
 	a.Color = ColorSequence.new(c.TracerColor.Color)
@@ -1654,27 +1654,27 @@ function reCast(_, a)
 		local _ = _
 		local a = a
 		local _ = CFrame.new(_, _ + a)
-		local c = Instance.new("\x50\x61\x72\x74")
+		local c = Instance.new("Part")
 		c.Parent = ca
-		c.Name = "\x42\x75\x6C\x6C\x65\x74"
+		c.Name = "Bullet"
 		game.Debris:AddItem(c, 10)
 		c.Shape = Enum.PartType.Ball
 		c.Size = Vector3.new(1, 1, 12)
-		c.Name = "\x42\x75\x6C\x6C\x65\x74"
-		c.TopSurface = "\x53\x6D\x6F\x6F\x74\x68"
-		c.BottomSurface = "\x53\x6D\x6F\x6F\x74\x68"
-		c.BrickColor = BrickColor.new("\x42\x72\x69\x67\x68\x74\x20\x67\x72\x65\x65\x6E")
-		c.Material = "\x4E\x65\x6F\x6E"
+		c.Name = "Bullet"
+		c.TopSurface = "Smooth"
+		c.BottomSurface = "Smooth"
+		c.BrickColor = BrickColor.new("Bright green")
+		c.Material = "Neon"
 		c.CanCollide = false
 		c.CFrame = _
 		c.Transparency = 1
 		local _ = c:GetMass()
-		local _ = Instance.new("\x42\x6F\x64\x79\x46\x6F\x72\x63\x65", c)
+		local _ = Instance.new("BodyForce", c)
 		_.Force = Ia.globalConfig.BulletPhysics
 		c.Velocity = a * Ia.globalConfig.BulletSpeed
-		local b = Instance.new("\x41\x74\x74\x61\x63\x68\x6D\x65\x6E\x74", c)
+		local b = Instance.new("Attachment", c)
 		b.Position = Vector3.new(0.1, 0, 0)
-		local a = Instance.new("\x41\x74\x74\x61\x63\x68\x6D\x65\x6E\x74", c)
+		local a = Instance.new("Attachment", c)
 		a.Position = Vector3.new(-0.1, 0, 0)
 		local _ = Ia.codeArchive.TracerCalculation(Ka.curConfig.TracerChance)
 		if Ka.curConfig.TracerEnabled == true and _ then
@@ -1714,23 +1714,23 @@ function CreateBullet(c, _, a)
 			CFrame.Angles(math.rad(math.random(-c, c)), math.rad(math.random(-c, c)), math.rad(math.random(-c, c)))
 		d = _ * d
 		local a = CFrame.new(b, b + d)
-		local e = Instance.new("\x50\x61\x72\x74")
+		local e = Instance.new("Part")
 		e.Parent = ca
 		table.insert(ha, e)
-		e.Name = "\x42\x75\x6C\x6C\x65\x74"
+		e.Name = "Bullet"
 		game.Debris:AddItem(e, 10)
 		e.Shape = Enum.PartType.Ball
 		e.Size = Vector3.new(1, 1, 12)
-		e.Name = "\x42\x75\x6C\x6C\x65\x74"
-		e.TopSurface = "\x53\x6D\x6F\x6F\x74\x68"
-		e.BottomSurface = "\x53\x6D\x6F\x6F\x74\x68"
-		e.BrickColor = BrickColor.new("\x42\x72\x69\x67\x68\x74\x20\x67\x72\x65\x65\x6E")
-		e.Material = "\x4E\x65\x6F\x6E"
+		e.Name = "Bullet"
+		e.TopSurface = "Smooth"
+		e.BottomSurface = "Smooth"
+		e.BrickColor = BrickColor.new("Bright green")
+		e.Material = "Neon"
 		e.CanCollide = false
 		e.CFrame = a
 		e.Transparency = 1
 		local _ = e:GetMass()
-		local _ = Instance.new("\x42\x6F\x64\x79\x46\x6F\x72\x63\x65", e)
+		local _ = Instance.new("BodyForce", e)
 		if not ja then
 			_.Force = Vector3.new(0, Ia.globalConfig.BulletPhysics, 0)
 			e.Velocity = d * Ia.globalConfig.BulletSpeed
@@ -1738,16 +1738,16 @@ function CreateBullet(c, _, a)
 			_.Force = Ka.curConfig.ExploPhysics
 			e.Velocity = d * Ka.curConfig.ExploSpeed
 		end
-		local b = Instance.new("\x41\x74\x74\x61\x63\x68\x6D\x65\x6E\x74", e)
+		local b = Instance.new("Attachment", e)
 		b.Position = Vector3.new(0.1, 0, 0)
-		local c = Instance.new("\x41\x74\x74\x61\x63\x68\x6D\x65\x6E\x74", e)
+		local c = Instance.new("Attachment", e)
 		c.Position = Vector3.new(-0.1, 0, 0)
 		local _ = Ia.codeArchive.TracerCalculation(Ka.curConfig.TracerChance)
 		if Ka.FireMode == 6 then
-			local _ = ra:WaitForChild("\x52\x6F\x63\x6B\x65\x74\x46\x69\x72\x65"):Clone()
+			local _ = ra:WaitForChild("RocketFire"):Clone()
 			_.Parent = e
 			_.Enabled = true
-			local _ = ra:WaitForChild("\x52\x6F\x63\x6B\x65\x74\x4C\x6F\x6F\x70"):Clone()
+			local _ = ra:WaitForChild("RocketLoop"):Clone()
 			_.Parent = e
 			_:Play()
 		end
@@ -1773,7 +1773,7 @@ function CreateBullet(c, _, a)
 				Ka.curConfig.BulletSpeed,
 				d,
 				Ka.curConfig.TracerColor,
-				"\x41\x75\x74\x68",
+				"Auth",
 				Ka.FireMode
 			)
 		end
@@ -1782,31 +1782,31 @@ function CreateBullet(c, _, a)
 end
 function CreateExternalBullet(f, g, b, d, e, a, _, c)
 	local _ = f
-	local f = Instance.new("\x50\x61\x72\x74")
+	local f = Instance.new("Part")
 	f.Parent = ca
-	f.Name = "\x42\x75\x6C\x6C\x65\x74"
+	f.Name = "Bullet"
 	game.Debris:AddItem(f, 10)
 	f.Shape = Enum.PartType.Ball
 	f.Size = Vector3.new(1, 1, 12)
-	f.Name = "\x42\x75\x6C\x6C\x65\x74"
-	f.TopSurface = "\x53\x6D\x6F\x6F\x74\x68"
-	f.BottomSurface = "\x53\x6D\x6F\x6F\x74\x68"
-	f.BrickColor = BrickColor.new("\x42\x72\x69\x67\x68\x74\x20\x67\x72\x65\x65\x6E")
-	f.Material = "\x4E\x65\x6F\x6E"
+	f.Name = "Bullet"
+	f.TopSurface = "Smooth"
+	f.BottomSurface = "Smooth"
+	f.BrickColor = BrickColor.new("Bright green")
+	f.Material = "Neon"
 	f.CanCollide = false
 	f.CFrame = _
 	game.Debris:AddItem(f, 4)
 	f.Transparency = 1
 	local _ = f:GetMass()
-	local _ = Instance.new("\x42\x6F\x64\x79\x46\x6F\x72\x63\x65", f)
+	local _ = Instance.new("BodyForce", f)
 	_.Force = d
 	f.Velocity = a * e
-	local a = Instance.new("\x41\x74\x74\x61\x63\x68\x6D\x65\x6E\x74", f)
+	local a = Instance.new("Attachment", f)
 	a.Position = Vector3.new(0.1, 0, 0)
-	local _ = Instance.new("\x41\x74\x74\x61\x63\x68\x6D\x65\x6E\x74", f)
+	local _ = Instance.new("Attachment", f)
 	_.Position = Vector3.new(-0.1, 0, 0)
 	if g and b then
-		local b = Instance.new("\x54\x72\x61\x69\x6C", f)
+		local b = Instance.new("Trail", f)
 		b.Attachment0 = a
 		b.Attachment1 = _
 		b.Transparency = NumberSequence.new(0.3)
@@ -1814,16 +1814,16 @@ function CreateExternalBullet(f, g, b, d, e, a, _, c)
 		b.TextureLength = 1
 		b.LightInfluence = 0
 		b.Texture =
-			"\x68\x74\x74\x70\x3A\x2F\x2F\x77\x77\x77\x2E\x72\x6F\x62\x6C\x6F\x78\x2E\x63\x6F\x6D\x2F\x61\x73\x73\x65\x74\x2F\x3F\x69\x64\x3D\x34\x35\x32\x38\x30\x31\x31\x35\x35\x35"
+			"http://www.roblox.com/asset/?id=4528011555"
 		b.Lifetime = 0.1
 		b.FaceCamera = true
-		b.Color = ColorSequence.new(BrickColor.new("\x44\x65\x65\x70\x20\x6F\x72\x61\x6E\x67\x65").Color)
+		b.Color = ColorSequence.new(BrickColor.new("Deep orange").Color)
 	end
 	if c == 6 then
-		local _ = ra:WaitForChild("\x52\x6F\x63\x6B\x65\x74\x46\x69\x72\x65"):Clone()
+		local _ = ra:WaitForChild("RocketFire"):Clone()
 		_.Parent = f
 		_.Enabled = true
-		local _ = ra:WaitForChild("\x52\x6F\x63\x6B\x65\x74\x4C\x6F\x6F\x70"):Clone()
+		local _ = ra:WaitForChild("RocketLoop"):Clone()
 		_.Parent = f
 		_:Play()
 	end
@@ -1831,100 +1831,100 @@ function CreateExternalBullet(f, g, b, d, e, a, _, c)
 end
 function HandleDamage(e, _, d, a, b, c)
 	if Ka.curConfig then
-		Ea.createOwnerEvent:FireServer(d, nil, nil, nil, nil, nil, nil, nil, "\x41\x75\x74\x68")
-		if (e.Name == "\x48\x65\x61\x64" or e:FindFirstAncestorWhichIsA("\x41\x63\x63\x65\x73\x73\x6F\x72\x79")) then
-			if e.Name == "\x48\x65\x61\x64" then
+		Ea.createOwnerEvent:FireServer(d, nil, nil, nil, nil, nil, nil, nil, "Auth")
+		if (e.Name == "Head" or e:FindFirstAncestorWhichIsA("Accessory")) then
+			if e.Name == "Head" then
 				Ea.damageEvent:FireServer(
 					d,
 					Ka.curConfig.HeadDamage,
 					e.Name,
-					{"\x6E\x69\x6C", "\x41\x75\x74\x68", "\x6E\x69\x6C", "\x6E\x69\x6C"}
+					{"nil", "Auth", "nil", "nil"}
 				)
-			elseif e:FindFirstAncestorWhichIsA("\x41\x63\x63\x65\x73\x73\x6F\x72\x79") then
-				local _ = e:FindFirstAncestorWhichIsA("\x41\x63\x63\x65\x73\x73\x6F\x72\x79")
+			elseif e:FindFirstAncestorWhichIsA("Accessory") then
+				local _ = e:FindFirstAncestorWhichIsA("Accessory")
 				if
-					_:WaitForChild("\x48\x61\x6E\x64\x6C\x65"):WaitForChild(
-					"\x41\x63\x63\x65\x73\x73\x6F\x72\x79\x57\x65\x6C\x64"
-					).Part1.Name == "\x48\x65\x61\x64"
+					_:WaitForChild("Handle"):WaitForChild(
+					"AccessoryWeld"
+					).Part1.Name == "Head"
 				then
 					Ea.damageEvent:FireServer(
 						d,
 						Ka.curConfig.HeadDamage,
 						e.Name,
-						{"\x6E\x69\x6C", "\x41\x75\x74\x68", "\x6E\x69\x6C", "\x6E\x69\x6C"}
+						{"nil", "Auth", "nil", "nil"}
 					)
 				elseif
-					_:WaitForChild("\x48\x61\x6E\x64\x6C\x65"):WaitForChild(
-					"\x41\x63\x63\x65\x73\x73\x6F\x72\x79\x57\x65\x6C\x64"
-					).Part1.Name == "\x54\x6F\x72\x73\x6F"
+					_:WaitForChild("Handle"):WaitForChild(
+					"AccessoryWeld"
+					).Part1.Name == "Torso"
 				then
 					Ea.damageEvent:FireServer(
 						d,
 						Ka.curConfig.BaseDamage,
 						e.Name,
-						{"\x6E\x69\x6C", "\x41\x75\x74\x68", "\x6E\x69\x6C", "\x6E\x69\x6C"}
+						{"nil", "Auth", "nil", "nil"}
 					)
 				end
 			end
 		elseif
-			e.Name == "\x54\x6F\x72\x73\x6F" or
-			e.Name == "\x48\x75\x6D\x61\x6E\x6F\x69\x64\x52\x6F\x6F\x74\x50\x61\x72\x74"
+			e.Name == "Torso" or
+			e.Name == "HumanoidRootPart"
 		then
 			Ea.damageEvent:FireServer(
 				d,
 				Ka.curConfig.BaseDamage,
 				e.Name,
-				{"\x6E\x69\x6C", "\x41\x75\x74\x68", "\x6E\x69\x6C", "\x6E\x69\x6C"}
+				{"nil", "Auth", "nil", "nil"}
 			)
 		elseif
-			(e.Name == "\x52\x69\x67\x68\x74\x20\x41\x72\x6D" or e.Name == "\x4C\x65\x66\x74\x20\x41\x72\x6D" or
-				e.Name == "\x4C\x65\x66\x74\x20\x4C\x65\x67" or
-				e.Name == "\x52\x69\x67\x68\x74\x20\x4C\x65\x67")
+			(e.Name == "Right Arm" or e.Name == "Left Arm" or
+				e.Name == "Left Leg" or
+				e.Name == "Right Leg")
 		then
 			Ea.damageEvent:FireServer(
 				d,
 				Ka.curConfig.LimbDamage,
 				e.Name,
-				{"\x6E\x69\x6C", "\x41\x75\x74\x68", "\x6E\x69\x6C", "\x6E\x69\x6C"}
+				{"nil", "Auth", "nil", "nil"}
 			)
-		elseif e.Name == "\x41\x72\x6D\x6F\x72" then
+		elseif e.Name == "Armor" then
 			Ea.damageEvent:FireServer(
 				d,
 				Ka.curConfig.ArmorDamage,
 				e.Name,
-				{"\x6E\x69\x6C", "\x41\x75\x74\x68", "\x6E\x69\x6C", "\x6E\x69\x6C"}
+				{"nil", "Auth", "nil", "nil"}
 			)
 		elseif
-			e.Parent:FindFirstChild("\x4D\x69\x64\x64\x6C\x65") or
-			e.Parent.Parent:FindFirstChild("\x4D\x69\x64\x64\x6C\x65")
+			e.Parent:FindFirstChild("Middle") or
+			e.Parent.Parent:FindFirstChild("Middle")
 		then
 			local _
-			if e.Parent:FindFirstChild("\x4D\x69\x64\x64\x6C\x65") then
+			if e.Parent:FindFirstChild("Middle") then
 				_ = e.Parent.Middle
-			elseif e.Parent.Parent:FindFirstChild("\x4D\x69\x64\x64\x6C\x65") then
+			elseif e.Parent.Parent:FindFirstChild("Middle") then
 				_ = e.Parent.Parent.Middle
 			end
 			if _ then
-				if _.Parent.Name == "\x43\x68\x65\x73\x74" then
+				if _.Parent.Name == "Chest" then
 					Ea.damageEvent:FireServer(
 						d,
 						Ka.curConfig.BaseDamage - (Ka.curConfig.BaseDamage * (Ia.globalConfig.ArmorBase / 100)),
 						e.Name,
-						{"\x6E\x69\x6C", "\x41\x75\x74\x68", "\x6E\x69\x6C", "\x6E\x69\x6C"}
+						{"nil", "Auth", "nil", "nil"}
 					)
-				elseif _.Parent.Name == "\x48\x65\x61\x64\x57\x65\x61\x72" then
+				elseif _.Parent.Name == "HeadWear" then
 					Ea.damageEvent:FireServer(
 						d,
 						Ka.curConfig.BaseDamage - (Ka.curConfig.HeadDamage * (Ia.globalConfig.ArmorHead / 100)),
 						e.Name,
-						{"\x6E\x69\x6C", "\x41\x75\x74\x68", "\x6E\x69\x6C", "\x6E\x69\x6C"}
+						{"nil", "Auth", "nil", "nil"}
 					)
 				else
 					Ea.damageEvent:FireServer(
 						d,
 						Ka.curConfig.BaseDamage - (Ka.curConfig.LimbDamage * (Ia.globalConfig.ArmorLimb / 100)),
 						e.Name,
-						{"\x6E\x69\x6C", "\x41\x75\x74\x68", "\x6E\x69\x6C", "\x6E\x69\x6C"}
+						{"nil", "Auth", "nil", "nil"}
 					)
 				end
 			end
@@ -1933,14 +1933,14 @@ function HandleDamage(e, _, d, a, b, c)
 				d,
 				Ka.curConfig.BaseDamage,
 				e.Name,
-				{"\x6E\x69\x6C", "\x41\x75\x74\x68", "\x6E\x69\x6C", "\x6E\x69\x6C"}
+				{"nil", "Auth", "nil", "nil"}
 			)
 		end
-		local d = ra:WaitForChild("\x42\x6F\x64\x79\x48\x69\x74"):clone()
+		local d = ra:WaitForChild("BodyHit"):clone()
 		d.Parent = Ba.PlayerGui
 		d:Play()
-		game:GetService("\x44\x65\x62\x72\x69\x73"):addItem(d, d.TimeLength)
-		Ea.hitEvent:FireServer(_, a, b, c, "\x41\x75\x74\x68", "\x48\x75\x6D\x61\x6E", e)
+		game:GetService("Debris"):addItem(d, d.TimeLength)
+		Ea.hitEvent:FireServer(_, a, b, c, "Auth", "Human", e)
 	end
 end
 function CastRay(i, c, a, _)
@@ -1970,12 +1970,12 @@ function CastRay(i, c, a, _)
 			end
 			for _, _ in pairs(game.Players:GetChildren()) do
 				if
-					_:IsA("\x50\x6C\x61\x79\x65\x72") and _ ~= Ba and _.Character and
-					_.Character:FindFirstChild("\x48\x65\x61\x64") and
+					_:IsA("Player") and _ ~= Ba and _.Character and
+					_.Character:FindFirstChild("Head") and
 					(_.Character.Head.Position - k).magnitude <= 25 and
 					not b
 				then
-					Ea.flybyEvent:FireServer(_, nil, nil, nil, nil, "\x41\x75\x74\x68")
+					Ea.flybyEvent:FireServer(_, nil, nil, nil, nil, "Auth")
 					b = true
 				end
 			end
@@ -1990,15 +1990,15 @@ function CastRay(i, c, a, _)
 			end
 			if l then
 				if
-					(l.Transparency >= 1 or l.CanCollide == false) and l.Name ~= "\x52\x69\x67\x68\x74\x20\x41\x72\x6D" and
-					l.Name ~= "\x4C\x65\x66\x74\x20\x41\x72\x6D" and
-					l.Name ~= "\x52\x69\x67\x68\x74\x20\x4C\x65\x67" and
-					l.Name ~= "\x4C\x65\x66\x74\x20\x4C\x65\x67" and
-					l.Name ~= "\x54\x6F\x72\x73\x6F" and
-					l.Name ~= "\x41\x72\x6D\x6F\x72" and
-					not l.Parent:FindFirstChild("\x43\x45\x56\x41\x52\x53") and
-					not l.Parent:FindFirstChild("\x4D\x69\x64\x64\x6C\x65") and
-					not l.Parent.Parent:FindFirstChild("\x4D\x69\x64\x64\x6C\x65") and
+					(l.Transparency >= 1 or l.CanCollide == false) and l.Name ~= "Right Arm" and
+					l.Name ~= "Left Arm" and
+					l.Name ~= "Right Leg" and
+					l.Name ~= "Left Leg" and
+					l.Name ~= "Torso" and
+					l.Name ~= "Armor" and
+					not l.Parent:FindFirstChild("CEVARS") and
+					not l.Parent:FindFirstChild("Middle") and
+					not l.Parent.Parent:FindFirstChild("Middle") and
 					l.Material ~= Enum.Material.Water
 				then
 					table.insert(ha, l)
@@ -2009,7 +2009,7 @@ function CastRay(i, c, a, _)
 							end
 						)
 					break
-				elseif l.Name == "\x48\x75\x6D\x61\x6E\x6F\x69\x64\x52\x6F\x6F\x74\x50\x61\x72\x74" then
+				elseif l.Name == "HumanoidRootPart" then
 					table.insert(ha, l)
 					local _, _ =
 						spawn(
@@ -2033,7 +2033,7 @@ function CastRay(i, c, a, _)
 									)
 							end
 						end
-						Ea.serverFXEvent:FireServer(k, nil, nil, nil, nil, nil, "\x41\x75\x74\x68")
+						Ea.serverFXEvent:FireServer(k, nil, nil, nil, nil, nil, "Auth")
 						if not ja then
 							if Ka.FireMode ~= 6 then
 								local _, b = Ia.utilitiesModule.CheckForHumanoid(l)
@@ -2045,12 +2045,12 @@ function CastRay(i, c, a, _)
 										then
 											HandleDamage(l, k, b, h, f, j)
 										end
-										if b.Name == "\x54\x61\x72\x67\x65\x74" then
+										if b.Name == "Target" then
 											HandleDamage(l, k, b, h, f, j)
 										end
 										if not game.Players:FindFirstChild(b.Parent.Name) then
-											if b.Parent:FindFirstChild("\x56\x61\x72\x73") then
-												if b.Parent.Vars:FindFirstChild("\x74\x65\x61\x6D\x43\x6F\x6C\x6F\x72") then
+											if b.Parent:FindFirstChild("Vars") then
+												if b.Parent.Vars:FindFirstChild("teamColor") then
 													if b.Parent.Vars.teamColor.Value ~= Ba.TeamColor then
 														HandleDamage(l, k, b, h, f, j)
 													end
@@ -2064,9 +2064,9 @@ function CastRay(i, c, a, _)
 									end
 								else
 									if
-										l.Parent:FindFirstChild("\x43\x45\x56\x41\x52\x53") and
+										l.Parent:FindFirstChild("CEVARS") and
 										l.Parent.CEVARS:FindFirstChild(
-											"\x49\x73\x45\x78\x70\x6C\x6F\x73\x69\x76\x65"
+											"IsExplosive"
 										) and
 											l.Parent.CEVARS.IsExplosive.Value == true
 									then
@@ -2083,7 +2083,7 @@ function CastRay(i, c, a, _)
 											nil,
 											nil,
 											nil,
-											"\x41\x75\x74\x68",
+											"Auth",
 											nil
 										)
 									end
@@ -2096,9 +2096,9 @@ function CastRay(i, c, a, _)
 										nil,
 										nil,
 										nil,
-										"\x41\x75\x74\x68"
+										"Auth"
 									)
-									Ea.hitEvent:FireServer(k, h, f, j, "\x41\x75\x74\x68", "\x50\x61\x72\x74", l)
+									Ea.hitEvent:FireServer(k, h, f, j, "Auth", "Part", l)
 								end
 							elseif Ka.FireMode == 6 and Ka.curConfig.RPGEnabled then
 								Ea.explosiveEvent:FireServer(
@@ -2114,7 +2114,7 @@ function CastRay(i, c, a, _)
 									nil,
 									nil,
 									nil,
-									"\x41\x75\x74\x68",
+									"Auth",
 									nil
 								)
 							end
@@ -2132,7 +2132,7 @@ function CastRay(i, c, a, _)
 								nil,
 								nil,
 								nil,
-								"\x41\x75\x74\x68",
+								"Auth",
 								nil
 							)
 						end
@@ -2151,22 +2151,22 @@ function CreateShell()
 		if ra:FindFirstChild(Ka.curConfig.RoundType) then
 			_ = ra:WaitForChild(Ka.curConfig.RoundType):clone()
 		else
-			_ = ra:WaitForChild("\x53\x68\x65\x6C\x6C"):clone()
+			_ = ra:WaitForChild("Shell"):clone()
 		end
 	else
-		_ = ra:WaitForChild("\x53\x68\x65\x6C\x6C"):clone()
+		_ = ra:WaitForChild("Shell"):clone()
 	end
 	_.Anchored = false
 	d = Ia.codeArchive.getQuality()
 	_.CanCollide = false
-	if _:FindFirstChildOfClass("\x4D\x6F\x74\x6F\x72\x36\x44") then
-		_:FindFirstChildOfClass("\x4D\x6F\x74\x6F\x72\x36\x44"):Destroy()
+	if _:FindFirstChildOfClass("Motor6D") then
+		_:FindFirstChildOfClass("Motor6D"):Destroy()
 	end
 	_.CFrame = Ka.curModel.Chamber.CFrame
 	_.Velocity = Ka.curModel.Chamber.CFrame.lookVector * 30 + Vector3.new(0, 4, 0)
 	_.RotVelocity = Vector3.new(math.random(-180, 180), math.random(-180, 180), math.random(-180, 180))
     _.Parent = ca
-    game:GetService("\x44\x65\x62\x72\x69\x73"):addItem(_, 10)
+    game:GetService("Debris"):addItem(_, 10)
     delay(
         0.1,
         function()
@@ -2180,16 +2180,16 @@ function CreateShell()
     delay(
         0.5,
         function()
-            if ra:FindFirstChild("\x53\x68\x65\x6C\x6C\x43\x61\x73\x69\x6E\x67") then
+            if ra:FindFirstChild("ShellCasing") then
                 local _ = ra.ShellCasing:clone()
                 _.Parent = Ba.PlayerGui
                 _:Play()
-                game:GetService("\x44\x65\x62\x72\x69\x73"):AddItem(_, _.TimeLength)
+                game:GetService("Debris"):AddItem(_, _.TimeLength)
             end
         end
     )
     for _, _ in pairs(Ka.curModel.Chamber:GetChildren()) do
-        if _ and _.Name == "\x47\x61\x73\x5F\x44\x69\x73\x63\x68\x61\x72\x67\x65" then
+        if _ and _.Name == "Gas_Discharge" then
             _.Enabled = true
             delay(
                 0.1,
@@ -2207,13 +2207,13 @@ function CreateDustUp()
         local c = Vector3.new(0, 1, 0):Cross(_)
         local _ = math.asin(c.magnitude)
         if b then
-            local b = Instance.new("\x50\x61\x72\x74")
+            local b = Instance.new("Part")
             b.Parent = ca
             b.Anchored = false
             b.CanCollide = false
             b.Transparency = 1
             b.CFrame = CFrame.new(a) * CFrame.fromAxisAngle(c.magnitude == 0 and Vector3.new(1) or c.unit, _)
-            local _ = ra:WaitForChild("\x44\x75\x73\x74\x55\x70"):Clone()
+            local _ = ra:WaitForChild("DustUp"):Clone()
             _.Parent = b
             _.Enabled = true
             game.Debris:AddItem(b, 2)
@@ -2229,13 +2229,13 @@ function CreateDustUp()
         local c = Vector3.new(0, 1, 0):Cross(_)
         local _ = math.asin(c.magnitude)
         if b then
-            local b = Instance.new("\x50\x61\x72\x74")
+            local b = Instance.new("Part")
             b.Parent = ca
             b.Anchored = false
             b.CanCollide = false
             b.Transparency = 1
             b.CFrame = CFrame.new(a) * CFrame.fromAxisAngle(c.magnitude == 0 and Vector3.new(1) or c.unit, _)
-            local _ = ra:WaitForChild("\x44\x75\x73\x74\x55\x70"):Clone()
+            local _ = ra:WaitForChild("DustUp"):Clone()
             _.Parent = b
             _.Enabled = true
             game.Debris:AddItem(b, 2)
@@ -2254,13 +2254,13 @@ function CreateDustUp()
         local c = Vector3.new(0, 1, 0):Cross(a)
         local a = math.asin(c.magnitude)
         if b then
-            local b = Instance.new("\x50\x61\x72\x74")
+            local b = Instance.new("Part")
             b.Parent = ca
             b.Anchored = false
             b.CanCollide = false
             b.Transparency = 1
             b.CFrame = CFrame.new(_) * CFrame.fromAxisAngle(c.magnitude == 0 and Vector3.new(1) or c.unit, a)
-            local _ = ra:WaitForChild("\x44\x75\x73\x74\x55\x70"):Clone()
+            local _ = ra:WaitForChild("DustUp"):Clone()
             _.Parent = b
             _.Enabled = true
             game.Debris:AddItem(b, 2)
@@ -2276,13 +2276,13 @@ function CreateDustUp()
         local c = Vector3.new(0, 1, 0):Cross(a)
         local a = math.asin(c.magnitude)
         if _ then
-            local d = Instance.new("\x50\x61\x72\x74")
+            local d = Instance.new("Part")
             d.Parent = ca
             d.Anchored = false
             d.CanCollide = false
             d.Transparency = 1
             d.CFrame = CFrame.new(b) * CFrame.fromAxisAngle(c.magnitude == 0 and Vector3.new(1) or c.unit, a)
-            local _ = ra:WaitForChild("\x44\x75\x73\x74\x55\x70"):Clone()
+            local _ = ra:WaitForChild("DustUp"):Clone()
             _.Parent = d
             _.Enabled = true
             game.Debris:AddItem(d, 2)
@@ -2330,16 +2330,16 @@ function fireSemi()
                 )
             end
             CreateDustUp()
-            Ea.updateCharEvent:FireServer("\x53\x68\x6F\x6F\x74", true, "\x41\x75\x74\x68", Ka.curConfig.Firerate / 2)
+            Ea.updateCharEvent:FireServer("Shoot", true, "Auth", Ka.curConfig.Firerate / 2)
             Shooting = true
             if Ia.globalConfig.SoundIso then
                 Ea.connectionEvent:FireServer(
-                    Fa:WaitForChild("\x40" .. Ka.curModel.Name):WaitForChild("\x47\x72\x69\x70"):WaitForChild(
-                        "\x46\x69\x72\x65"
+                    Fa:WaitForChild("@" .. Ka.curModel.Name):WaitForChild("Grip"):WaitForChild(
+                        "Fire"
                     ).SoundId,
-                    Fa:WaitForChild("\x40" .. Ka.curModel.Name):WaitForChild("\x47\x72\x69\x70"),
-                    Fa:WaitForChild("\x40" .. Ka.curModel.Name):WaitForChild("\x47\x72\x69\x70"):WaitForChild(
-                        "\x46\x69\x72\x65"
+                    Fa:WaitForChild("@" .. Ka.curModel.Name):WaitForChild("Grip"),
+                    Fa:WaitForChild("@" .. Ka.curModel.Name):WaitForChild("Grip"):WaitForChild(
+                        "Fire"
                     ).PlaybackSpeed,
                     nil,
                     nil,
@@ -2350,17 +2350,17 @@ function fireSemi()
                     nil,
                     nil,
                     nil,
-                    "\x41\x75\x74\x68"
+                    "Auth"
                 )
             end
-            Fa:WaitForChild("\x40" .. Ka.curModel.Name):WaitForChild("\x47\x72\x69\x70"):WaitForChild(
-                "\x46\x69\x72\x65"
+            Fa:WaitForChild("@" .. Ka.curModel.Name):WaitForChild("Grip"):WaitForChild(
+                "Fire"
             ):Play()
             _a = CreateBullet(Ka.curConfig.BulletSpread)
             Ka.Ammo = Ka.Ammo - 1
             if Ka.Ammo <= 0 then
                 for _, _ in pairs(Ka.curModel:GetDescendants()) do
-                    if _ and _.Name == "\x50\x69\x6E\x67" and _:IsA("\x53\x6F\x75\x6E\x64") then
+                    if _ and _.Name == "Ping" and _:IsA("Sound") then
                         _:Play()
                     end
                 end
@@ -2373,7 +2373,7 @@ function fireSemi()
                 end
             )
             for _, _ in pairs(Ka.FirePart:GetChildren()) do
-                if _.Name:sub(1, 7) == "\x46\x6C\x61\x73\x68\x46\x58" then
+                if _.Name:sub(1, 7) == "FlashFX" then
                     _.Enabled = true
                 end
             end
@@ -2381,7 +2381,7 @@ function fireSemi()
                 1 / 30,
                 function()
                     for _, _ in pairs(Ka.FirePart:GetChildren()) do
-                        if _.Name:sub(1, 7) == "\x46\x6C\x61\x73\x68\x46\x58" then
+                        if _.Name:sub(1, 7) == "FlashFX" then
                             _.Enabled = false
                         end
                     end
@@ -2458,16 +2458,16 @@ function fireRPG()
                 )
             end
             CreateDustUp()
-            Ea.updateCharEvent:FireServer("\x53\x68\x6F\x6F\x74", true, "\x41\x75\x74\x68", Ka.curConfig.Firerate / 2)
+            Ea.updateCharEvent:FireServer("Shoot", true, "Auth", Ka.curConfig.Firerate / 2)
             Shooting = true
             if Ia.globalConfig.SoundIso then
                 Ea.connectionEvent:FireServer(
-                    Fa:WaitForChild("\x40" .. Ka.curModel.Name):WaitForChild("\x47\x72\x69\x70"):WaitForChild(
-                        "\x46\x69\x72\x65"
+                    Fa:WaitForChild("@" .. Ka.curModel.Name):WaitForChild("Grip"):WaitForChild(
+                        "Fire"
                     ).SoundId,
-                    Fa:WaitForChild("\x40" .. Ka.curModel.Name):WaitForChild("\x47\x72\x69\x70"),
-                    Fa:WaitForChild("\x40" .. Ka.curModel.Name):WaitForChild("\x47\x72\x69\x70"):WaitForChild(
-                        "\x46\x69\x72\x65"
+                    Fa:WaitForChild("@" .. Ka.curModel.Name):WaitForChild("Grip"),
+                    Fa:WaitForChild("@" .. Ka.curModel.Name):WaitForChild("Grip"):WaitForChild(
+                        "Fire"
                     ).PlaybackSpeed,
                     nil,
                     nil,
@@ -2478,11 +2478,11 @@ function fireRPG()
                     nil,
                     nil,
                     nil,
-                    "\x41\x75\x74\x68"
+                    "Auth"
                 )
             end
-            Fa:WaitForChild("\x40" .. Ka.curModel.Name):WaitForChild("\x47\x72\x69\x70"):WaitForChild(
-                "\x46\x69\x72\x65"
+            Fa:WaitForChild("@" .. Ka.curModel.Name):WaitForChild("Grip"):WaitForChild(
+                "Fire"
             ):Play()
             _a = CreateBullet(0)
             Ka.Ammo = Ka.Ammo - 1
@@ -2494,7 +2494,7 @@ function fireRPG()
                 end
             )
             for _, _ in pairs(Ka.FirePart:GetChildren()) do
-                if _.Name:sub(1, 7) == "\x46\x6C\x61\x73\x68\x46\x58" then
+                if _.Name:sub(1, 7) == "FlashFX" then
                     _.Enabled = true
                 end
             end
@@ -2502,7 +2502,7 @@ function fireRPG()
                 1 / 30,
                 function()
                     for _, _ in pairs(Ka.FirePart:GetChildren()) do
-                        if _.Name:sub(1, 7) == "\x46\x6C\x61\x73\x68\x46\x58" then
+                        if _.Name:sub(1, 7) == "FlashFX" then
                             _.Enabled = false
                         end
                     end
@@ -2557,16 +2557,16 @@ function fireExplosive()
                 )
             end
             CreateDustUp()
-            Ea.updateCharEvent:FireServer("\x53\x68\x6F\x6F\x74", true, "\x41\x75\x74\x68", Ka.curConfig.Firerate / 2)
+            Ea.updateCharEvent:FireServer("Shoot", true, "Auth", Ka.curConfig.Firerate / 2)
             Shooting = true
             if Ia.globalConfig.SoundIso then
                 Ea.connectionEvent:FireServer(
-                    Fa:WaitForChild("\x40" .. Ka.curModel.Name):WaitForChild("\x47\x72\x69\x70"):WaitForChild(
-                        "\x46\x69\x72\x65\x32"
+                    Fa:WaitForChild("@" .. Ka.curModel.Name):WaitForChild("Grip"):WaitForChild(
+                        "Fire2"
                     ).SoundId,
-                    Fa:WaitForChild("\x40" .. Ka.curModel.Name):WaitForChild("\x47\x72\x69\x70"),
-                    Fa:WaitForChild("\x40" .. Ka.curModel.Name):WaitForChild("\x47\x72\x69\x70"):WaitForChild(
-                        "\x46\x69\x72\x65\x32"
+                    Fa:WaitForChild("@" .. Ka.curModel.Name):WaitForChild("Grip"),
+                    Fa:WaitForChild("@" .. Ka.curModel.Name):WaitForChild("Grip"):WaitForChild(
+                        "Fire2"
                     ).PlaybackSpeed,
                     nil,
                     nil,
@@ -2577,11 +2577,11 @@ function fireExplosive()
                     nil,
                     nil,
                     nil,
-                    "\x41\x75\x74\x68"
+                    "Auth"
                 )
             end
-            Fa:WaitForChild("\x40" .. Ka.curModel.Name):WaitForChild("\x47\x72\x69\x70"):WaitForChild(
-                "\x46\x69\x72\x65\x32"
+            Fa:WaitForChild("@" .. Ka.curModel.Name):WaitForChild("Grip"):WaitForChild(
+                "Fire2"
             ):Play()
             _a = CreateBullet(0)
             Ka.ExplosiveAmmo = Ka.ExplosiveAmmo - 1
@@ -2593,7 +2593,7 @@ function fireExplosive()
                 end
             )
             for _, _ in pairs(Ka.FirePart2:GetChildren()) do
-                if _.Name:sub(1, 7) == "\x46\x6C\x61\x73\x68\x46\x58" then
+                if _.Name:sub(1, 7) == "FlashFX" then
                     _.Enabled = true
                 end
             end
@@ -2601,7 +2601,7 @@ function fireExplosive()
                 1 / 30,
                 function()
                     for _, _ in pairs(Ka.FirePart2:GetChildren()) do
-                        if _.Name:sub(1, 7) == "\x46\x6C\x61\x73\x68\x46\x58" then
+                        if _.Name:sub(1, 7) == "FlashFX" then
                             _.Enabled = false
                         end
                     end
@@ -2655,17 +2655,17 @@ function fireShot()
                 )
             end
             CreateDustUp()
-            Ea.updateCharEvent:FireServer("\x53\x68\x6F\x6F\x74", true, "\x41\x75\x74\x68", Ka.curConfig.Firerate / 2)
+            Ea.updateCharEvent:FireServer("Shoot", true, "Auth", Ka.curConfig.Firerate / 2)
             Shooting = true
             RecoilFront = true
             if Ia.globalConfig.SoundIso then
                 Ea.connectionEvent:FireServer(
-                    Fa:WaitForChild("\x40" .. Ka.curModel.Name):WaitForChild("\x47\x72\x69\x70"):WaitForChild(
-                        "\x46\x69\x72\x65"
+                    Fa:WaitForChild("@" .. Ka.curModel.Name):WaitForChild("Grip"):WaitForChild(
+                        "Fire"
                     ).SoundId,
-                    Fa:WaitForChild("\x40" .. Ka.curModel.Name):WaitForChild("\x47\x72\x69\x70"),
-                    Fa:WaitForChild("\x40" .. Ka.curModel.Name):WaitForChild("\x47\x72\x69\x70"):WaitForChild(
-                        "\x46\x69\x72\x65"
+                    Fa:WaitForChild("@" .. Ka.curModel.Name):WaitForChild("Grip"),
+                    Fa:WaitForChild("@" .. Ka.curModel.Name):WaitForChild("Grip"):WaitForChild(
+                        "Fire"
                     ).PlaybackSpeed,
                     nil,
                     nil,
@@ -2676,11 +2676,11 @@ function fireShot()
                     nil,
                     nil,
                     nil,
-                    "\x41\x75\x74\x68"
+                    "Auth"
                 )
             end
-            Fa:WaitForChild("\x40" .. Ka.curModel.Name):WaitForChild("\x47\x72\x69\x70"):WaitForChild(
-                "\x46\x69\x72\x65"
+            Fa:WaitForChild("@" .. Ka.curModel.Name):WaitForChild("Grip"):WaitForChild(
+                "Fire"
             ):Play()
             for _ = 1, Ka.curConfig.ShotNum do
                 spawn(
@@ -2696,7 +2696,7 @@ function fireShot()
                 )
             end
             for _, _ in pairs(Ka.FirePart:GetChildren()) do
-                if _.Name:sub(1, 7) == "\x46\x6C\x61\x73\x68\x46\x58" then
+                if _.Name:sub(1, 7) == "FlashFX" then
                     _.Enabled = true
                 end
             end
@@ -2704,7 +2704,7 @@ function fireShot()
                 1 / 30,
                 function()
                     for _, _ in pairs(Ka.FirePart:GetChildren()) do
-                        if _.Name:sub(1, 7) == "\x46\x6C\x61\x73\x68\x46\x58" then
+                        if _.Name:sub(1, 7) == "FlashFX" then
                             _.Enabled = false
                         end
                     end
@@ -2790,16 +2790,16 @@ function fireBoltAction()
                 )
             end
             CreateDustUp()
-            Ea.updateCharEvent:FireServer("\x53\x68\x6F\x6F\x74", true, "\x41\x75\x74\x68", Ka.curConfig.Firerate / 2)
+            Ea.updateCharEvent:FireServer("Shoot", true, "Auth", Ka.curConfig.Firerate / 2)
             Shooting = true
             if Ia.globalConfig.SoundIso then
                 Ea.connectionEvent:FireServer(
-                    Fa:WaitForChild("\x40" .. Ka.curModel.Name):WaitForChild("\x47\x72\x69\x70"):WaitForChild(
-                        "\x46\x69\x72\x65"
+                    Fa:WaitForChild("@" .. Ka.curModel.Name):WaitForChild("Grip"):WaitForChild(
+                        "Fire"
                     ).SoundId,
-                    Fa:WaitForChild("\x40" .. Ka.curModel.Name):WaitForChild("\x47\x72\x69\x70"),
-                    Fa:WaitForChild("\x40" .. Ka.curModel.Name):WaitForChild("\x47\x72\x69\x70"):WaitForChild(
-                        "\x46\x69\x72\x65"
+                    Fa:WaitForChild("@" .. Ka.curModel.Name):WaitForChild("Grip"),
+                    Fa:WaitForChild("@" .. Ka.curModel.Name):WaitForChild("Grip"):WaitForChild(
+                        "Fire"
                     ).PlaybackSpeed,
                     nil,
                     nil,
@@ -2810,11 +2810,11 @@ function fireBoltAction()
                     nil,
                     nil,
                     nil,
-                    "\x41\x75\x74\x68"
+                    "Auth"
                 )
             end
-            Fa:WaitForChild("\x40" .. Ka.curModel.Name):WaitForChild("\x47\x72\x69\x70"):WaitForChild(
-                "\x46\x69\x72\x65"
+            Fa:WaitForChild("@" .. Ka.curModel.Name):WaitForChild("Grip"):WaitForChild(
+                "Fire"
             ):Play()
             _a = CreateBullet(Ka.curConfig.BulletSpread)
             Ka.Ammo = Ka.Ammo - 1
@@ -2826,7 +2826,7 @@ function fireBoltAction()
                 end
             )
             for _, _ in pairs(Ka.FirePart:GetChildren()) do
-                if _.Name:sub(1, 7) == "\x46\x6C\x61\x73\x68\x46\x58" then
+                if _.Name:sub(1, 7) == "FlashFX" then
                     _.Enabled = true
                 end
             end
@@ -2834,7 +2834,7 @@ function fireBoltAction()
                 1 / 30,
                 function()
                     for _, _ in pairs(Ka.FirePart:GetChildren()) do
-                        if _.Name:sub(1, 7) == "\x46\x6C\x61\x73\x68\x46\x58" then
+                        if _.Name:sub(1, 7) == "FlashFX" then
                             _.Enabled = false
                         end
                     end
@@ -2924,15 +2924,15 @@ function fireAuto()
                 )
             end
             CreateDustUp()
-            Ea.updateCharEvent:FireServer("\x53\x68\x6F\x6F\x74", true, "\x41\x75\x74\x68", Ka.curConfig.Firerate / 2)
+            Ea.updateCharEvent:FireServer("Shoot", true, "Auth", Ka.curConfig.Firerate / 2)
             if Ia.globalConfig.SoundIso then
                 Ea.connectionEvent:FireServer(
-                    Fa:WaitForChild("\x40" .. Ka.curModel.Name):WaitForChild("\x47\x72\x69\x70"):WaitForChild(
-                        "\x46\x69\x72\x65"
+                    Fa:WaitForChild("@" .. Ka.curModel.Name):WaitForChild("Grip"):WaitForChild(
+                        "Fire"
                     ).SoundId,
-                    Fa:WaitForChild("\x40" .. Ka.curModel.Name):WaitForChild("\x47\x72\x69\x70"),
-                    Fa:WaitForChild("\x40" .. Ka.curModel.Name):WaitForChild("\x47\x72\x69\x70"):WaitForChild(
-                        "\x46\x69\x72\x65"
+                    Fa:WaitForChild("@" .. Ka.curModel.Name):WaitForChild("Grip"),
+                    Fa:WaitForChild("@" .. Ka.curModel.Name):WaitForChild("Grip"):WaitForChild(
+                        "Fire"
                     ).PlaybackSpeed,
                     nil,
                     nil,
@@ -2943,11 +2943,11 @@ function fireAuto()
                     nil,
                     nil,
                     nil,
-                    "\x41\x75\x74\x68"
+                    "Auth"
                 )
             end
-            Fa:WaitForChild("\x40" .. Ka.curModel.Name):WaitForChild("\x47\x72\x69\x70"):WaitForChild(
-                "\x46\x69\x72\x65"
+            Fa:WaitForChild("@" .. Ka.curModel.Name):WaitForChild("Grip"):WaitForChild(
+                "Fire"
             ):Play()
             Ka.Ammo = Ka.Ammo - 1
             Shooting = true
@@ -2960,7 +2960,7 @@ function fireAuto()
                 end
             )
             for _, _ in pairs(Ka.FirePart:GetChildren()) do
-                if _.Name:sub(1, 7) == "\x46\x6C\x61\x73\x68\x46\x58" then
+                if _.Name:sub(1, 7) == "FlashFX" then
                     _.Enabled = true
                 end
             end
@@ -2968,7 +2968,7 @@ function fireAuto()
                 1 / 30,
                 function()
                     for _, _ in pairs(Ka.FirePart:GetChildren()) do
-                        if _.Name:sub(1, 7) == "\x46\x6C\x61\x73\x68\x46\x58" then
+                        if _.Name:sub(1, 7) == "FlashFX" then
                             _.Enabled = false
                         end
                     end
@@ -3048,19 +3048,19 @@ function fireBurst()
                     end
                     CreateDustUp()
                     Ea.updateCharEvent:FireServer(
-                        "\x53\x68\x6F\x6F\x74",
+                        "Shoot",
                         true,
-                        "\x41\x75\x74\x68",
+                        "Auth",
                         Ka.curConfig.Firerate / 2
                     )
                     if Ia.globalConfig.SoundIso then
                         Ea.connectionEvent:FireServer(
-                            Fa:WaitForChild("\x40" .. Ka.curModel.Name):WaitForChild("\x47\x72\x69\x70"):WaitForChild(
-                                "\x46\x69\x72\x65"
+                            Fa:WaitForChild("@" .. Ka.curModel.Name):WaitForChild("Grip"):WaitForChild(
+                                "Fire"
                             ).SoundId,
-                            Fa:WaitForChild("\x40" .. Ka.curModel.Name):WaitForChild("\x47\x72\x69\x70"),
-                            Fa:WaitForChild("\x40" .. Ka.curModel.Name):WaitForChild("\x47\x72\x69\x70"):WaitForChild(
-                                "\x46\x69\x72\x65"
+                            Fa:WaitForChild("@" .. Ka.curModel.Name):WaitForChild("Grip"),
+                            Fa:WaitForChild("@" .. Ka.curModel.Name):WaitForChild("Grip"):WaitForChild(
+                                "Fire"
                             ).PlaybackSpeed,
                             nil,
                             nil,
@@ -3071,11 +3071,11 @@ function fireBurst()
                             nil,
                             nil,
                             nil,
-                            "\x41\x75\x74\x68"
+                            "Auth"
                         )
                     end
-                    Fa:WaitForChild("\x40" .. Ka.curModel.Name):WaitForChild("\x47\x72\x69\x70"):WaitForChild(
-                        "\x46\x69\x72\x65"
+                    Fa:WaitForChild("@" .. Ka.curModel.Name):WaitForChild("Grip"):WaitForChild(
+                        "Fire"
                     ):Play()
                     _a = CreateBullet(Ka.curConfig.BulletSpread)
                     local _, _ =
@@ -3085,7 +3085,7 @@ function fireBurst()
                         end
                     )
                     for _, _ in pairs(Ka.FirePart:GetChildren()) do
-                        if _.Name:sub(1, 7) == "\x46\x6C\x61\x73\x68\x46\x58" then
+                        if _.Name:sub(1, 7) == "FlashFX" then
                             _.Enabled = true
                         end
                     end
@@ -3093,7 +3093,7 @@ function fireBurst()
                         1 / 30,
                         function()
                             for _, _ in pairs(Ka.FirePart:GetChildren()) do
-                                if _.Name:sub(1, 7) == "\x46\x6C\x61\x73\x68\x46\x58" then
+                                if _.Name:sub(1, 7) == "FlashFX" then
                                     _.Enabled = false
                                 end
                             end
@@ -3140,15 +3140,15 @@ function UpdateAmmo()
         Ka.ammoDisplay.Text = Ka.Ammo
         Ka.title.Text = Ka.curModel.Name
         Ka.magCountDisplay.Text = math.ceil(Ka.StoredAmmo / Ka.curConfig.StoredAmmo)
-        Ka.mobileAmmo.Text = Ka.Ammo .. "\x2F" .. math.ceil(Ka.StoredAmmo / Ka.curConfig.StoredAmmo)
+        Ka.mobileAmmo.Text = Ka.Ammo .. "/" .. math.ceil(Ka.StoredAmmo / Ka.curConfig.StoredAmmo)
         if Ka.StanceIndex == 0 then
-            Ka.stanceDisplay.Image = "\x72\x62\x78\x61\x73\x73\x65\x74\x69\x64\x3A\x2F\x2F" .. 1868007495
+            Ka.stanceDisplay.Image = "rbxassetid://" .. 1868007495
             Ka.stanceDisplay.Position = UDim2.new(1, -102, 0, 0)
         elseif Ka.StanceIndex == 1 then
-            Ka.stanceDisplay.Image = "\x72\x62\x78\x61\x73\x73\x65\x74\x69\x64\x3A\x2F\x2F" .. 1868007947
+            Ka.stanceDisplay.Image = "rbxassetid://" .. 1868007947
             Ka.stanceDisplay.Position = UDim2.new(1, -102, 0, 10)
         elseif Ka.StanceIndex == 2 then
-            Ka.stanceDisplay.Image = "\x72\x62\x78\x61\x73\x73\x65\x74\x69\x64\x3A\x2F\x2F" .. 1868008584
+            Ka.stanceDisplay.Image = "rbxassetid://" .. 1868008584
             Ka.stanceDisplay.Position = UDim2.new(1, -102, 0, 23)
         end
         if Ka.FireMode == 1 then
@@ -3190,20 +3190,20 @@ function UpdateAmmo()
         end
         if Ka.CanShoot then
             for _, _ in pairs(Ka.mainFrame:GetChildren()) do
-                if _ and _.Name:sub(1, 4) == "\x4D\x6F\x64\x65" then
+                if _ and _.Name:sub(1, 4) == "Mode" then
                     _.BackgroundColor3 =
-                        BrickColor.new("\x49\x6E\x73\x74\x69\x74\x75\x74\x69\x6F\x6E\x61\x6C\x20\x77\x68\x69\x74\x65").Color
+                        BrickColor.new("Institutional white").Color
                 end
             end
         else
             for _, _ in pairs(Ka.mainFrame:GetChildren()) do
-                if _ and _.Name:sub(1, 4) == "\x4D\x6F\x64\x65" then
+                if _ and _.Name:sub(1, 4) == "Mode" then
                     if _.BackgroundTransparency == 0 then
-                        _.BackgroundColor3 = BrickColor.new("\x44\x75\x73\x74\x79\x20\x52\x6F\x73\x65").Color
+                        _.BackgroundColor3 = BrickColor.new("Dusty Rose").Color
                     else
                         _.BackgroundColor3 =
                             BrickColor.new(
-                            "\x49\x6E\x73\x74\x69\x74\x75\x74\x69\x6F\x6E\x61\x6C\x20\x77\x68\x69\x74\x65"
+                            "Institutional white"
                         ).Color
                     end
                 end
@@ -3213,31 +3213,31 @@ function UpdateAmmo()
 end
 function OtherLaser(d, _, _, f)
     if _ then
-        if f:FindFirstChild("\x4C\x61\x73\x65\x72\x4C\x69\x67\x68\x74") then
+        if f:FindFirstChild("LaserLight") then
             local _ =
-                f.LaserLight:FindFirstChild("\x41\x74\x74\x63\x68\x30") or
-                Instance.new("\x41\x74\x74\x61\x63\x68\x6D\x65\x6E\x74")
+                f.LaserLight:FindFirstChild("Attch0") or
+                Instance.new("Attachment")
             _.Parent = f.LaserLight
-            _.Name = "\x41\x74\x74\x63\x68\x30"
+            _.Name = "Attch0"
             local b =
-                f.LaserLight:FindFirstChild("\x41\x74\x74\x63\x68\x31") or
-                Instance.new("\x41\x74\x74\x61\x63\x68\x6D\x65\x6E\x74")
+                f.LaserLight:FindFirstChild("Attch1") or
+                Instance.new("Attachment")
             b.Parent = f.LaserLight
-            b.Name = "\x41\x74\x74\x63\x68\x31"
-            local e = xa:FindFirstChild(d.Name .. "\x53\x70\x68\x65\x72\x65") or Instance.new("\x50\x61\x72\x74")
-            e.Name = d.Name .. "\x53\x70\x68\x65\x72\x65"
-            e.Shape = "\x42\x61\x6C\x6C"
+            b.Name = "Attch1"
+            local e = xa:FindFirstChild(d.Name .. "Sphere") or Instance.new("Part")
+            e.Name = d.Name .. "Sphere"
+            e.Shape = "Ball"
             e.Size = Vector3.new(0.1, 0.1, 0.1)
             e.Parent = xa
             e.CanCollide = false
-            e.BrickColor = BrickColor.new("\x52\x65\x61\x6C\x6C\x79\x20\x72\x65\x64")
+            e.BrickColor = BrickColor.new("Really red")
             e.Material = Enum.Material.Neon
-            local a = f.LaserLight:FindFirstChild("\x42\x65\x61\x6D") or Instance.new("\x42\x65\x61\x6D")
-            a.Name = "\x42\x65\x61\x6D"
+            local a = f.LaserLight:FindFirstChild("Beam") or Instance.new("Beam")
+            a.Name = "Beam"
             a.Parent = f.LaserLight
             a.Attachment0 = _
             a.Attachment1 = b
-            a.Color = ColorSequence.new(BrickColor.new("\x52\x65\x61\x6C\x6C\x79\x20\x72\x65\x64").Color)
+            a.Color = ColorSequence.new(BrickColor.new("Really red").Color)
             a.LightEmission = 1
             a.LightInfluence = 0
             a.Transparency = NumberSequence.new(0.3)
@@ -3246,7 +3246,7 @@ function OtherLaser(d, _, _, f)
             a.Width1 = 0.01
             local _ = Ray.new(f.LaserLight.Position, f.Grip.CFrame.lookVector * 9999)
             local c, a, _ = workspace:FindPartOnRayWithIgnoreList(_, y)
-            local _ = d.Character.CarbonValues:WaitForChild("\x43\x75\x72\x4C\x65\x6E\x67\x74\x68").Value
+            local _ = d.Character.CarbonValues:WaitForChild("CurLength").Value
             if c then
                 _ = (f.LaserLight.Position - a).magnitude
             else
@@ -3259,18 +3259,18 @@ function OtherLaser(d, _, _, f)
             end
         end
     else
-        if xa:FindFirstChild(d.Name .. "\x53\x70\x68\x65\x72\x65") then
-            xa[d.Name .. "\x53\x70\x68\x65\x72\x65"]:Destroy()
+        if xa:FindFirstChild(d.Name .. "Sphere") then
+            xa[d.Name .. "Sphere"]:Destroy()
         end
         if
-            d.Character.CarbonValues.SModel.Value and f:FindFirstChild("\x4C\x61\x73\x65\x72\x4C\x69\x67\x68\x74") and
-                f:WaitForChild("\x4C\x61\x73\x65\x72\x4C\x69\x67\x68\x74"):FindFirstChild("\x41\x74\x74\x63\x68\x30") and
-                f:WaitForChild("\x4C\x61\x73\x65\x72\x4C\x69\x67\x68\x74"):FindFirstChild("\x41\x74\x74\x63\x68\x31") and
-                f:WaitForChild("\x4C\x61\x73\x65\x72\x4C\x69\x67\x68\x74"):FindFirstChild("\x42\x65\x61\x6D")
+            d.Character.CarbonValues.SModel.Value and f:FindFirstChild("LaserLight") and
+                f:WaitForChild("LaserLight"):FindFirstChild("Attch0") and
+                f:WaitForChild("LaserLight"):FindFirstChild("Attch1") and
+                f:WaitForChild("LaserLight"):FindFirstChild("Beam")
          then
-            f.LaserLight:WaitForChild("\x41\x74\x74\x63\x68\x30"):Destroy()
-            f.LaserLight:WaitForChild("\x41\x74\x74\x63\x68\x31"):Destroy()
-            f.LaserLight:WaitForChild("\x42\x65\x61\x6D"):Destroy()
+            f.LaserLight:WaitForChild("Attch0"):Destroy()
+            f.LaserLight:WaitForChild("Attch1"):Destroy()
+            f.LaserLight:WaitForChild("Beam"):Destroy()
         end
     end
 end
@@ -3283,13 +3283,13 @@ function HandleBino()
         if ya then
             Sprint(false, false)
         end
-        I = ra:WaitForChild("\x42\x69\x6E\x6F\x73"):clone()
+        I = ra:WaitForChild("Binos"):clone()
         I.Parent = Ka.LA
         for _, _ in pairs(I:GetChildren()) do
-            if _ and _:IsA("\x42\x61\x73\x65\x50\x61\x72\x74") then
-                if _.Name ~= "\x47\x72\x69\x70" then
-                    Ia.utilitiesModule.Weld(_, I:WaitForChild("\x47\x72\x69\x70"))
-                elseif _.Name == "\x47\x72\x69\x70" then
+            if _ and _:IsA("BasePart") then
+                if _.Name ~= "Grip" then
+                    Ia.utilitiesModule.Weld(_, I:WaitForChild("Grip"))
+                elseif _.Name == "Grip" then
                     Ia.utilitiesModule.Weld(
                         _,
                         Ka.LA,
@@ -3313,7 +3313,7 @@ function HandleBino()
             end
         end
         for _, _ in pairs(I:GetChildren()) do
-            if _ and _:IsA("\x42\x61\x73\x65\x50\x61\x72\x74") then
+            if _ and _:IsA("BasePart") then
                 _.Anchored = false
             end
         end
@@ -3379,56 +3379,56 @@ function HandleBino()
             }
         ):Play()
         Ja:Create(
-            Ka.hud:WaitForChild("\x52\x61\x6E\x67\x65\x46\x72\x61\x6D\x65"),
+            Ka.hud:WaitForChild("RangeFrame"),
             TweenInfo.new(0.4),
             {BackgroundTransparency = 0}
         ):Play()
         wait(0.4)
         for _, _ in pairs(I:GetChildren()) do
-            if _ and _:IsA("\x42\x61\x73\x65\x50\x61\x72\x74") then
+            if _ and _:IsA("BasePart") then
                 _.LocalTransparencyModifier = 1
             end
         end
         Ka.LA.LocalTransparencyModifier = 1
-        for _, _ in pairs(Ka.hud:WaitForChild("\x52\x61\x6E\x67\x65\x46\x72\x61\x6D\x65"):GetChildren()) do
+        for _, _ in pairs(Ka.hud:WaitForChild("RangeFrame"):GetChildren()) do
             if _ then
                 _.Visible = true
             end
         end
-        Ka.hud:WaitForChild("\x52\x61\x6E\x67\x65\x46\x72\x61\x6D\x65"):WaitForChild("\x5A\x6F\x6F\x6D\x4E\x75\x6D").Text =
+        Ka.hud:WaitForChild("RangeFrame"):WaitForChild("ZoomNum").Text =
             Ia.globalConfig.BinoZoom
         Ja:Create(xa, TweenInfo.new(0.05, Enum.EasingStyle.Quad), {FieldOfView = Ia.globalConfig.BinoZoom}):Play()
         wait(0.05)
         Ja:Create(
-            Ka.hud:WaitForChild("\x52\x61\x6E\x67\x65\x46\x72\x61\x6D\x65"),
+            Ka.hud:WaitForChild("RangeFrame"),
             TweenInfo.new(0.4),
             {BackgroundTransparency = 1}
         ):Play()
         wait(0.4)
     else
         Ja:Create(
-            Ka.hud:WaitForChild("\x52\x61\x6E\x67\x65\x46\x72\x61\x6D\x65"),
+            Ka.hud:WaitForChild("RangeFrame"),
             TweenInfo.new(0.4),
             {BackgroundTransparency = 0}
         ):Play()
         wait(0.4)
         for _, _ in pairs(I:GetChildren()) do
-            if _ and _:IsA("\x42\x61\x73\x65\x50\x61\x72\x74") then
+            if _ and _:IsA("BasePart") then
                 _.LocalTransparencyModifier = 0
             end
         end
         Ka.LA.LocalTransparencyModifier = 0
-        for _, _ in pairs(Ka.hud:WaitForChild("\x52\x61\x6E\x67\x65\x46\x72\x61\x6D\x65"):GetChildren()) do
+        for _, _ in pairs(Ka.hud:WaitForChild("RangeFrame"):GetChildren()) do
             if _ then
                 _.Visible = false
             end
         end
-        Ka.hud:WaitForChild("\x52\x61\x6E\x67\x65\x46\x72\x61\x6D\x65"):WaitForChild("\x5A\x6F\x6F\x6D\x4E\x75\x6D").Text =
-            "\x37\x30"
+        Ka.hud:WaitForChild("RangeFrame"):WaitForChild("ZoomNum").Text =
+            "70"
         Ja:Create(xa, TweenInfo.new(0.05, Enum.EasingStyle.Quad), {FieldOfView = 70}):Play()
         wait(0.05)
         Ja:Create(
-            Ka.hud:WaitForChild("\x52\x61\x6E\x67\x65\x46\x72\x61\x6D\x65"),
+            Ka.hud:WaitForChild("RangeFrame"),
             TweenInfo.new(0.4),
             {BackgroundTransparency = 1}
         ):Play()
@@ -3461,10 +3461,10 @@ function HandleBino()
 end
 function HandleToggle()
     if z then
-        Fa:WaitForChild("\x43\x61\x72\x62\x6F\x6E\x56\x61\x6C\x75\x65\x73"):WaitForChild(
-                "\x4E\x56\x47\x41\x63\x74\x69\x76\x65"
+        Fa:WaitForChild("CarbonValues"):WaitForChild(
+                "NVGActive"
             ).Value = true
-        Ka.overlay.Image = "\x72\x62\x78\x61\x73\x73\x65\x74\x69\x64\x3A\x2F\x2F" .. Ia.globalConfig.OverlayID
+        Ka.overlay.Image = "rbxassetid://" .. Ia.globalConfig.OverlayID
         Ja:Create(game.Lighting, TweenInfo.new(0.5), {ExposureCompensation = Ia.globalConfig.Exposure}):Play()
         Ja:Create(
             Ka.cc,
@@ -3478,7 +3478,7 @@ function HandleToggle()
         ):Play()
         Ja:Create(Ka.overlay, TweenInfo.new(0.5), {ImageTransparency = 0}):Play()
         Ja:Create(Ka.noise, TweenInfo.new(0.5), {ImageTransparency = 0}):Play()
-        local _ = ra:WaitForChild("\x4E\x56\x47\x54\x6F\x67\x67\x6C\x65"):Clone()
+        local _ = ra:WaitForChild("NVGToggle"):Clone()
         _.Parent = Ba.PlayerGui
         _:Play()
         game.Debris:AddItem(_, _.TimeLength)
@@ -3492,15 +3492,15 @@ function HandleToggle()
             end
         )
         if
-            Fa:WaitForChild("\x43\x61\x72\x62\x6F\x6E\x56\x61\x6C\x75\x65\x73"):WaitForChild(
-                "\x4E\x56\x47\x41\x63\x74\x69\x76\x65"
+            Fa:WaitForChild("CarbonValues"):WaitForChild(
+                "NVGActive"
             ).Value == true and
                 O and
-                Ka.curModel:FindFirstChild("\x41\x69\x6D\x50\x61\x72\x74\x33") and
+                Ka.curModel:FindFirstChild("AimPart3") and
                 Ca and
                 Ka.CurAimPart ~= Ka.curModel.AimPart3
          then
-            Ka.CurAimPart = Ka.curModel:WaitForChild("\x41\x69\x6D\x50\x61\x72\x74\x33")
+            Ka.CurAimPart = Ka.curModel:WaitForChild("AimPart3")
             Ka.curZoom = 60
             if za then
                 Ja:Create(xa, TweenInfo.new(Ka.curConfig.AimZoomSpeed, Enum.EasingStyle.Quad), {FieldOfView = 60}):Play(
@@ -3509,18 +3509,18 @@ function HandleToggle()
             end
         end
     else
-        Fa:WaitForChild("\x43\x61\x72\x62\x6F\x6E\x56\x61\x6C\x75\x65\x73"):WaitForChild(
-                "\x4E\x56\x47\x41\x63\x74\x69\x76\x65"
+        Fa:WaitForChild("CarbonValues"):WaitForChild(
+                "NVGActive"
             ).Value = false
         if Ca then
             Ka.CurAimPart = Ka.lastAimPart
-            if Ka.CurAimPart.Name == "\x41\x69\x6D\x50\x61\x72\x74" then
+            if Ka.CurAimPart.Name == "AimPart" then
                 if not ia then
                     Ka.curZoom = Ka.curConfig.AimZoom
                 else
                     Ka.curZoom = P
                 end
-            elseif Ka.CurAimPart.Name == "\x41\x69\x6D\x50\x61\x72\x74\x32" then
+            elseif Ka.CurAimPart.Name == "AimPart2" then
                 if not ia then
                     Ka.curZoom = Ka.curConfig.AltAimZoom
                 else
@@ -3545,7 +3545,7 @@ function cycle(b)
     repeat
         c = _[math.random(1, #_)]
     until c ~= b.last
-    a.Image = "\x72\x62\x78\x61\x73\x73\x65\x74\x69\x64\x3A\x2F\x2F" .. c
+    a.Image = "rbxassetid://" .. c
     local _ = math.random(230, 255)
     a.Position = UDim2.new(math.random(.4, .6), 0, math.random(.4, .6), 0)
     a.ImageColor3 = Color3.fromRGB(_, _, _)
@@ -3594,13 +3594,13 @@ function HandleNades()
             }
         ):Play()
         wait(0.2)
-        local a = ra:WaitForChild("\x46\x52\x41\x47"):clone()
+        local a = ra:WaitForChild("FRAG"):clone()
         a.Parent = Ka.LA
         for _, _ in pairs(a:GetChildren()) do
-            if _ and _:IsA("\x42\x61\x73\x65\x50\x61\x72\x74") then
-                if _.Name ~= "\x47\x72\x69\x70" then
-                    Ia.utilitiesModule.Weld(_, a:WaitForChild("\x47\x72\x69\x70"))
-                elseif _.Name == "\x47\x72\x69\x70" then
+            if _ and _:IsA("BasePart") then
+                if _.Name ~= "Grip" then
+                    Ia.utilitiesModule.Weld(_, a:WaitForChild("Grip"))
+                elseif _.Name == "Grip" then
                     Ia.utilitiesModule.Weld(
                         _,
                         Ka.LA,
@@ -3624,7 +3624,7 @@ function HandleNades()
             end
         end
         for _, _ in pairs(a:GetChildren()) do
-            if _ and _:IsA("\x42\x61\x73\x65\x50\x61\x72\x74") then
+            if _ and _:IsA("BasePart") then
                 _.Anchored = false
             end
         end
@@ -3670,7 +3670,7 @@ function HandleNades()
             }
         ):Play()
         wait(0.4)
-        if a:FindFirstChild("\x50\x69\x6E") then
+        if a:FindFirstChild("Pin") then
             a.Pin:Destroy()
             a.Lever:Destroy()
         end
@@ -3697,11 +3697,11 @@ function HandleNades()
         wait(0.03)
         a.Grip:Destroy()
         Ka.FragAmmo = Ka.FragAmmo - 1
-        local _ = a:WaitForChild("\x4E\x41\x44\x45"):GetMass()
-        local _ = Instance.new("\x42\x6F\x64\x79\x46\x6F\x72\x63\x65", a:WaitForChild("\x4E\x41\x44\x45"))
+        local _ = a:WaitForChild("NADE"):GetMass()
+        local _ = Instance.new("BodyForce", a:WaitForChild("NADE"))
         _.Force = Ia.globalConfig.NadePhysics
-        a:WaitForChild("\x4E\x41\x44\x45").Velocity = xa.CFrame.LookVector * Ia.globalConfig.NadeSpeed
-        Ea.nadeEvent:FireServer(a.NADE.CFrame, "\x41\x75\x74\x68", xa.CFrame.LookVector)
+        a:WaitForChild("NADE").Velocity = xa.CFrame.LookVector * Ia.globalConfig.NadeSpeed
+        Ea.nadeEvent:FireServer(a.NADE.CFrame, "Auth", xa.CFrame.LookVector)
         local _ = a.NADE
         _.Parent = ca
         a:Destroy()
@@ -3709,11 +3709,11 @@ function HandleNades()
             0.02,
             function()
                 _.CanCollide = true
-                _:WaitForChild("\x49\x6E\x64\x69\x63\x61\x74\x6F\x72").MaxDistance = Ia.globalConfig.BlastRadius
-                _:WaitForChild("\x49\x6E\x64\x69\x63\x61\x74\x6F\x72"):WaitForChild("\x46\x72\x69\x65\x6E\x64\x6C\x79").Visible =
+                _:WaitForChild("Indicator").MaxDistance = Ia.globalConfig.BlastRadius
+                _:WaitForChild("Indicator"):WaitForChild("Friendly").Visible =
                     true
                 if Ia.globalConfig.NadeTrailEnabled then
-                    _:WaitForChild("\x54\x72\x61\x69\x6C").Enabled = true
+                    _:WaitForChild("Trail").Enabled = true
                 end
             end
         )
@@ -3733,7 +3733,7 @@ function HandleNades()
                     nil,
                     nil,
                     nil,
-                    "\x41\x75\x74\x68",
+                    "Auth",
                     nil
                 )
                 _:Destroy()
@@ -3787,13 +3787,13 @@ function HandleNades()
             }
         ):Play()
         wait(0.4)
-        Z = ra:WaitForChild("\x43\x34"):clone()
+        Z = ra:WaitForChild("C4"):clone()
         Z.Parent = Ka.LA
         for _, _ in pairs(Z:GetChildren()) do
-            if _ and _:IsA("\x42\x61\x73\x65\x50\x61\x72\x74") then
-                if _.Name ~= "\x47\x72\x69\x70" then
-                    Ia.utilitiesModule.Weld(_, Z:WaitForChild("\x47\x72\x69\x70"))
-                elseif _.Name == "\x47\x72\x69\x70" then
+            if _ and _:IsA("BasePart") then
+                if _.Name ~= "Grip" then
+                    Ia.utilitiesModule.Weld(_, Z:WaitForChild("Grip"))
+                elseif _.Name == "Grip" then
                     Ia.utilitiesModule.Weld(
                         _,
                         Ka.LA,
@@ -3804,7 +3804,7 @@ function HandleNades()
             end
         end
         for _, _ in pairs(Z:GetChildren()) do
-            if _ and _:IsA("\x42\x61\x73\x65\x50\x61\x72\x74") then
+            if _ and _:IsA("BasePart") then
                 _.Anchored = false
             end
         end
@@ -3838,16 +3838,16 @@ function UpdateCamChar(_)
         ga.PrimaryPart = J
         D.CFrame = ga.PrimaryPart.CFrame * CFrame.new(0, -0.5, -5) * CFrame.Angles(0, math.rad(180), 0)
         for _, _ in pairs(ga:GetChildren()) do
-            if _ and _:IsA("\x42\x61\x73\x65\x50\x61\x72\x74") then
+            if _ and _:IsA("BasePart") then
                 _.BrickColor =
-                    BrickColor.new("\x49\x6E\x73\x74\x69\x74\x75\x74\x69\x6F\x6E\x61\x6C\x20\x77\x68\x69\x74\x65")
+                    BrickColor.new("Institutional white")
             end
         end
         for _, _ in pairs(Fa:GetDescendants()) do
-            if _ and _.Name == "\x4D\x69\x64\x64\x6C\x65" and _:FindFirstChild("\x4D\x69\x64\x64\x6C\x65") then
+            if _ and _.Name == "Middle" and _:FindFirstChild("Middle") then
                 if ga:FindFirstChild(_.Middle.Part1.Name) then
                     ga:FindFirstChild(_.Middle.Part1.Name).BrickColor =
-                        BrickColor.new("\x50\x61\x73\x74\x65\x6C\x20\x42\x6C\x75\x65")
+                        BrickColor.new("Pastel Blue")
                 end
             end
         end
@@ -3896,13 +3896,13 @@ end
 Fa.ChildAdded:connect(
     function(a)
         if
-            a:IsA("\x54\x6F\x6F\x6C") and a:FindFirstChild("\x41\x75\x74\x68\x65\x6E\x74\x69\x63\x61\x74\x65") and
+            a:IsA("Tool") and a:FindFirstChild("Authenticate") and
                 Da.humanoid.Health > 0 and
-                require(a.Authenticate).Type == "\x47\x75\x6E"
+                require(a.Authenticate).Type == "Gun"
          then
             if not w then
                 local _ = true
-                if Da.humanoid.Sit and Fa.Humanoid.SeatPart.Name == "\x44\x72\x69\x76\x65\x72\x53\x65\x61\x74" then
+                if Da.humanoid.Sit and Fa.Humanoid.SeatPart.Name == "DriverSeat" then
                     _ = false
                 end
                 if _ then
@@ -3920,7 +3920,7 @@ Fa.ChildAdded:connect(
             end
         end
         for _, _ in pairs(a:GetDescendants()) do
-            if _ and _.Name == "\x4D\x69\x64\x64\x6C\x65" then
+            if _ and _.Name == "Middle" then
             end
         end
     end
@@ -3956,7 +3956,7 @@ Da.humanoid.Died:connect(
         Ka.overlay.ImageTransparency = 1
         game.Lighting.ExposureCompensation = 0
         Ea.storeDataEvent:InvokeServer(
-            "\x45\x72\x61\x73\x65",
+            "Erase",
             nil,
             nil,
             nil,
@@ -3966,7 +3966,7 @@ Da.humanoid.Died:connect(
             nil,
             nil,
             nil,
-            "\x41\x75\x74\x68"
+            "Auth"
         )
         local a = 1
         for _, _ in pairs(Ea) do
@@ -3995,7 +3995,7 @@ Da.humanoid.Changed:connect(
                 TweenInfo.new(0.1),
                 {
                     ImageColor3 = BrickColor.new(
-                        "\x49\x6E\x73\x74\x69\x74\x75\x74\x69\x6F\x6E\x61\x6C\x20\x77\x68\x69\x74\x65"
+                        "Institutional white"
                     ).Color
                 }
             ):Play()
@@ -4005,7 +4005,7 @@ Da.humanoid.Changed:connect(
                     Ja:Create(
                         Ka.intenseShade,
                         TweenInfo.new(0.3),
-                        {ImageColor3 = BrickColor.new("\x52\x65\x61\x6C\x6C\x79\x20\x62\x6C\x61\x63\x6B").Color}
+                        {ImageColor3 = BrickColor.new("Really black").Color}
                     ):Play()
                 end
             )
@@ -4055,7 +4055,7 @@ ua.InputBegan:connect(
                         end
                     end
                     if Ka.Ammo <= 0 or not Ka.CanShoot then
-                        Ka.Grip:WaitForChild("\x43\x6C\x69\x63\x6B"):Play()
+                        Ka.Grip:WaitForChild("Click"):Play()
                     end
                 else
                     if Ka.NadeMode == 4 and not ba then
@@ -4071,7 +4071,7 @@ ua.InputBegan:connect(
                             local _ = math.asin(a.magnitude)
                             if d then
                                 Z:Destroy()
-                                V = Ea.placeC4Event:InvokeServer(b, a, _, "\x41\x75\x74\x68", c, d)
+                                V = Ea.placeC4Event:InvokeServer(b, a, _, "Auth", c, d)
                                 IdleAnim()
                                 pa = false
                             end
@@ -4082,27 +4082,27 @@ ua.InputBegan:connect(
             end
             if
                 a.KeyCode == Enum.KeyCode.Minus and Ca and not va and
-                    Ka.curModel:FindFirstChild("\x4E\x6F\x64\x65\x5F\x53\x74\x6F\x72\x61\x67\x65")
+                    Ka.curModel:FindFirstChild("Node_Storage")
              then
                 l = not l
                 if l then
                     AttachAnim()
                     ua.MouseIconEnabled = true
-                    Ka.hud:WaitForChild("\x41\x74\x74\x61\x63\x68\x6D\x65\x6E\x74\x5F\x46\x72\x61\x6D\x65").Visible =
+                    Ka.hud:WaitForChild("Attachment_Frame").Visible =
                         true
-                    Ka.hud:WaitForChild("\x4D\x6F\x75\x73\x65\x5F\x52\x65\x6C\x65\x61\x73\x65").Modal = true
+                    Ka.hud:WaitForChild("Mouse_Release").Modal = true
                     for _, a in pairs(
-                        Ka.curModel:WaitForChild("\x4E\x6F\x64\x65\x5F\x53\x74\x6F\x72\x61\x67\x65"):GetChildren()
+                        Ka.curModel:WaitForChild("Node_Storage"):GetChildren()
                     ) do
                         if a then
-                            local _ = Ka.tempFolder:WaitForChild("\x4E\x6F\x64\x65\x5F\x55\x49"):Clone()
-                            _.Parent = Ba:WaitForChild("\x50\x6C\x61\x79\x65\x72\x47\x75\x69")
+                            local _ = Ka.tempFolder:WaitForChild("Node_UI"):Clone()
+                            _.Parent = Ba:WaitForChild("PlayerGui")
                             _.Adornee = a
                             _.Enabled = true
-                            _:WaitForChild("\x42\x75\x74\x74\x6F\x6E").MouseButton1Click:Connect(
+                            _:WaitForChild("Button").MouseButton1Click:Connect(
                                 function()
                                     for _, _ in pairs(Ka.attachFrame:GetChildren()) do
-                                        if _ and _:IsA("\x46\x72\x61\x6D\x65") then
+                                        if _ and _:IsA("Frame") then
                                             _:Destroy()
                                         end
                                     end
@@ -4110,35 +4110,35 @@ ua.InputBegan:connect(
                                         if b and b.PrimaryPart.Name == a.Name then
                                             local c =
                                                 Ka.tempFolder:WaitForChild(
-                                                "\x41\x74\x74\x61\x63\x68\x6D\x65\x6E\x74\x5F\x49\x74\x65\x6D"
+                                                "Attachment_Item"
                                             ):Clone()
                                             c.Parent = Ka.attachFrame
                                             c.Visible = true
-                                            c:WaitForChild("\x42\x75\x74\x74\x6F\x6E").Text = b.Name
-                                            local a = Instance.new("\x43\x61\x6D\x65\x72\x61")
-                                            a.Name = "\x44\x69\x73\x70\x6C\x61\x79\x5F\x43\x61\x6D"
+                                            c:WaitForChild("Button").Text = b.Name
+                                            local a = Instance.new("Camera")
+                                            a.Name = "Display_Cam"
                                             a.CameraType = Enum.CameraType.Scriptable
-                                            c:WaitForChild("\x56\x69\x65\x77\x46\x72\x61\x6D\x65").CurrentCamera = a
-                                            a.Parent = c:WaitForChild("\x56\x69\x65\x77\x46\x72\x61\x6D\x65")
+                                            c:WaitForChild("ViewFrame").CurrentCamera = a
+                                            a.Parent = c:WaitForChild("ViewFrame")
                                             local _ = t:WaitForChild(b.Name):Clone()
-                                            _.Parent = c:WaitForChild("\x56\x69\x65\x77\x46\x72\x61\x6D\x65")
+                                            _.Parent = c:WaitForChild("ViewFrame")
                                             a.CFrame =
-                                                _:WaitForChild("\x42\x6F\x78").CFrame *
+                                                _:WaitForChild("Box").CFrame *
                                                 CFrame.Angles(0, math.rad(90), 0) *
                                                 CFrame.new(0, 0, 1)
                                             for _, _ in pairs(_:GetDescendants()) do
-                                                if _ and _:IsA("\x42\x61\x73\x65\x50\x61\x72\x74") then
+                                                if _ and _:IsA("BasePart") then
                                                     _.BrickColor =
                                                         BrickColor.new(
-                                                        "\x49\x6E\x73\x74\x69\x74\x75\x74\x69\x6F\x6E\x61\x6C\x20\x77\x68\x69\x74\x65"
+                                                        "Institutional white"
                                                     )
                                                     _.Material = Enum.Material.SmoothPlastic
-                                                    if _:IsA("\x55\x6E\x69\x6F\x6E\x4F\x70\x65\x72\x61\x74\x69\x6F\x6E") then
+                                                    if _:IsA("UnionOperation") then
                                                         _.UsePartColor = true
                                                     end
                                                 end
                                             end
-                                            c:WaitForChild("\x42\x75\x74\x74\x6F\x6E").MouseButton1Click:Connect(
+                                            c:WaitForChild("Button").MouseButton1Click:Connect(
                                                 function()
                                                     local _, a = Ia.attachmentAPI.AttachCELive(Ka.curModel, b.Name)
                                                     Ia.attachmentAPI.AttachCE(
@@ -4146,13 +4146,13 @@ ua.InputBegan:connect(
                                                         b.Name
                                                     )
                                                     Ka.AimPart =
-                                                        Ka.curModel:FindFirstChild("\x41\x69\x6D\x50\x61\x72\x74")
+                                                        Ka.curModel:FindFirstChild("AimPart")
                                                     Ka.CurAimPart =
-                                                        Ka.curModel:FindFirstChild("\x41\x69\x6D\x50\x61\x72\x74")
+                                                        Ka.curModel:FindFirstChild("AimPart")
                                                     Ka.lastAimPart =
-                                                        Ka.curModel:FindFirstChild("\x41\x69\x6D\x50\x61\x72\x74")
+                                                        Ka.curModel:FindFirstChild("AimPart")
                                                     Ka.FirePart =
-                                                        Ka.curModel:FindFirstChild("\x46\x69\x72\x65\x50\x61\x72\x74")
+                                                        Ka.curModel:FindFirstChild("FirePart")
                                                     Ea.attachmentEvent:FireServer(Ka.curModel.Name, b.Name)
                                                     if _ then
                                                         ia = true
@@ -4170,12 +4170,12 @@ ua.InputBegan:connect(
                     end
                 else
                     ua.MouseIconEnabled = false
-                    Ka.hud:WaitForChild("\x4D\x6F\x75\x73\x65\x5F\x52\x65\x6C\x65\x61\x73\x65").Modal = false
-                    Ka.hud:WaitForChild("\x41\x74\x74\x61\x63\x68\x6D\x65\x6E\x74\x5F\x46\x72\x61\x6D\x65").Visible =
+                    Ka.hud:WaitForChild("Mouse_Release").Modal = false
+                    Ka.hud:WaitForChild("Attachment_Frame").Visible =
                         false
                     Ea.clearAttchEvent:FireServer(Ka.curModel.Name)
                     for _, _ in pairs(Ba.PlayerGui:GetChildren()) do
-                        if _ and _.Name == "\x4E\x6F\x64\x65\x5F\x55\x49" then
+                        if _ and _.Name == "Node_UI" then
                             _:Destroy()
                         end
                     end
@@ -4203,7 +4203,7 @@ ua.InputBegan:connect(
             end
             if a.KeyCode == Enum.KeyCode.KeypadEight and Ca and not va then
                 if C then
-                    N = "\x52\x61\x64\x69\x61\x6C\x5F\x54\x6F\x70"
+                    N = "Radial_Top"
                     for _, _ in pairs(Ka.radialInner:GetChildren()) do
                         if _ and _ ~= Ka.radialTop then
                             Ja:Create(_, TweenInfo.new(0.3), {Position = UDim2.new(0, 0, 0, 0)}):Play()
@@ -4216,7 +4216,7 @@ ua.InputBegan:connect(
             end
             if a.KeyCode == Enum.KeyCode.KeypadTwo and Ca and not va then
                 if C then
-                    N = "\x52\x61\x64\x69\x61\x6C\x5F\x42\x6F\x74\x74\x6F\x6D"
+                    N = "Radial_Bottom"
                     for _, _ in pairs(Ka.radialInner:GetChildren()) do
                         if _ and _ ~= Ka.radialBottom then
                             Ja:Create(_, TweenInfo.new(0.3), {Position = UDim2.new(0, 0, 0, 0)}):Play()
@@ -4231,7 +4231,7 @@ ua.InputBegan:connect(
                 if not za then
                     C = not C
                     if C then
-                        N = "\x52\x61\x64\x69\x61\x6C\x5F\x43\x65\x6E\x74\x65\x72"
+                        N = "Radial_Center"
                         Ja:Create(Ka.radialOutter, TweenInfo.new(0.5), {ImageTransparency = 0}):Play()
                         for _, _ in pairs(Ka.radialInner:GetChildren()) do
                             if _ then
@@ -4245,7 +4245,7 @@ ua.InputBegan:connect(
                         )
                         Ka.radialTop.MouseEnter:Connect(
                             function()
-                                N = "\x52\x61\x64\x69\x61\x6C\x5F\x54\x6F\x70"
+                                N = "Radial_Top"
                                 for _, _ in pairs(Ka.radialInner:GetChildren()) do
                                     if _ and _ ~= Ka.radialTop then
                                         Ja:Create(_, TweenInfo.new(0.5), {Position = UDim2.new(0, 0, 0, 0)}):Play()
@@ -4264,7 +4264,7 @@ ua.InputBegan:connect(
                         )
                         Ka.radialBottom.MouseEnter:Connect(
                             function()
-                                N = "\x52\x61\x64\x69\x61\x6C\x5F\x42\x6F\x74\x74\x6F\x6D"
+                                N = "Radial_Bottom"
                                 for _, _ in pairs(Ka.radialInner:GetChildren()) do
                                     if _ and _ ~= Ka.radialBottom then
                                         Ja:Create(_, TweenInfo.new(0.5), {Position = UDim2.new(0, 0, 0, 0)}):Play()
@@ -4285,7 +4285,7 @@ ua.InputBegan:connect(
                         )
                         Ka.radialCenter.MouseEnter:Connect(
                             function()
-                                N = "\x52\x61\x64\x69\x61\x6C\x5F\x43\x65\x6E\x74\x65\x72"
+                                N = "Radial_Center"
                                 for _, _ in pairs(Ka.radialInner:GetChildren()) do
                                     if _ and _ ~= Ka.radialCenter then
                                         Ja:Create(_, TweenInfo.new(0.5), {Position = UDim2.new(0, 0, 0, 0)}):Play()
@@ -4302,17 +4302,17 @@ ua.InputBegan:connect(
                             end
                         )
                     else
-                        if N == "\x52\x61\x64\x69\x61\x6C\x5F\x54\x6F\x70" then
+                        if N == "Radial_Top" then
                             Ka.readyMode = Ka.readyMode + 1
                             if Ka.readyMode > 1 then
                                 Ka.readyMode = 1
                             end
-                        elseif N == "\x52\x61\x64\x69\x61\x6C\x5F\x42\x6F\x74\x74\x6F\x6D" then
+                        elseif N == "Radial_Bottom" then
                             Ka.readyMode = Ka.readyMode - 1
                             if Ka.readyMode < -1 then
                                 Ka.readyMode = -1
                             end
-                        elseif N == "\x52\x61\x64\x69\x61\x6C\x5F\x43\x65\x6E\x74\x65\x72" then
+                        elseif N == "Radial_Center" then
                             Ka.readyMode = 0
                         end
                         ChangeReady()
@@ -4399,7 +4399,7 @@ ua.InputBegan:connect(
                         if V and Ka.NadeMode == 4 then
                             ba = true
                             m = false
-                            local _ = V:WaitForChild("\x43\x45\x56\x41\x52\x53"):WaitForChild("\x48\x69\x74").Value
+                            local _ = V:WaitForChild("CEVARS"):WaitForChild("Hit").Value
                             Ja:Create(
                                 Ka.LAW,
                                 TweenInfo.new(0.2),
@@ -4421,13 +4421,13 @@ ua.InputBegan:connect(
                                 }
                             ):Play()
                             wait(0.2)
-                            local a = ra:WaitForChild("\x50\x68\x6F\x6E\x65"):clone()
+                            local a = ra:WaitForChild("Phone"):clone()
                             a.Parent = Ka.LA
                             for _, _ in pairs(a:GetChildren()) do
-                                if _ and _:IsA("\x42\x61\x73\x65\x50\x61\x72\x74") then
-                                    if _.Name ~= "\x47\x72\x69\x70" then
-                                        Ia.utilitiesModule.Weld(_, a:WaitForChild("\x47\x72\x69\x70"))
-                                    elseif _.Name == "\x47\x72\x69\x70" then
+                                if _ and _:IsA("BasePart") then
+                                    if _.Name ~= "Grip" then
+                                        Ia.utilitiesModule.Weld(_, a:WaitForChild("Grip"))
+                                    elseif _.Name == "Grip" then
                                         Ia.utilitiesModule.Weld(
                                             _,
                                             Ka.LA,
@@ -4451,7 +4451,7 @@ ua.InputBegan:connect(
                                 end
                             end
                             for _, _ in pairs(a:GetChildren()) do
-                                if _ and _:IsA("\x42\x61\x73\x65\x50\x61\x72\x74") then
+                                if _ and _:IsA("BasePart") then
                                     _.Anchored = false
                                 end
                             end
@@ -4476,7 +4476,7 @@ ua.InputBegan:connect(
                                 }
                             ):Play()
                             wait(0.4)
-                            a:WaitForChild("\x47\x72\x69\x70"):WaitForChild("\x44\x69\x61\x6C"):Play()
+                            a:WaitForChild("Grip"):WaitForChild("Dial"):Play()
                             Ja:Create(
                                 Ka.LAW,
                                 TweenInfo.new(0.4),
@@ -4500,7 +4500,7 @@ ua.InputBegan:connect(
                             wait(0.35)
                             Ea.explosiveEvent:FireServer(
                                 _,
-                                V:WaitForChild("\x47\x72\x69\x70").Position,
+                                V:WaitForChild("Grip").Position,
                                 Ia.globalConfig.C4BlastPressue,
                                 Ia.globalConfig.C4BlastRadius,
                                 Ia.globalConfig.C4DestroyJointRadius,
@@ -4511,7 +4511,7 @@ ua.InputBegan:connect(
                                 nil,
                                 nil,
                                 nil,
-                                "\x41\x75\x74\x68",
+                                "Auth",
                                 nil
                             )
                             V = nil
@@ -4623,13 +4623,13 @@ ua.InputBegan:connect(
                 if ya then
                     Sprint(false, false)
                 end
-                local a = ra:WaitForChild("\x4D\x65\x6C\x65\x65"):clone()
+                local a = ra:WaitForChild("Melee"):clone()
                 a.Parent = Ka.LA
                 for _, _ in pairs(a:GetChildren()) do
-                    if _ and _:IsA("\x42\x61\x73\x65\x50\x61\x72\x74") then
-                        if _.Name ~= "\x47\x72\x69\x70" then
-                            Ia.utilitiesModule.Weld(_, a:WaitForChild("\x47\x72\x69\x70"))
-                        elseif _.Name == "\x47\x72\x69\x70" then
+                    if _ and _:IsA("BasePart") then
+                        if _.Name ~= "Grip" then
+                            Ia.utilitiesModule.Weld(_, a:WaitForChild("Grip"))
+                        elseif _.Name == "Grip" then
                             Ia.utilitiesModule.Weld(
                                 _,
                                 Ka.LA,
@@ -4653,7 +4653,7 @@ ua.InputBegan:connect(
                     end
                 end
                 for _, _ in pairs(a:GetChildren()) do
-                    if _ and _:IsA("\x42\x61\x73\x65\x50\x61\x72\x74") then
+                    if _ and _:IsA("BasePart") then
                         _.Anchored = false
                     end
                 end
@@ -4698,7 +4698,7 @@ ua.InputBegan:connect(
                     }
                 ):Play()
                 wait(0.2)
-                local _ = ra:WaitForChild("\x4B\x6E\x69\x66\x65\x4A\x61\x62"):clone()
+                local _ = ra:WaitForChild("KnifeJab"):clone()
                 _.Parent = Ba.PlayerGui
                 _:Play()
                 game.Debris:AddItem(_, _.TimeLength)
@@ -4725,19 +4725,19 @@ ua.InputBegan:connect(
                 coroutine.resume(
                     coroutine.create(
                         function()
-                            while a:FindFirstChild("\x47\x72\x69\x70") do
+                            while a:FindFirstChild("Grip") do
                                 local a, _, _ =
                                     workspace:FindPartOnRayWithIgnoreList(
                                     Ray.new(
-                                        a:WaitForChild("\x47\x72\x69\x70").Position,
-                                        a:WaitForChild("\x47\x72\x69\x70").CFrame.upVector * 2
+                                        a:WaitForChild("Grip").Position,
+                                        a:WaitForChild("Grip").CFrame.upVector * 2
                                     ),
                                     ha
                                 )
                                 if a then
                                     local _, a = Ia.utilitiesModule.CheckForHumanoid(a)
                                     if _ and a then
-                                        local _ = ra:WaitForChild("\x4B\x6E\x69\x66\x65\x43\x75\x74"):clone()
+                                        local _ = ra:WaitForChild("KnifeCut"):clone()
                                         _.Parent = Ba.PlayerGui
                                         _:Play()
                                         game.Debris:AddItem(_, _.TimeLength)
@@ -4750,13 +4750,13 @@ ua.InputBegan:connect(
                                             nil,
                                             nil,
                                             nil,
-                                            "\x41\x75\x74\x68"
+                                            "Auth"
                                         )
                                         Ea.damageEvent:FireServer(
                                             a,
                                             100,
                                             nil,
-                                            {"\x6E\x69\x6C", "\x41\x75\x74\x68", "\x6E\x69\x6C", "\x6E\x69\x6C"}
+                                            {"nil", "Auth", "nil", "nil"}
                                         )
                                     end
                                     break
@@ -4795,23 +4795,23 @@ ua.InputBegan:connect(
                         Ka.CanShoot = false
                     end
                     local _ =
-                        Ba.PlayerGui:FindFirstChild("\x4E\x61\x64\x65\x53\x6F\x75\x6E\x64") or
-                        Instance.new("\x53\x6F\x75\x6E\x64")
+                        Ba.PlayerGui:FindFirstChild("NadeSound") or
+                        Instance.new("Sound")
                     _.Parent = Ba.PlayerGui
-                    _.SoundId = "\x72\x62\x78\x61\x73\x73\x65\x74\x69\x64\x3A\x2F\x2F" .. u[math.random(1, #u)]
+                    _.SoundId = "rbxassetid://" .. u[math.random(1, #u)]
                     _:Play()
-                    _.Name = "\x4E\x61\x64\x65\x53\x6F\x75\x6E\x64"
+                    _.Name = "NadeSound"
                     Ja:Create(Ka.LAW, TweenInfo.new(0.3), {C1 = Ka.curConfig.GLLeftPos}):Play()
                     UpdateAmmo()
                 else
                     Ka.CanShoot = Aa
                     local _ =
-                        Ba.PlayerGui:FindFirstChild("\x4E\x61\x64\x65\x53\x6F\x75\x6E\x64") or
-                        Instance.new("\x53\x6F\x75\x6E\x64")
+                        Ba.PlayerGui:FindFirstChild("NadeSound") or
+                        Instance.new("Sound")
                     _.Parent = Ba.PlayerGui
-                    _.SoundId = "\x72\x62\x78\x61\x73\x73\x65\x74\x69\x64\x3A\x2F\x2F" .. v[math.random(1, #v)]
+                    _.SoundId = "rbxassetid://" .. v[math.random(1, #v)]
                     _:Play()
-                    _.Name = "\x4E\x61\x64\x65\x53\x6F\x75\x6E\x64"
+                    _.Name = "NadeSound"
                     Ja:Create(Ka.LAW, TweenInfo.new(0.3), {C1 = Ka.curConfig.LeftArmPos}):Play()
                     UpdateAmmo()
                 end
@@ -4822,7 +4822,7 @@ ua.InputBegan:connect(
              then
                 wa = true
                 k = false
-                local a = ra:WaitForChild("\x53\x79\x72\x69\x6E\x67\x65"):clone()
+                local a = ra:WaitForChild("Syringe"):clone()
                 a.Parent = Ka.LA
                 Ja:Create(
                     Ka.LAW,
@@ -4846,10 +4846,10 @@ ua.InputBegan:connect(
                 ):Play()
                 wait(0.4)
                 for _, _ in pairs(a:GetChildren()) do
-                    if _ and _:IsA("\x42\x61\x73\x65\x50\x61\x72\x74") then
-                        if _.Name ~= "\x47\x6C\x61\x73\x73" then
-                            Ia.utilitiesModule.Weld(_, a:WaitForChild("\x47\x6C\x61\x73\x73"))
-                        elseif _.Name == "\x47\x6C\x61\x73\x73" then
+                    if _ and _:IsA("BasePart") then
+                        if _.Name ~= "Glass" then
+                            Ia.utilitiesModule.Weld(_, a:WaitForChild("Glass"))
+                        elseif _.Name == "Glass" then
                             Ia.utilitiesModule.Weld(
                                 _,
                                 Ka.LA,
@@ -4873,7 +4873,7 @@ ua.InputBegan:connect(
                     end
                 end
                 for _, _ in pairs(a:GetChildren()) do
-                    if _ and _:IsA("\x42\x61\x73\x65\x50\x61\x72\x74") then
+                    if _ and _:IsA("BasePart") then
                         _.Anchored = false
                     end
                 end
@@ -4898,7 +4898,7 @@ ua.InputBegan:connect(
                     }
                 ):Play()
                 wait(0.24)
-                local _ = ra:WaitForChild("\x53\x79\x72\x69\x6E\x67\x65\x49\x6E"):Clone()
+                local _ = ra:WaitForChild("SyringeIn"):Clone()
                 _.Parent = Ba.PlayerGui
                 _:Play()
                 game.Debris:AddItem(_, _.TimeLength)
@@ -4932,31 +4932,31 @@ ua.InputBegan:connect(
                 )
                 wait(0.35)
                 Ja:Create(
-                    a:WaitForChild("\x50\x75\x73\x68"):WaitForChild("\x50\x75\x73\x68"),
+                    a:WaitForChild("Push"):WaitForChild("Push"),
                     TweenInfo.new(0.3),
                     {C1 = CFrame.new(-0.65829581, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1)}
                 ):Play()
                 Ja:Create(
-                    a:WaitForChild("\x4C\x69\x71\x75\x69\x64"):WaitForChild("\x4C\x69\x71\x75\x69\x64"),
+                    a:WaitForChild("Liquid"):WaitForChild("Liquid"),
                     TweenInfo.new(0.3),
                     {C1 = CFrame.new(-0.64000386, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1)}
                 ):Play()
                 wait(0.5)
-                Ea.medEvent:FireServer(true, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, "\x41\x75\x74\x68")
-                a:WaitForChild("\x4C\x69\x71\x75\x69\x64").Transparency = 1
+                Ea.medEvent:FireServer(true, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, "Auth")
+                a:WaitForChild("Liquid").Transparency = 1
                 IdleAnim()
                 a:Destroy()
                 wa = false
             end
             if
                 a.KeyCode == Ka.curConfig.LaserKey and not wa and Ca and Ka.curModel and
-                    Ka.curModel:FindFirstChild("\x4C\x61\x73\x65\x72\x4C\x69\x67\x68\x74") and
+                    Ka.curModel:FindFirstChild("LaserLight") and
                     Ka.curConfig.LaserAttached
              then
                 O = not O
                 Ea.manipEvent:FireServer(
                     O,
-                    "\x4C\x61\x73\x65\x72",
+                    "Laser",
                     nil,
                     nil,
                     nil,
@@ -4964,21 +4964,21 @@ ua.InputBegan:connect(
                     nil,
                     nil,
                     nil,
-                    "\x41\x75\x74\x68"
+                    "Auth"
                 )
-                Y = Instance.new("\x50\x61\x72\x74")
-                Y.Shape = "\x42\x61\x6C\x6C"
+                Y = Instance.new("Part")
+                Y.Shape = "Ball"
                 Y.Size = Vector3.new(0.1, 0.1, 0.1)
                 Y.Parent = xa
                 Y.CanCollide = false
                 Y.BrickColor = Ka.curConfig.LaserColor
                 Y.Material = Enum.Material.Neon
                 if O then
-                    E = Instance.new("\x41\x74\x74\x61\x63\x68\x6D\x65\x6E\x74")
+                    E = Instance.new("Attachment")
                     E.Parent = Ka.curModel.LaserLight
-                    M = Instance.new("\x41\x74\x74\x61\x63\x68\x6D\x65\x6E\x74")
+                    M = Instance.new("Attachment")
                     M.Parent = Ka.curModel.LaserLight
-                    aa = Instance.new("\x42\x65\x61\x6D")
+                    aa = Instance.new("Beam")
                     aa.Parent = Ka.curModel.LaserLight
                     aa.Attachment0 = E
                     aa.Attachment1 = M
@@ -4990,10 +4990,10 @@ ua.InputBegan:connect(
                     aa.Width0 = 0.01
                     aa.Width1 = 0.01
                     if
-                        Fa:WaitForChild("\x43\x61\x72\x62\x6F\x6E\x56\x61\x6C\x75\x65\x73"):WaitForChild(
-                            "\x4E\x56\x47\x41\x63\x74\x69\x76\x65"
+                        Fa:WaitForChild("CarbonValues"):WaitForChild(
+                            "NVGActive"
                         ).Value == true and
-                            Ka.curModel:FindFirstChild("\x41\x69\x6D\x50\x61\x72\x74\x33") and
+                            Ka.curModel:FindFirstChild("AimPart3") and
                             Ka.CurAimPart ~= Ka.curModel.AimPart3
                      then
                         Ka.CurAimPart = Ka.curModel.AimPart3
@@ -5008,13 +5008,13 @@ ua.InputBegan:connect(
                     end
                 else
                     Ka.CurAimPart = Ka.lastAimPart
-                    if Ka.CurAimPart.Name == "\x41\x69\x6D\x50\x61\x72\x74" then
+                    if Ka.CurAimPart.Name == "AimPart" then
                         if not ia then
                             Ka.curZoom = Ka.curConfig.AimZoom
                         else
                             Ka.curZoom = P
                         end
-                    elseif Ka.CurAimPart.Name == "\x41\x69\x6D\x50\x61\x72\x74\x32" then
+                    elseif Ka.CurAimPart.Name == "AimPart2" then
                         if not ia then
                             Ka.curZoom = Ka.curConfig.AltAimZoom
                         else
@@ -5029,18 +5029,18 @@ ua.InputBegan:connect(
             end
             if
                 a.KeyCode == Ka.curConfig.LightKey and not wa and Ka.curConfig.LightAttached and
-                    Ka.curModel:FindFirstChild("\x46\x6C\x61\x73\x68\x4C\x69\x67\x68\x74")
+                    Ka.curModel:FindFirstChild("FlashLight")
              then
                 A = not A
-                for _, _ in pairs(Ka.curModel:WaitForChild("\x46\x6C\x61\x73\x68\x4C\x69\x67\x68\x74"):GetChildren()) do
-                    if _ and _.Name == "\x45\x6E\x61\x62\x6C\x65" then
+                for _, _ in pairs(Ka.curModel:WaitForChild("FlashLight"):GetChildren()) do
+                    if _ and _.Name == "Enable" then
                         _.Enabled = A
                     end
                 end
                 if Ia.globalConfig.ReplicatedFlashlight then
                     Ea.manipEvent:FireServer(
                         A,
-                        "\x46\x6C\x61\x73\x68\x4C\x69\x67\x68\x74",
+                        "FlashLight",
                         nil,
                         nil,
                         nil,
@@ -5048,7 +5048,7 @@ ua.InputBegan:connect(
                         nil,
                         nil,
                         nil,
-                        "\x41\x75\x74\x68"
+                        "Auth"
                     )
                 end
             end
@@ -5117,32 +5117,32 @@ ua.InputBegan:connect(
                             )
                         }
                     ):Play()
-                    Ea.updateCharEvent:FireServer("\x50\x61\x74\x72\x6F\x6C", true, "\x41\x75\x74\x68")
+                    Ea.updateCharEvent:FireServer("Patrol", true, "Auth")
                     W = true
                     wait(0.5)
                 else
-                    Ea.updateCharEvent:FireServer("\x50\x61\x74\x72\x6F\x6C", false, "\x41\x75\x74\x68")
+                    Ea.updateCharEvent:FireServer("Patrol", false, "Auth")
                     W = false
                 end
             end
             if
                 a.KeyCode == Ka.curConfig.CycleSightKey and not wa and Ca and
-                    not (Fa:WaitForChild("\x43\x61\x72\x62\x6F\x6E\x56\x61\x6C\x75\x65\x73"):WaitForChild(
-                        "\x4E\x56\x47\x41\x63\x74\x69\x76\x65"
+                    not (Fa:WaitForChild("CarbonValues"):WaitForChild(
+                        "NVGActive"
                     ).Value == true and O)
              then
-                if Ka.curModel:FindFirstChild("\x41\x69\x6D\x50\x61\x72\x74\x32") then
+                if Ka.curModel:FindFirstChild("AimPart2") then
                     Q = not Q
                     if Q then
-                        Ka.CurAimPart = Ka.curModel:FindFirstChild("\x41\x69\x6D\x50\x61\x72\x74\x32")
+                        Ka.CurAimPart = Ka.curModel:FindFirstChild("AimPart2")
                         Ka.lastAimPart = Ka.CurAimPart
-                        Ka.AimPart2 = Ka.curModel:FindFirstChild("\x41\x69\x6D\x50\x61\x72\x74\x32")
+                        Ka.AimPart2 = Ka.curModel:FindFirstChild("AimPart2")
                         if not ia then
                             Ka.curZoom = Ka.curConfig.AltAimZoom
                         else
                             Ka.curZoom = R
                         end
-                        if Ka.curModel:FindFirstChild("\x4D\x61\x67\x6E\x69") then
+                        if Ka.curModel:FindFirstChild("Magni") then
                             Ja:Create(
                                 Ka.LAW,
                                 TweenInfo.new(0.3),
@@ -5225,7 +5225,7 @@ ua.InputBegan:connect(
                         if za then
                             Aim(true, false)
                         end
-                        if Ka.curModel:FindFirstChild("\x4D\x61\x67\x6E\x69") then
+                        if Ka.curModel:FindFirstChild("Magni") then
                             Ja:Create(
                                 Ka.LAW,
                                 TweenInfo.new(0.3),
@@ -5598,7 +5598,7 @@ ua.InputBegan:connect(
                     Shoot()
                 end
                 if Ka.Ammo <= 0 or not Ka.CanShoot then
-                    Ka.Grip:WaitForChild("\x43\x6C\x69\x63\x6B"):Play()
+                    Ka.Grip:WaitForChild("Click"):Play()
                 end
             end
             if
@@ -5832,11 +5832,11 @@ ua.InputBegan:connect(
                 T = false
             end
             if a.KeyCode == Enum.KeyCode.DPadUp then
-                if Ka.curModel:FindFirstChild("\x41\x69\x6D\x50\x61\x72\x74\x32") then
+                if Ka.curModel:FindFirstChild("AimPart2") then
                     Q = not Q
                     if Q then
-                        Ka.CurAimPart = Ka.curModel:FindFirstChild("\x41\x69\x6D\x50\x61\x72\x74\x32")
-                        Ka.AimPart2 = Ka.curModel:FindFirstChild("\x41\x69\x6D\x50\x61\x72\x74\x32")
+                        Ka.CurAimPart = Ka.curModel:FindFirstChild("AimPart2")
+                        Ka.AimPart2 = Ka.curModel:FindFirstChild("AimPart2")
                         if not ia then
                             Ka.curZoom = Ka.curConfig.AltAimZoom
                         else
@@ -5951,9 +5951,9 @@ B:Connect(
             end
             if Ka.StanceIndex == 0 and not ya then
                 if not za then
-                    Fa:WaitForChild("\x48\x75\x6D\x61\x6E\x6F\x69\x64").WalkSpeed = Ka.baseWalkspeed
+                    Fa:WaitForChild("Humanoid").WalkSpeed = Ka.baseWalkspeed
                 else
-                    Fa:WaitForChild("\x48\x75\x6D\x61\x6E\x6F\x69\x64").WalkSpeed = Ka.aimWalkSpeed
+                    Fa:WaitForChild("Humanoid").WalkSpeed = Ka.aimWalkSpeed
                 end
             end
             if za and not ya and not da and not oa then
@@ -5981,7 +5981,7 @@ B:Connect(
                 Ka.AnimBaseW.C1 = Ka.AnimBaseW.C1:lerp(CFrame.new() * Ga.swayCF, d * 7)
             end
             for _, a in pairs(Ka.curModel:GetChildren()) do
-                if a and string.match(a.Name, "\x50\x72\x6F\x6A\x65\x63\x74\x6F\x72\x53\x69\x67\x68\x74") then
+                if a and string.match(a.Name, "ProjectorSight") then
                     local _ = a.SurfaceGui
                     _.Adornee = a
                     local _ = _.ClippingFrame.Reticle
@@ -5990,8 +5990,8 @@ B:Connect(
                 end
             end
             if
-                na and Ka.LA:FindFirstChild("\x42\x69\x6E\x6F\x73") and
-                    Ka.LA.Binos:FindFirstChild("\x41\x69\x6D\x50\x61\x72\x74")
+                na and Ka.LA:FindFirstChild("Binos") and
+                    Ka.LA.Binos:FindFirstChild("AimPart")
              then
                 if U.Hit then
                     local b, a, _ =
@@ -6000,8 +6000,8 @@ B:Connect(
                         ha
                     )
                     if b then
-                        Ka.hud:WaitForChild("\x52\x61\x6E\x67\x65\x46\x72\x61\x6D\x65"):WaitForChild("\x44\x69\x73\x74").Text =
-                            math.ceil((Da.head.Position - a).magnitude) .. "\x6D"
+                        Ka.hud:WaitForChild("RangeFrame"):WaitForChild("Dist").Text =
+                            math.ceil((Da.head.Position - a).magnitude) .. "m"
                     end
                 end
             end
@@ -6032,39 +6032,39 @@ B:Connect(
         HalfStepFunc(-math.asin((U.Hit.p - U.Origin.p).unit.y))
         for _, b in pairs(game.Players:GetChildren()) do
             if
-                b and b:IsA("\x50\x6C\x61\x79\x65\x72") and b ~= Ba and b.Character and
-                    b.Character:WaitForChild("\x43\x61\x72\x62\x6F\x6E\x56\x61\x6C\x75\x65\x73"):FindFirstChild(
-                        "\x79\x52\x6F\x74"
+                b and b:IsA("Player") and b ~= Ba and b.Character and
+                    b.Character:WaitForChild("CarbonValues"):FindFirstChild(
+                        "yRot"
                     ) and
-                    b.Character:WaitForChild("\x43\x61\x72\x62\x6F\x6E\x56\x61\x6C\x75\x65\x73").yRot.Value and
-                    b.Character:WaitForChild("\x43\x61\x72\x62\x6F\x6E\x56\x61\x6C\x75\x65\x73"):FindFirstChild(
-                        "\x7A\x52\x6F\x74"
+                    b.Character:WaitForChild("CarbonValues").yRot.Value and
+                    b.Character:WaitForChild("CarbonValues"):FindFirstChild(
+                        "zRot"
                     ) and
-                    b.Character:WaitForChild("\x43\x61\x72\x62\x6F\x6E\x56\x61\x6C\x75\x65\x73").zRot.Value and
-                    b.Character:FindFirstChild("\x54\x6F\x72\x73\x6F") and
-                    b.Character.Torso:FindFirstChild("\x4E\x65\x63\x6B") and
-                    (b.Character:WaitForChild("\x48\x75\x6D\x61\x6E\x6F\x69\x64\x52\x6F\x6F\x74\x50\x61\x72\x74").Position -
+                    b.Character:WaitForChild("CarbonValues").zRot.Value and
+                    b.Character:FindFirstChild("Torso") and
+                    b.Character.Torso:FindFirstChild("Neck") and
+                    (b.Character:WaitForChild("HumanoidRootPart").Position -
                         Da.rootPart.Position).magnitude <= Ia.globalConfig.RenderDist
              then
-                local a = b.Character:WaitForChild("\x54\x6F\x72\x73\x6F"):WaitForChild("\x4E\x65\x63\x6B")
+                local a = b.Character:WaitForChild("Torso"):WaitForChild("Neck")
                 local _ =
-                    b.Character:WaitForChild("\x48\x75\x6D\x61\x6E\x6F\x69\x64\x52\x6F\x6F\x74\x50\x61\x72\x74").CFrame *
+                    b.Character:WaitForChild("HumanoidRootPart").CFrame *
                     CFrame.new(0, 1.5, 0) *
-                    CFrame.new(b.Character:WaitForChild("\x48\x75\x6D\x61\x6E\x6F\x69\x64").CameraOffset)
+                    CFrame.new(b.Character:WaitForChild("Humanoid").CameraOffset)
                 a.C0 =
                     a.C0:lerp(
-                    b.Character:WaitForChild("\x48\x75\x6D\x61\x6E\x6F\x69\x64\x52\x6F\x6F\x74\x50\x61\x72\x74").CFrame:toObjectSpace(
+                    b.Character:WaitForChild("HumanoidRootPart").CFrame:toObjectSpace(
                         _
                     ) *
-                        b.Character:WaitForChild("\x43\x61\x72\x62\x6F\x6E\x56\x61\x6C\x75\x65\x73"):WaitForChild(
-                            "\x6E\x65\x63\x6B\x43\x46"
+                        b.Character:WaitForChild("CarbonValues"):WaitForChild(
+                            "neckCF"
                         ).Value,
                     0.2
                 )
                 a.C1 =
                     a.C1:lerp(
-                    b.Character:WaitForChild("\x43\x61\x72\x62\x6F\x6E\x56\x61\x6C\x75\x65\x73").yRot.Value *
-                        b.Character:WaitForChild("\x43\x61\x72\x62\x6F\x6E\x56\x61\x6C\x75\x65\x73").zRot.Value,
+                    b.Character:WaitForChild("CarbonValues").yRot.Value *
+                        b.Character:WaitForChild("CarbonValues").zRot.Value,
                     0.2
                 )
             end
@@ -6086,10 +6086,10 @@ B:Connect(
         if Ia.globalConfig.ReplicatedLaser then
             for _, _ in pairs(game.Players:GetChildren()) do
                 if
-                    _ and _:IsA("\x50\x6C\x61\x79\x65\x72") and _ ~= Ba and _.Character and
-                        _.Character.CarbonValues:FindFirstChild("\x45\x71\x75\x69\x70\x70\x65\x64") and
+                    _ and _:IsA("Player") and _ ~= Ba and _.Character and
+                        _.Character.CarbonValues:FindFirstChild("Equipped") and
                         _.Character.CarbonValues.Equipped.Value and
-                        _.Character.CarbonValues:FindFirstChild("\x53\x4D\x6F\x64\x65\x6C") and
+                        _.Character.CarbonValues:FindFirstChild("SModel") and
                         _.Character.CarbonValues.SModel.Value
                  then
                     OtherLaser(
@@ -6103,8 +6103,8 @@ B:Connect(
         end
     end
 )
-game:GetService("\x52\x75\x6E\x53\x65\x72\x76\x69\x63\x65"):BindToRenderStep(
-    "\x43\x61\x6D\x65\x72\x61\x20\x55\x70\x64\x61\x74\x65",
+game:GetService("RunService"):BindToRenderStep(
+    "Camera Update",
     200,
     Update
 )
@@ -6141,8 +6141,8 @@ U.Idle:connect(
 Ea.updateCharEvent.OnClientEvent:connect(
     function(e, d, c, _, b, a)
         if
-            e ~= Ba and e.Character and e.Character:FindFirstChild("\x42\x61\x73\x65\x50\x61\x72\x74") and
-                (e.Character:WaitForChild("\x48\x75\x6D\x61\x6E\x6F\x69\x64\x52\x6F\x6F\x74\x50\x61\x72\x74").Position -
+            e ~= Ba and e.Character and e.Character:FindFirstChild("BasePart") and
+                (e.Character:WaitForChild("HumanoidRootPart").Position -
                     Da.rootPart.Position).magnitude <= Ia.globalConfig.RenderDist
          then
             local a
@@ -6151,7 +6151,7 @@ Ea.updateCharEvent.OnClientEvent:connect(
             else
                 a = nil
             end
-            if d == "\x41\x69\x6D" then
+            if d == "Aim" then
                 if c then
                     Ja:Create(e.Character.BasePart.RAW, TweenInfo.new(0.5, Enum.EasingStyle.Quad), {C1 = a.RightAimPos}):Play(
 
@@ -6168,7 +6168,7 @@ Ea.updateCharEvent.OnClientEvent:connect(
                     )
                 end
             end
-            if d == "\x53\x70\x72\x69\x6E\x74" then
+            if d == "Sprint" then
                 if c then
                     Ja:Create(
                         e.Character.BasePart.RAW,
@@ -6189,33 +6189,33 @@ Ea.updateCharEvent.OnClientEvent:connect(
                     )
                 end
             end
-            if d == "\x53\x68\x6F\x6F\x74" then
+            if d == "Shoot" then
                 if c then
                     if
-                        e.Character:FindFirstChild("\x42\x61\x73\x65\x50\x61\x72\x74") and
-                            e.Character.BasePart:FindFirstChild("\x42\x61\x73\x65\x50\x61\x72\x74\x57")
+                        e.Character:FindFirstChild("BasePart") and
+                            e.Character.BasePart:FindFirstChild("BasePartW")
                      then
                         Ja:Create(
-                            e.Character:WaitForChild("\x42\x61\x73\x65\x50\x61\x72\x74"):WaitForChild(
-                                "\x42\x61\x73\x65\x50\x61\x72\x74\x57"
+                            e.Character:WaitForChild("BasePart"):WaitForChild(
+                                "BasePartW"
                             ),
                             TweenInfo.new(b),
                             {C1 = a.ShootPos}
                         ):Play()
                     end
                     if
-                        e.Character:FindFirstChildOfClass("\x54\x6F\x6F\x6C") and
+                        e.Character:FindFirstChildOfClass("Tool") and
                             e.Character:FindFirstChild(
-                                "\x40" .. e.Character:FindFirstChildOfClass("\x54\x6F\x6F\x6C").Name
+                                "@" .. e.Character:FindFirstChildOfClass("Tool").Name
                             )
                      then
                         local _ =
                             e.Character:FindFirstChild(
-                            "\x40" .. e.Character:FindFirstChildOfClass("\x54\x6F\x6F\x6C").Name
+                            "@" .. e.Character:FindFirstChildOfClass("Tool").Name
                         )
-                        if _:FindFirstChild("\x46\x69\x72\x65\x50\x61\x72\x74") then
+                        if _:FindFirstChild("FirePart") then
                             for _, _ in pairs(_.FirePart:GetChildren()) do
-                                if _ and _.Name:sub(1, 7) == "\x46\x6C\x61\x73\x68\x46\x58" then
+                                if _ and _.Name:sub(1, 7) == "FlashFX" then
                                     _.Enabled = true
                                 end
                             end
@@ -6223,7 +6223,7 @@ Ea.updateCharEvent.OnClientEvent:connect(
                                 1 / 30,
                                 function()
                                     for _, _ in pairs(_.FirePart:GetChildren()) do
-                                        if _ and _.Name:sub(1, 7) == "\x46\x6C\x61\x73\x68\x46\x58" then
+                                        if _ and _.Name:sub(1, 7) == "FlashFX" then
                                             _.Enabled = false
                                         end
                                     end
@@ -6233,12 +6233,12 @@ Ea.updateCharEvent.OnClientEvent:connect(
                     end
                     wait(b * 2)
                     if
-                        e.Character:FindFirstChild("\x42\x61\x73\x65\x50\x61\x72\x74") and
-                            e.Character.BasePart:FindFirstChild("\x42\x61\x73\x65\x50\x61\x72\x74\x57")
+                        e.Character:FindFirstChild("BasePart") and
+                            e.Character.BasePart:FindFirstChild("BasePartW")
                      then
                         Ja:Create(
-                            e.Character:WaitForChild("\x42\x61\x73\x65\x50\x61\x72\x74"):WaitForChild(
-                                "\x42\x61\x73\x65\x50\x61\x72\x74\x57"
+                            e.Character:WaitForChild("BasePart"):WaitForChild(
+                                "BasePartW"
                             ),
                             TweenInfo.new(0.2),
                             {C1 = CFrame.new()}
@@ -6246,7 +6246,7 @@ Ea.updateCharEvent.OnClientEvent:connect(
                     end
                 end
             end
-            if d == "\x52\x65\x61\x64\x79\x48\x69\x67\x68" then
+            if d == "ReadyHigh" then
                 if c then
                     Ja:Create(
                         e.Character.BasePart.BasePartW,
@@ -6255,7 +6255,7 @@ Ea.updateCharEvent.OnClientEvent:connect(
                     ):Play()
                 end
             end
-            if d == "\x52\x65\x61\x64\x79\x4C\x6F\x77" then
+            if d == "ReadyLow" then
                 if c then
                     Ja:Create(
                         e.Character.BasePart.BasePartW,
@@ -6264,7 +6264,7 @@ Ea.updateCharEvent.OnClientEvent:connect(
                     ):Play()
                 end
             end
-            if d == "\x49\x64\x6C\x65" then
+            if d == "Idle" then
                 if c then
                     Ja:Create(
                         e.Character.BasePart.RAW,
@@ -6281,7 +6281,7 @@ Ea.updateCharEvent.OnClientEvent:connect(
                     ):Play()
                 end
             end
-            if d == "\x50\x61\x74\x72\x6F\x6C" then
+            if d == "Patrol" then
                 if c then
                     Ja:Create(
                         e.Character.BasePart.RAW,
@@ -6304,41 +6304,41 @@ Ea.updateCharEvent.OnClientEvent:connect(
             end
         end
         if
-            d == "\x53\x74\x61\x6E\x63\x65" and e ~= Ba and e.Character and
-                e.Character:FindFirstChild("\x48\x75\x6D\x61\x6E\x6F\x69\x64") and
+            d == "Stance" and e ~= Ba and e.Character and
+                e.Character:FindFirstChild("Humanoid") and
                 e.Character.Humanoid.Health > 0
          then
             if b == 0 then
                 Ja:Create(
-                    e.Character:WaitForChild("\x48\x75\x6D\x61\x6E\x6F\x69\x64\x52\x6F\x6F\x74\x50\x61\x72\x74"):WaitForChild(
-                        "\x52\x6F\x6F\x74\x4A\x6F\x69\x6E\x74"
+                    e.Character:WaitForChild("HumanoidRootPart"):WaitForChild(
+                        "RootJoint"
                     ),
                     TweenInfo.new(0.6),
                     {C0 = CFrame.new(0, 0, 0, -1, 0, 0, 0, 0, 1, 0, 1, -0)}
                 ):Play()
                 Ja:Create(
-                    e.Character:WaitForChild("\x54\x6F\x72\x73\x6F"):WaitForChild(
-                        "\x52\x69\x67\x68\x74\x20\x48\x69\x70"
+                    e.Character:WaitForChild("Torso"):WaitForChild(
+                        "Right Hip"
                     ),
                     TweenInfo.new(0.6),
                     {C0 = CFrame.new(1, -1, 0, 0, 0, 1, 0, 1, -0, -1, 0, 0)}
                 ):Play()
                 Ja:Create(
-                    e.Character:WaitForChild("\x54\x6F\x72\x73\x6F"):WaitForChild("\x4C\x65\x66\x74\x20\x48\x69\x70"),
+                    e.Character:WaitForChild("Torso"):WaitForChild("Left Hip"),
                     TweenInfo.new(0.6),
                     {C0 = CFrame.new(-1, -1, 0, 0, 0, -1, 0, 1, 0, 1, 0, 0)}
                 ):Play()
             elseif b == 1 then
                 Ja:Create(
-                    e.Character:WaitForChild("\x48\x75\x6D\x61\x6E\x6F\x69\x64\x52\x6F\x6F\x74\x50\x61\x72\x74"):WaitForChild(
-                        "\x52\x6F\x6F\x74\x4A\x6F\x69\x6E\x74"
+                    e.Character:WaitForChild("HumanoidRootPart"):WaitForChild(
+                        "RootJoint"
                     ),
                     TweenInfo.new(0.6),
                     {C0 = CFrame.new(0, -1.20000005, 0, -1, 0, 0, 0, 0, 1, 0, 1, 0)}
                 ):Play()
                 Ja:Create(
-                    e.Character:WaitForChild("\x54\x6F\x72\x73\x6F"):WaitForChild(
-                        "\x52\x69\x67\x68\x74\x20\x48\x69\x70"
+                    e.Character:WaitForChild("Torso"):WaitForChild(
+                        "Right Hip"
                     ),
                     TweenInfo.new(0.6),
                     {
@@ -6359,7 +6359,7 @@ Ea.updateCharEvent.OnClientEvent:connect(
                     }
                 ):Play()
                 Ja:Create(
-                    e.Character:WaitForChild("\x54\x6F\x72\x73\x6F"):WaitForChild("\x4C\x65\x66\x74\x20\x48\x69\x70"),
+                    e.Character:WaitForChild("Torso"):WaitForChild("Left Hip"),
                     TweenInfo.new(0.6),
                     {
                         C0 = CFrame.new(
@@ -6380,15 +6380,15 @@ Ea.updateCharEvent.OnClientEvent:connect(
                 ):Play()
             elseif b == 2 then
                 Ja:Create(
-                    e.Character:WaitForChild("\x48\x75\x6D\x61\x6E\x6F\x69\x64\x52\x6F\x6F\x74\x50\x61\x72\x74"):WaitForChild(
-                        "\x52\x6F\x6F\x74\x4A\x6F\x69\x6E\x74"
+                    e.Character:WaitForChild("HumanoidRootPart"):WaitForChild(
+                        "RootJoint"
                     ),
                     TweenInfo.new(0.6),
                     {C0 = CFrame.new(0, -2.5999999, 0, -1, 0, 0, 0, 1, 1.19248806e-08, 0, 1.19248806e-08, -1)}
                 ):Play()
                 Ja:Create(
-                    e.Character:WaitForChild("\x54\x6F\x72\x73\x6F"):WaitForChild(
-                        "\x52\x69\x67\x68\x74\x20\x48\x69\x70"
+                    e.Character:WaitForChild("Torso"):WaitForChild(
+                        "Right Hip"
                     ),
                     TweenInfo.new(0.6),
                     {
@@ -6409,7 +6409,7 @@ Ea.updateCharEvent.OnClientEvent:connect(
                     }
                 ):Play()
                 Ja:Create(
-                    e.Character:WaitForChild("\x54\x6F\x72\x73\x6F"):WaitForChild("\x4C\x65\x66\x74\x20\x48\x69\x70"),
+                    e.Character:WaitForChild("Torso"):WaitForChild("Left Hip"),
                     TweenInfo.new(0.6),
                     {
                         C0 = CFrame.new(
@@ -6431,14 +6431,14 @@ Ea.updateCharEvent.OnClientEvent:connect(
             end
         end
         if
-            d == "\x4C\x65\x61\x6E" and e ~= Ba and e.Character and
-                e.Character:FindFirstChild("\x48\x75\x6D\x61\x6E\x6F\x69\x64") and
+            d == "Lean" and e ~= Ba and e.Character and
+                e.Character:FindFirstChild("Humanoid") and
                 e.Character.Humanoid.Health > 0
          then
             if a == 1 then
                 Ja:Create(
-                    e.Character:WaitForChild("\x48\x75\x6D\x61\x6E\x6F\x69\x64\x52\x6F\x6F\x74\x50\x61\x72\x74"):WaitForChild(
-                        "\x52\x6F\x6F\x74\x4A\x6F\x69\x6E\x74"
+                    e.Character:WaitForChild("HumanoidRootPart"):WaitForChild(
+                        "RootJoint"
                     ),
                     TweenInfo.new(0.6),
                     {
@@ -6459,14 +6459,14 @@ Ea.updateCharEvent.OnClientEvent:connect(
                     }
                 ):Play()
                 Ja:Create(
-                    e.Character:WaitForChild("\x54\x6F\x72\x73\x6F"):WaitForChild(
-                        "\x52\x69\x67\x68\x74\x20\x48\x69\x70"
+                    e.Character:WaitForChild("Torso"):WaitForChild(
+                        "Right Hip"
                     ),
                     TweenInfo.new(0.6),
                     {C1 = CFrame.new(0.5, 1, 0, 0, 0.087155737, 0.99619472, 0, 0.99619472, -0.087155737, -1, 0, 0)}
                 ):Play()
                 Ja:Create(
-                    e.Character:WaitForChild("\x54\x6F\x72\x73\x6F"):WaitForChild("\x4C\x65\x66\x74\x20\x48\x69\x70"),
+                    e.Character:WaitForChild("Torso"):WaitForChild("Left Hip"),
                     TweenInfo.new(0.6),
                     {
                         C1 = CFrame.new(
@@ -6487,8 +6487,8 @@ Ea.updateCharEvent.OnClientEvent:connect(
                 ):Play()
             elseif a == -1 then
                 Ja:Create(
-                    e.Character:WaitForChild("\x48\x75\x6D\x61\x6E\x6F\x69\x64\x52\x6F\x6F\x74\x50\x61\x72\x74"):WaitForChild(
-                        "\x52\x6F\x6F\x74\x4A\x6F\x69\x6E\x74"
+                    e.Character:WaitForChild("HumanoidRootPart"):WaitForChild(
+                        "RootJoint"
                     ),
                     TweenInfo.new(0.6),
                     {
@@ -6509,8 +6509,8 @@ Ea.updateCharEvent.OnClientEvent:connect(
                     }
                 ):Play()
                 Ja:Create(
-                    e.Character:WaitForChild("\x54\x6F\x72\x73\x6F"):WaitForChild(
-                        "\x52\x69\x67\x68\x74\x20\x48\x69\x70"
+                    e.Character:WaitForChild("Torso"):WaitForChild(
+                        "Right Hip"
                     ),
                     TweenInfo.new(0.6),
                     {
@@ -6531,27 +6531,27 @@ Ea.updateCharEvent.OnClientEvent:connect(
                     }
                 ):Play()
                 Ja:Create(
-                    e.Character:WaitForChild("\x54\x6F\x72\x73\x6F"):WaitForChild("\x4C\x65\x66\x74\x20\x48\x69\x70"),
+                    e.Character:WaitForChild("Torso"):WaitForChild("Left Hip"),
                     TweenInfo.new(0.6),
                     {C1 = CFrame.new(-0.5, 1, 0, 0, 0, -0.99999994, 0, 0.99999994, 0, 1, 0, 0)}
                 ):Play()
             elseif a == 0 then
                 Ja:Create(
-                    e.Character:WaitForChild("\x48\x75\x6D\x61\x6E\x6F\x69\x64\x52\x6F\x6F\x74\x50\x61\x72\x74"):WaitForChild(
-                        "\x52\x6F\x6F\x74\x4A\x6F\x69\x6E\x74"
+                    e.Character:WaitForChild("HumanoidRootPart"):WaitForChild(
+                        "RootJoint"
                     ),
                     TweenInfo.new(0.6),
                     {C1 = CFrame.new(0, 0, 0, -1, 0, 0, 0, 0, 1, 0, 1, -0)}
                 ):Play()
                 Ja:Create(
-                    e.Character:WaitForChild("\x54\x6F\x72\x73\x6F"):WaitForChild(
-                        "\x52\x69\x67\x68\x74\x20\x48\x69\x70"
+                    e.Character:WaitForChild("Torso"):WaitForChild(
+                        "Right Hip"
                     ),
                     TweenInfo.new(0.6),
                     {C1 = CFrame.new(0.5, 1, 0, 0, 0, 1, 0, 1, -0, -1, 0, 0)}
                 ):Play()
                 Ja:Create(
-                    e.Character:WaitForChild("\x54\x6F\x72\x73\x6F"):WaitForChild("\x4C\x65\x66\x74\x20\x48\x69\x70"),
+                    e.Character:WaitForChild("Torso"):WaitForChild("Left Hip"),
                     TweenInfo.new(0.6),
                     {C1 = CFrame.new(-0.5, 1, 0, 0, 0, -1, 0, 1, 0, 1, 0, 0)}
                 ):Play()
@@ -6587,8 +6587,8 @@ Ea.serverFXEvent.OnClientEvent:connect(
 Ea.manipEvent.OnClientEvent:Connect(
     function(c, b, a, _)
         if Ba ~= c then
-            for _, _ in pairs(b:WaitForChild("\x46\x6C\x61\x73\x68\x4C\x69\x67\x68\x74"):GetChildren()) do
-                if _ and _.Name == "\x45\x6E\x61\x62\x6C\x65" then
+            for _, _ in pairs(b:WaitForChild("FlashLight"):GetChildren()) do
+                if _ and _.Name == "Enable" then
                     _.Enabled = a
                 end
             end
@@ -6614,38 +6614,38 @@ Ea.connectionEvent.OnClientEvent:Connect(
 Ea.nadeEvent.OnClientEvent:Connect(
     function(b, _, a)
         if b ~= Ba then
-            local c = ra:WaitForChild("\x46\x52\x41\x47"):WaitForChild("\x4E\x41\x44\x45"):Clone()
+            local c = ra:WaitForChild("FRAG"):WaitForChild("NADE"):Clone()
             c.Parent = workspace
             c.CFrame = _
             c.Anchored = false
             c.CanCollide = true
             game.Debris:AddItem(c, 5)
             local _ = c:GetMass()
-            local _ = Instance.new("\x42\x6F\x64\x79\x46\x6F\x72\x63\x65", c)
+            local _ = Instance.new("BodyForce", c)
             _.Force = Ia.globalConfig.NadePhysics
             c.Velocity = a * Ia.globalConfig.NadeSpeed
-            c:WaitForChild("\x49\x6E\x64\x69\x63\x61\x74\x6F\x72").MaxDistance = Ia.globalConfig.BlastRadius
+            c:WaitForChild("Indicator").MaxDistance = Ia.globalConfig.BlastRadius
             if b.TeamColor ~= Ba.TeamColor then
-                c:WaitForChild("\x49\x6E\x64\x69\x63\x61\x74\x6F\x72"):WaitForChild("\x45\x6E\x65\x6D\x79").Visible =
+                c:WaitForChild("Indicator"):WaitForChild("Enemy").Visible =
                     true
             else
-                c:WaitForChild("\x49\x6E\x64\x69\x63\x61\x74\x6F\x72"):WaitForChild("\x46\x72\x69\x65\x6E\x64\x6C\x79").Visible =
+                c:WaitForChild("Indicator"):WaitForChild("Friendly").Visible =
                     true
             end
             if Ia.globalConfig.NadeTrailEnabled then
-                c:WaitForChild("\x54\x72\x61\x69\x6C").Enabled = true
+                c:WaitForChild("Trail").Enabled = true
             end
         end
     end
 )
 Ea.attachmentEvent.OnClientEvent:Connect(
     function(a, _, b)
-        if _ == "\x4F\x70\x74\x69\x63\x4E\x6F\x64\x65" then
+        if _ == "OpticNode" then
             ia = a
             P = b[1]
             R = b[2]
             Ka.oHopUp = b[3]
-        elseif _ == "\x47\x72\x69\x70\x4E\x6F\x64\x65" then
+        elseif _ == "GripNode" then
             K = a
             F = b
         end
@@ -6724,7 +6724,7 @@ end
 Ka.optionButton.MouseEnter:connect(
     function()
         Ja:Create(
-            Ka.optionButton:WaitForChild("\x44\x65\x74\x61\x69\x6C"),
+            Ka.optionButton:WaitForChild("Detail"),
             TweenInfo.new(0.3),
             {BackgroundTransparency = 0.3}
         ):Play()
@@ -6732,9 +6732,9 @@ Ka.optionButton.MouseEnter:connect(
 )
 Ka.optionButton.MouseLeave:connect(
     function()
-        if X ~= "\x4F\x70\x74\x69\x6F\x6E" then
+        if X ~= "Option" then
             Ja:Create(
-                Ka.optionButton:WaitForChild("\x44\x65\x74\x61\x69\x6C"),
+                Ka.optionButton:WaitForChild("Detail"),
                 TweenInfo.new(0.3),
                 {BackgroundTransparency = 1}
             ):Play()
@@ -6743,14 +6743,14 @@ Ka.optionButton.MouseLeave:connect(
 )
 Ka.optionButton.MouseButton1Click:connect(
     function()
-        X = "\x4F\x70\x74\x69\x6F\x6E"
+        X = "Option"
         Ia.codeArchive.OptionFunc(Ka, X)
     end
 )
 Ka.keybindButton.MouseEnter:connect(
     function()
         Ja:Create(
-            Ka.keybindButton:WaitForChild("\x44\x65\x74\x61\x69\x6C"),
+            Ka.keybindButton:WaitForChild("Detail"),
             TweenInfo.new(0.3),
             {BackgroundTransparency = 0.3}
         ):Play()
@@ -6758,9 +6758,9 @@ Ka.keybindButton.MouseEnter:connect(
 )
 Ka.keybindButton.MouseLeave:connect(
     function()
-        if X ~= "\x4B\x65\x79\x62\x69\x6E\x64" then
+        if X ~= "Keybind" then
             Ja:Create(
-                Ka.keybindButton:WaitForChild("\x44\x65\x74\x61\x69\x6C"),
+                Ka.keybindButton:WaitForChild("Detail"),
                 TweenInfo.new(0.3),
                 {BackgroundTransparency = 1}
             ):Play()
@@ -6769,14 +6769,14 @@ Ka.keybindButton.MouseLeave:connect(
 )
 Ka.keybindButton.MouseButton1Click:connect(
     function()
-        X = "\x4B\x65\x79\x62\x69\x6E\x64"
+        X = "Keybind"
         Ia.codeArchive.KeybindFunc(Ka, X)
     end
 )
 Ka.patchButton.MouseEnter:connect(
     function()
         Ja:Create(
-            Ka.patchButton:WaitForChild("\x44\x65\x74\x61\x69\x6C"),
+            Ka.patchButton:WaitForChild("Detail"),
             TweenInfo.new(0.3),
             {BackgroundTransparency = 0.3}
         ):Play()
@@ -6784,9 +6784,9 @@ Ka.patchButton.MouseEnter:connect(
 )
 Ka.patchButton.MouseLeave:connect(
     function()
-        if X ~= "\x50\x61\x74\x63\x68" then
+        if X ~= "Patch" then
             Ja:Create(
-                Ka.patchButton:WaitForChild("\x44\x65\x74\x61\x69\x6C"),
+                Ka.patchButton:WaitForChild("Detail"),
                 TweenInfo.new(0.3),
                 {BackgroundTransparency = 1}
             ):Play()
@@ -6795,18 +6795,18 @@ Ka.patchButton.MouseLeave:connect(
 )
 Ka.patchButton.MouseButton1Click:connect(
     function()
-        X = "\x50\x61\x74\x63\x68"
-        Ja:Create(Ka.patchButton:WaitForChild("\x48\x6F\x76\x65\x72"), TweenInfo.new(0.3), {ImageTransparency = 0.6}):Play(
+        X = "Patch"
+        Ja:Create(Ka.patchButton:WaitForChild("Hover"), TweenInfo.new(0.3), {ImageTransparency = 0.6}):Play(
 
         )
-        Ka.menuFrame:WaitForChild("\x50\x61\x67\x65\x73\x46\x72\x61\x6D\x65"):WaitForChild(
-            "\x50\x61\x67\x65\x4C\x61\x79\x6F\x75\x74"
-        ):JumpTo(Ka.menuFrame:WaitForChild("\x50\x61\x67\x65\x73\x46\x72\x61\x6D\x65"):WaitForChild(X))
-        for _, _ in pairs(Ka.menuFrame:WaitForChild("\x42\x75\x74\x74\x6F\x6E\x73"):GetDescendants()) do
-            if _ and _.Name == "\x48\x6F\x76\x65\x72" and _.Parent ~= Ka.patchButton then
+        Ka.menuFrame:WaitForChild("PagesFrame"):WaitForChild(
+            "PageLayout"
+        ):JumpTo(Ka.menuFrame:WaitForChild("PagesFrame"):WaitForChild(X))
+        for _, _ in pairs(Ka.menuFrame:WaitForChild("Buttons"):GetDescendants()) do
+            if _ and _.Name == "Hover" and _.Parent ~= Ka.patchButton then
                 Ja:Create(_, TweenInfo.new(0.3), {ImageTransparency = 1}):Play()
             end
-            if _ and _.Name == "\x44\x65\x74\x61\x69\x6C" and _.Parent ~= Ka.patchButton then
+            if _ and _.Name == "Detail" and _.Parent ~= Ka.patchButton then
                 Ja:Create(_, TweenInfo.new(0.3), {BackgroundTransparency = 1}):Play()
             end
         end
@@ -6815,7 +6815,7 @@ Ka.patchButton.MouseButton1Click:connect(
 Ka.storeButton.MouseEnter:connect(
     function()
         Ja:Create(
-            Ka.storeButton:WaitForChild("\x44\x65\x74\x61\x69\x6C"),
+            Ka.storeButton:WaitForChild("Detail"),
             TweenInfo.new(0.3),
             {BackgroundTransparency = 0.3}
         ):Play()
@@ -6823,9 +6823,9 @@ Ka.storeButton.MouseEnter:connect(
 )
 Ka.storeButton.MouseLeave:connect(
     function()
-        if X ~= "\x53\x74\x6F\x72\x65" then
+        if X ~= "Store" then
             Ja:Create(
-                Ka.storeButton:WaitForChild("\x44\x65\x74\x61\x69\x6C"),
+                Ka.storeButton:WaitForChild("Detail"),
                 TweenInfo.new(0.3),
                 {BackgroundTransparency = 1}
             ):Play()
@@ -6834,73 +6834,73 @@ Ka.storeButton.MouseLeave:connect(
 )
 Ka.storeButton.MouseButton1Click:connect(
     function()
-        X = "\x53\x74\x6F\x72\x65"
-        Ja:Create(Ka.storeButton:WaitForChild("\x48\x6F\x76\x65\x72"), TweenInfo.new(0.3), {ImageTransparency = 0.6}):Play(
+        X = "Store"
+        Ja:Create(Ka.storeButton:WaitForChild("Hover"), TweenInfo.new(0.3), {ImageTransparency = 0.6}):Play(
 
         )
-        Ka.menuFrame:WaitForChild("\x50\x61\x67\x65\x73\x46\x72\x61\x6D\x65"):WaitForChild(
-            "\x50\x61\x67\x65\x4C\x61\x79\x6F\x75\x74"
-        ):JumpTo(Ka.menuFrame:WaitForChild("\x50\x61\x67\x65\x73\x46\x72\x61\x6D\x65"):WaitForChild(X))
-        for _, _ in pairs(Ka.menuFrame:WaitForChild("\x42\x75\x74\x74\x6F\x6E\x73"):GetDescendants()) do
-            if _ and _.Name == "\x48\x6F\x76\x65\x72" and _.Parent ~= Ka.storeButton then
+        Ka.menuFrame:WaitForChild("PagesFrame"):WaitForChild(
+            "PageLayout"
+        ):JumpTo(Ka.menuFrame:WaitForChild("PagesFrame"):WaitForChild(X))
+        for _, _ in pairs(Ka.menuFrame:WaitForChild("Buttons"):GetDescendants()) do
+            if _ and _.Name == "Hover" and _.Parent ~= Ka.storeButton then
                 Ja:Create(_, TweenInfo.new(0.3), {ImageTransparency = 1}):Play()
             end
-            if _ and _.Name == "\x44\x65\x74\x61\x69\x6C" and _.Parent ~= Ka.storeButton then
+            if _ and _.Name == "Detail" and _.Parent ~= Ka.storeButton then
                 Ja:Create(_, TweenInfo.new(0.3), {BackgroundTransparency = 1}):Play()
             end
         end
     end
 )
-Ka.menuFrame:WaitForChild("\x50\x61\x67\x65\x73\x46\x72\x61\x6D\x65"):WaitForChild("\x4F\x70\x74\x69\x6F\x6E"):WaitForChild(
-    "\x42\x61\x73\x65\x53\x65\x6E\x73"
-):WaitForChild("\x43\x6F\x6E\x74\x65\x78\x74").FocusLost:connect(
+Ka.menuFrame:WaitForChild("PagesFrame"):WaitForChild("Option"):WaitForChild(
+    "BaseSens"
+):WaitForChild("Context").FocusLost:connect(
     function(_)
         if _ then
             local _ =
                 tonumber(
-                Ka.menuFrame:WaitForChild("\x50\x61\x67\x65\x73\x46\x72\x61\x6D\x65"):WaitForChild(
-                    "\x4F\x70\x74\x69\x6F\x6E"
-                ):WaitForChild("\x42\x61\x73\x65\x53\x65\x6E\x73"):WaitForChild("\x43\x6F\x6E\x74\x65\x78\x74").Text
+                Ka.menuFrame:WaitForChild("PagesFrame"):WaitForChild(
+                    "Option"
+                ):WaitForChild("BaseSens"):WaitForChild("Context").Text
             )
             if _ > 0 and _ <= 1 then
                 Ka.baseSens = _
                 e.Value = _
             end
         else
-            Ka.menuFrame:WaitForChild("\x50\x61\x67\x65\x73\x46\x72\x61\x6D\x65"):WaitForChild(
-                    "\x4F\x70\x74\x69\x6F\x6E"
-                ):WaitForChild("\x42\x61\x73\x65\x53\x65\x6E\x73"):WaitForChild("\x43\x6F\x6E\x74\x65\x78\x74").Text =
+            Ka.menuFrame:WaitForChild("PagesFrame"):WaitForChild(
+                    "Option"
+                ):WaitForChild("BaseSens"):WaitForChild("Context").Text =
                 Ka.baseSens
-            Ka.menuFrame:WaitForChild("\x50\x61\x67\x65\x73\x46\x72\x61\x6D\x65"):WaitForChild(
-                    "\x4F\x70\x74\x69\x6F\x6E"
-                ):WaitForChild("\x41\x69\x6D\x53\x65\x6E\x73"):WaitForChild("\x43\x6F\x6E\x74\x65\x78\x74").Text =
+            Ka.menuFrame:WaitForChild("PagesFrame"):WaitForChild(
+                    "Option"
+                ):WaitForChild("AimSens"):WaitForChild("Context").Text =
                 Ka.aimSens
         end
     end
 )
-Ka.menuFrame:WaitForChild("\x50\x61\x67\x65\x73\x46\x72\x61\x6D\x65"):WaitForChild("\x4F\x70\x74\x69\x6F\x6E"):WaitForChild(
-    "\x41\x69\x6D\x53\x65\x6E\x73"
-):WaitForChild("\x43\x6F\x6E\x74\x65\x78\x74").FocusLost:connect(
+Ka.menuFrame:WaitForChild("PagesFrame"):WaitForChild("Option"):WaitForChild(
+    "AimSens"
+):WaitForChild("Context").FocusLost:connect(
     function(_)
         if _ then
             local _ =
                 tonumber(
-                Ka.menuFrame:WaitForChild("\x50\x61\x67\x65\x73\x46\x72\x61\x6D\x65"):WaitForChild(
-                    "\x4F\x70\x74\x69\x6F\x6E"
-                ):WaitForChild("\x41\x69\x6D\x53\x65\x6E\x73"):WaitForChild("\x43\x6F\x6E\x74\x65\x78\x74").Text
+                Ka.menuFrame:WaitForChild("PagesFrame"):WaitForChild(
+                    "Option"
+                ):WaitForChild("AimSens"):WaitForChild("Context").Text
             )
             if _ > 0 and _ <= 1 then
                 Ka.aimSens = _
                 c.Value = _
             end
         else
-            Ka.menuFrame:WaitForChild("\x50\x61\x67\x65\x73\x46\x72\x61\x6D\x65"):WaitForChild(
-                    "\x4F\x70\x74\x69\x6F\x6E"
-                ):WaitForChild("\x42\x61\x73\x65\x53\x65\x6E\x73"):WaitForChild("\x43\x6F\x6E\x74\x65\x78\x74").Text =
+            Ka.menuFrame:WaitForChild("PagesFrame"):WaitForChild(
+                    "Option"
+                ):WaitForChild("BaseSens"):WaitForChild("Context").Text =
                 Ka.baseSens
-            Ka.menuFrame:WaitForChild("\x50\x61\x67\x65\x73\x46\x72\x61\x6D\x65"):WaitForChild(
-                    "\x4F\x70\x74\x69\x6F\x6E"
-                ):WaitForChild("\x41\x69\x6D\x53\x65\x6E\x73"):WaitForChild("\x43\x6F\x6E\x74\x65\x78\x74").Text =
+            Ka.menuFrame:WaitForChild("PagesFrame"):WaitForChild(
+                    "Option"
+                ):WaitForChild("AimSens"):WaitForChild("Context").Text =
                 Ka.aimSens
         end
     end
@@ -6909,13 +6909,13 @@ Ka.menuButton.MouseButton1Click:connect(
     function()
         Ka.menuFrame.Visible = not Ka.menuFrame.Visible
         if Ka.menuFrame.Visible then
-            Ka.menuFrame:WaitForChild("\x50\x61\x67\x65\x73\x46\x72\x61\x6D\x65"):WaitForChild(
-                    "\x4F\x70\x74\x69\x6F\x6E"
-                ):WaitForChild("\x42\x61\x73\x65\x53\x65\x6E\x73"):WaitForChild("\x43\x6F\x6E\x74\x65\x78\x74").Text =
+            Ka.menuFrame:WaitForChild("PagesFrame"):WaitForChild(
+                    "Option"
+                ):WaitForChild("BaseSens"):WaitForChild("Context").Text =
                 Ka.baseSens
-            Ka.menuFrame:WaitForChild("\x50\x61\x67\x65\x73\x46\x72\x61\x6D\x65"):WaitForChild(
-                    "\x4F\x70\x74\x69\x6F\x6E"
-                ):WaitForChild("\x41\x69\x6D\x53\x65\x6E\x73"):WaitForChild("\x43\x6F\x6E\x74\x65\x78\x74").Text =
+            Ka.menuFrame:WaitForChild("PagesFrame"):WaitForChild(
+                    "Option"
+                ):WaitForChild("AimSens"):WaitForChild("Context").Text =
                 Ka.aimSens
         end
     end
@@ -6969,7 +6969,7 @@ function MobileShoot(_, a, _)
                     end
                 end
                 if Ka.Ammo <= 0 or not Ka.CanShoot then
-                    Ka.Grip:WaitForChild("\x43\x6C\x69\x63\x6B"):Play()
+                    Ka.Grip:WaitForChild("Click"):Play()
                 end
             else
                 if Ka.NadeMode == 4 and not ba then
@@ -6985,7 +6985,7 @@ function MobileShoot(_, a, _)
                         local _ = math.asin(a.magnitude)
                         if d then
                             Z:Destroy()
-                            V = Ea.placeC4Event:InvokeServer(b, a, _, "\x41\x75\x74\x68", c, d)
+                            V = Ea.placeC4Event:InvokeServer(b, a, _, "Auth", c, d)
                             IdleAnim()
                             pa = false
                         end
