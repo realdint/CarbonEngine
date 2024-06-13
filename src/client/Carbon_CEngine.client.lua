@@ -1,5 +1,5 @@
 repeat
-	wait()
+	task.wait()
 until game.Players.LocalPlayer.Character
 local Ba = game.Players.LocalPlayer
 local Fa = Ba.Character
@@ -2398,7 +2398,7 @@ function fireSemi()
                     RecoilFront = false
                 end
             )
-            wait(Ka.curConfig.Firerate)
+            task.wait(Ka.curConfig.Firerate)
             Shooting = false
             Ka.CanShoot = true
         end
@@ -2722,7 +2722,7 @@ function fireShot()
                 end
             )
             Ka.Ammo = Ka.Ammo - 1
-            wait(Ka.curConfig.Firerate)
+            task.wait(Ka.curConfig.Firerate)
             ta = false
             if Ka.curConfig.CanAutoBolt then
                 Actioning = true
@@ -2852,7 +2852,7 @@ function fireBoltAction()
                 end
             )
             ta = false
-            wait(Ka.curConfig.Firerate)
+            task.wait(Ka.curConfig.Firerate)
             if Ka.curConfig.CanAutoBolt then
                 Actioning = true
                 BoltBackAnim()
@@ -2985,7 +2985,7 @@ function fireAuto()
                     RecoilFront = false
                 end
             )
-            wait(Ka.curConfig.Firerate)
+            task.wait(Ka.curConfig.Firerate)
             Shooting = false
             Ka.CanShoot = true
             UpdateAmmo()
@@ -3112,7 +3112,7 @@ function fireBurst()
                             RecoilFront = false
                         end
                     )
-                    wait(Ka.curConfig.Firerate)
+                    task.wait(Ka.curConfig.Firerate)
                 end
                 Shooting = true
             end
@@ -3326,7 +3326,7 @@ function HandleBino()
                 )
             }
         ):Play()
-        wait(0.4)
+        task.wait(0.4)
         Ja:Create(
             Ka.LAW,
             TweenInfo.new(0.4),
@@ -3372,7 +3372,7 @@ function HandleBino()
             TweenInfo.new(0.4),
             {BackgroundTransparency = 0}
         ):Play()
-        wait(0.4)
+        task.wait(0.4)
         for _, _ in pairs(I:GetChildren()) do
             if _ and _:IsA("BasePart") then
                 _.LocalTransparencyModifier = 1
@@ -3387,20 +3387,20 @@ function HandleBino()
         Ka.hud:WaitForChild("RangeFrame"):WaitForChild("ZoomNum").Text =
             Ia.globalConfig.BinoZoom
         Ja:Create(xa, TweenInfo.new(0.05, Enum.EasingStyle.Quad), {FieldOfView = Ia.globalConfig.BinoZoom}):Play()
-        wait(0.05)
+        task.wait(0.05)
         Ja:Create(
             Ka.hud:WaitForChild("RangeFrame"),
             TweenInfo.new(0.4),
             {BackgroundTransparency = 1}
         ):Play()
-        wait(0.4)
+        task.wait(0.4)
     else
         Ja:Create(
             Ka.hud:WaitForChild("RangeFrame"),
             TweenInfo.new(0.4),
             {BackgroundTransparency = 0}
         ):Play()
-        wait(0.4)
+        task.wait(0.4)
         for _, _ in pairs(I:GetChildren()) do
             if _ and _:IsA("BasePart") then
                 _.LocalTransparencyModifier = 0
@@ -3415,13 +3415,13 @@ function HandleBino()
         Ka.hud:WaitForChild("RangeFrame"):WaitForChild("ZoomNum").Text =
             "70"
         Ja:Create(xa, TweenInfo.new(0.05, Enum.EasingStyle.Quad), {FieldOfView = 70}):Play()
-        wait(0.05)
+        task.wait(0.05)
         Ja:Create(
             Ka.hud:WaitForChild("RangeFrame"),
             TweenInfo.new(0.4),
             {BackgroundTransparency = 1}
         ):Play()
-        wait(0.4)
+        task.wait(0.4)
         Ja:Create(
             Ka.LAW,
             TweenInfo.new(0.4),
@@ -3442,7 +3442,7 @@ function HandleBino()
                 )
             }
         ):Play()
-        wait(0.4)
+        task.wait(0.4)
         IdleAnim()
         Ka.LA:ClearAllChildren()
     end
@@ -3476,7 +3476,7 @@ function HandleToggle()
                 while z do
                     cycle(b)
                     cycle(a)
-                    wait(0.05)
+                    task.wait(0.05)
                 end
             end
         )
@@ -3582,7 +3582,7 @@ function HandleNades()
                 )
             }
         ):Play()
-        wait(0.2)
+        task.wait(0.2)
         local a = ra:WaitForChild("FRAG"):clone()
         a.Parent = Ka.LA
         for _, _ in pairs(a:GetChildren()) do
@@ -3637,7 +3637,7 @@ function HandleNades()
                 )
             }
         ):Play()
-        wait(0.15)
+        task.wait(0.15)
         Ja:Create(
             Ka.LAW,
             TweenInfo.new(0.4),
@@ -3658,7 +3658,7 @@ function HandleNades()
                 )
             }
         ):Play()
-        wait(0.4)
+        task.wait(0.4)
         if a:FindFirstChild("Pin") then
             a.Pin:Destroy()
             a.Lever:Destroy()
@@ -3683,7 +3683,7 @@ function HandleNades()
                 )
             }
         ):Play()
-        wait(0.03)
+        task.wait(0.03)
         a.Grip:Destroy()
         Ka.FragAmmo = Ka.FragAmmo - 1
         local _ = a:WaitForChild("NADE"):GetMass()
@@ -3728,7 +3728,7 @@ function HandleNades()
                 _:Destroy()
             end
         )
-        wait(0.18)
+        task.wait(0.18)
         IdleAnim()
         pa = false
     elseif Ka.NadeMode == 2 then
@@ -3775,7 +3775,7 @@ function HandleNades()
                 )
             }
         ):Play()
-        wait(0.4)
+        task.wait(0.4)
         Z = ra:WaitForChild("C4"):clone()
         Z.Parent = Ka.LA
         for _, _ in pairs(Z:GetChildren()) do
@@ -3817,7 +3817,7 @@ function HandleNades()
                 )
             }
         ):Play()
-        wait(0.4)
+        task.wait(0.4)
         g = true
         ba = false
     end
@@ -4410,7 +4410,7 @@ ua.InputBegan:connect(
                                     )
                                 }
                             ):Play()
-                            wait(0.2)
+                            task.wait(0.2)
                             local a = ra:WaitForChild("Phone"):clone()
                             a.Parent = Ka.LA
                             for _, _ in pairs(a:GetChildren()) do
@@ -4465,7 +4465,7 @@ ua.InputBegan:connect(
                                     )
                                 }
                             ):Play()
-                            wait(0.4)
+                            task.wait(0.4)
                             a:WaitForChild("Grip"):WaitForChild("Dial"):Play()
                             Ja:Create(
                                 Ka.LAW,
@@ -4487,7 +4487,7 @@ ua.InputBegan:connect(
                                     )
                                 }
                             ):Play()
-                            wait(0.35)
+                            task.wait(0.35)
                             Ea.explosiveEvent:FireServer(
                                 _,
                                 V:WaitForChild("Grip").Position,
@@ -4525,7 +4525,7 @@ ua.InputBegan:connect(
                                     )
                                 }
                             ):Play()
-                            wait(0.4)
+                            task.wait(0.4)
                             a:Destroy()
                             m = true
                             IdleAnim()
@@ -4555,7 +4555,7 @@ ua.InputBegan:connect(
                                         )
                                     }
                                 ):Play()
-                                wait(0.2)
+                                task.wait(0.2)
                                 if Z then
                                     Z:Destroy()
                                 end
@@ -4592,7 +4592,7 @@ ua.InputBegan:connect(
                                 break
                             end
                         end
-                        wait()
+                        task.wait()
                     end
                 end
             end
@@ -4687,7 +4687,7 @@ ua.InputBegan:connect(
                         )
                     }
                 ):Play()
-                wait(0.2)
+                task.wait(0.2)
                 local _ = ra:WaitForChild("KnifeJab"):clone()
                 _.Parent = Ba.PlayerGui
                 _:Play()
@@ -4756,7 +4756,7 @@ ua.InputBegan:connect(
                         end
                     )
                 )
-                wait(0.1)
+                task.wait(0.1)
                 IdleAnim()
                 a:Destroy()
                 ka = false
@@ -4834,7 +4834,7 @@ ua.InputBegan:connect(
                         )
                     }
                 ):Play()
-                wait(0.4)
+                task.wait(0.4)
                 for _, _ in pairs(a:GetChildren()) do
                     if _ and _:IsA("BasePart") then
                         if _.Name ~= "Glass" then
@@ -4887,7 +4887,7 @@ ua.InputBegan:connect(
                         )
                     }
                 ):Play()
-                wait(0.24)
+                task.wait(0.24)
                 local _ = ra:WaitForChild("SyringeIn"):Clone()
                 _.Parent = Ba.PlayerGui
                 _:Play()
@@ -4920,7 +4920,7 @@ ua.InputBegan:connect(
                         Ja:Create(Ka.painShade, TweenInfo.new(3), {ImageTransparency = 1}):Play()
                     end
                 )
-                wait(0.35)
+                task.wait(0.35)
                 Ja:Create(
                     a:WaitForChild("Push"):WaitForChild("Push"),
                     TweenInfo.new(0.3),
@@ -4931,7 +4931,7 @@ ua.InputBegan:connect(
                     TweenInfo.new(0.3),
                     {C1 = CFrame.new(-0.64000386, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1)}
                 ):Play()
-                wait(0.5)
+                task.wait(0.5)
                 Ea.medEvent:FireServer(true, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, "Auth")
                 a:WaitForChild("Liquid").Transparency = 1
                 IdleAnim()
@@ -5109,7 +5109,7 @@ ua.InputBegan:connect(
                     ):Play()
                     Ea.updateCharEvent:FireServer("Patrol", true, "Auth")
                     W = true
-                    wait(0.5)
+                    task.wait(0.5)
                 else
                     Ea.updateCharEvent:FireServer("Patrol", false, "Auth")
                     W = false
@@ -5153,7 +5153,7 @@ ua.InputBegan:connect(
                                     )
                                 }
                             ):Play()
-                            wait(0.3)
+                            task.wait(0.3)
                             Ja:Create(
                                 Ka.curModel.Magni.Magni,
                                 TweenInfo.new(0.3),
@@ -5194,7 +5194,7 @@ ua.InputBegan:connect(
                                     )
                                 }
                             ):Play()
-                            wait(0.3)
+                            task.wait(0.3)
                             IdleAnim()
                             if za then
                                 Aim(true, false)
@@ -5236,7 +5236,7 @@ ua.InputBegan:connect(
                                     )
                                 }
                             ):Play()
-                            wait(0.3)
+                            task.wait(0.3)
                             Ja:Create(Ka.curModel.Magni.Magni, TweenInfo.new(0.3), {C1 = CFrame.new()}):Play()
                             Ja:Create(
                                 Ka.LAW,
@@ -5258,7 +5258,7 @@ ua.InputBegan:connect(
                                     )
                                 }
                             ):Play()
-                            wait(0.3)
+                            task.wait(0.3)
                             IdleAnim()
                         else
                             if za then
@@ -5366,7 +5366,7 @@ ua.InputBegan:connect(
                             Ja:Create(Ka.LAW, TweenInfo.new(0.25, Enum.EasingStyle.Quad), {C1 = Ka.curConfig.GLLeftPos}):Play(
 
                             )
-                            wait(0.25)
+                            task.wait(0.25)
                         end
                         ma = false
                         Ka.CanShoot = true
@@ -6102,7 +6102,7 @@ coroutine.resume(
     coroutine.create(
         function()
             while true do
-                wait(1)
+                task.wait(1)
                 if Ia.globalConfig.StaminaEnabled then
                     if ya then
                         Ka.Stamina = Ka.Stamina - Ka.StaminaMult
@@ -6111,7 +6111,7 @@ coroutine.resume(
                             Sprint(false)
                         end
                     elseif not ya and Ka.Stamina < 1 then
-                        wait(Ia.globalConfig.StaminaRegenTime - 1)
+                        task.wait(Ia.globalConfig.StaminaRegenTime - 1)
                         Ka.Stamina = Ka.Stamina + Ia.globalConfig.StaminaRegenMult
                         if Ka.Stamina > 1 then
                             Ka.Stamina = 1
@@ -6221,7 +6221,7 @@ Ea.updateCharEvent.OnClientEvent:connect(
                             )
                         end
                     end
-                    wait(b * 2)
+                    task.wait(b * 2)
                     if
                         e.Character:FindFirstChild("BasePart") and
                             e.Character.BasePart:FindFirstChild("BasePartW")
@@ -7108,7 +7108,7 @@ function MobileReload(_, _, _)
 
                     )
                     Ja:Create(Ka.LAW, TweenInfo.new(0.25, Enum.EasingStyle.Quad), {C1 = Ka.curConfig.GLLeftPos}):Play()
-                    wait(0.25)
+                    task.wait(0.25)
                 end
                 ma = false
                 Ka.CanShoot = true
@@ -7128,7 +7128,7 @@ function MobileJump(_, a, _)
             coroutine.resume(
                 coroutine.create(
                     function()
-                        while wait() do
+                        while task.wait() do
                             if not n then
                                 break
                             end
@@ -7139,7 +7139,7 @@ function MobileJump(_, a, _)
             )
         elseif a == Enum.UserInputState.End or a == Enum.UserInputState.Cancel then
             n = false
-            wait()
+            task.wait()
             Da.humanoid.Jump = false
         end
     end
