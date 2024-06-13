@@ -2177,17 +2177,6 @@ function CreateShell()
             end
         end
     )
-    delay(
-        0.5,
-        function()
-            if ra:FindFirstChild("ShellCasing") then
-                local _ = ra.ShellCasing:clone()
-                _.Parent = Ba.PlayerGui
-                _:Play()
-                game:GetService("Debris"):AddItem(_, _.TimeLength)
-            end
-        end
-    )
     for _, _ in pairs(Ka.curModel.Chamber:GetChildren()) do
         if _ and _.Name == "Gas_Discharge" then
             _.Enabled = true
@@ -3949,6 +3938,7 @@ Ba.CharacterRemoving:Connect(
 )
 Da.humanoid.Died:connect(
     function()
+        print("You died idiot!")
         f = true
         U.TargetFilter = nil
         UnequipModel()
