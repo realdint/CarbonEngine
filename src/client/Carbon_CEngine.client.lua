@@ -1,100 +1,98 @@
 repeat
 	task.wait()
 until game.Players.LocalPlayer.Character
-local Ba = game.Players.LocalPlayer
-local Fa = Ba.Character
-local xa = workspace.CurrentCamera
-local U = Ba:GetMouse()
-local d = game.ReplicatedStorage:WaitForChild("CarbonResource")
-local f = d:WaitForChild("Events")
-local ra = d:WaitForChild("FX")
-local _ = d:WaitForChild("Models")
-local p = _:WaitForChild("Client")
-local _ = _:WaitForChild("Server")
-local c = d:WaitForChild("HUD")
-local a = d:WaitForChild("Global")
-local e = d:WaitForChild("Modules")
-local b = d:WaitForChild("Accessories")
-local _ = b:WaitForChild("Arms")
-local _ = b:WaitForChild("Wearable")
-local ca
-local _a = nil
-local S = CFrame.Angles(0, 0, 0)
-local _ =
+local localPlayer = game.Players.LocalPlayer
+local playerCharacter = localPlayer.Character
+local currentCamera = workspace.CurrentCamera
+local mouse = localPlayer:GetMouse()
+local carbonResource = game.ReplicatedStorage:WaitForChild("CarbonResource")
+local carbonEvents = carbonResource:WaitForChild("Events")
+local carbonFx = carbonResource:WaitForChild("FX")
+local _carbonResourceModels = carbonResource:WaitForChild("Models")
+local carbonClientResourceModels = _carbonResourceModels:WaitForChild("Client")
+local _carbonResourceModels = _carbonResourceModels:WaitForChild("Server")
+local carbonHUD = carbonResource:WaitForChild("HUD")
+local carbonGlobalResource = carbonResource:WaitForChild("Global")
+local carbonModules = carbonResource:WaitForChild("Modules")
+local carbonAccessories = carbonResource:WaitForChild("Accessories")
+local _carbonArms = carbonAccessories:WaitForChild("Arms")
+local _wearable = carbonAccessories:WaitForChild("Wearable")
+local carbonAudio
+local _aBullet = nil
+local rotation = CFrame.Angles(0, 0, 0)
+local dataStorage =
 	script:FindFirstChild("DataStorage") or Instance.new("Folder")
-_.Name = "DataStorage"
-_.Parent = script
-local s = game.ReplicatedStorage:FindFirstChild("Menu_Storage") or nil
-local t
-local o
-local _
-if s then
-	t = s:WaitForChild("Attachments")
-	o = s:WaitForChild("Events")
-	_ = game.ReplicatedStorage:WaitForChild("ToolStorage")
+dataStorage.Name = "DataStorage"
+dataStorage.Parent = script
+local menuStorage = game.ReplicatedStorage:FindFirstChild("Menu_Storage") or nil
+local attachmentStorage
+local eventsStorage
+local toolStorage
+if menuStorage then
+	attachmentStorage = menuStorage:WaitForChild("Attachments")
+	eventsStorage = menuStorage:WaitForChild("Events")
+	toolStorage = game.ReplicatedStorage:WaitForChild("ToolStorage")
 else
-	t = d:WaitForChild("Attachments")
+	attachmentStorage = carbonResource:WaitForChild("Attachments")
 end
-local Ja = game:GetService("TweenService")
-local B = game:GetService("RunService").RenderStepped
-local ua = game:GetService("UserInputService")
-local sa = game:GetService("ContextActionService")
-local _
-local _
-local Da = {
-	head = Fa:WaitForChild("Head"),
-	torso = Fa:WaitForChild("Torso"),
-	rightArm = Fa:WaitForChild("Right Arm"),
-	leftArm = Fa:WaitForChild("Left Arm"),
-	rightLeg = Fa:WaitForChild("Right Leg"),
-	leftLeg = Fa:WaitForChild("Left Leg"),
-	rootPart = Fa:WaitForChild("HumanoidRootPart"),
-	humanoid = Fa:WaitForChild("Humanoid"),
-	neck = Fa.Torso:WaitForChild("Neck"),
-	rightShoulder = Fa.Torso:WaitForChild("Right Shoulder"),
-	leftShoulder = Fa.Torso:WaitForChild("Left Shoulder"),
-	rightHip = Fa.Torso:WaitForChild("Right Hip"),
-	leftHip = Fa.Torso:WaitForChild("Left Hip"),
-	rootJoint = Fa.HumanoidRootPart:WaitForChild("RootJoint")
+local tweenService = game:GetService("TweenService")
+local renderLoop = game:GetService("RunService").RenderStepped
+local userInputService = game:GetService("UserInputService")
+local contextActionService = game:GetService("ContextActionService")
+local playerArms = {
+	head = playerCharacter:WaitForChild("Head"),
+	torso = playerCharacter:WaitForChild("Torso"),
+	rightArm = playerCharacter:WaitForChild("Right Arm"),
+	leftArm = playerCharacter:WaitForChild("Left Arm"),
+	rightLeg = playerCharacter:WaitForChild("Right Leg"),
+	leftLeg = playerCharacter:WaitForChild("Left Leg"),
+	rootPart = playerCharacter:WaitForChild("HumanoidRootPart"),
+	humanoid = playerCharacter:WaitForChild("Humanoid"),
+	neck = playerCharacter.Torso:WaitForChild("Neck"),
+	rightShoulder = playerCharacter.Torso:WaitForChild("Right Shoulder"),
+	leftShoulder = playerCharacter.Torso:WaitForChild("Left Shoulder"),
+	rightHip = playerCharacter.Torso:WaitForChild("Right Hip"),
+	leftHip = playerCharacter.Torso:WaitForChild("Left Hip"),
+	rootJoint = playerCharacter.HumanoidRootPart:WaitForChild("RootJoint")
 }
-local Ia = {
-	globalConfig = require(a:WaitForChild("GlobalConfig")),
-	ignoreModule = require(e:WaitForChild("IgnoreModule")),
-	ragdollModule = require(e:WaitForChild("Ragdoll")),
-	setupModule = require(e:WaitForChild("SetupModule")),
-	springModule = require(e:WaitForChild("Spring")),
-	utilitiesModule = require(e:WaitForChild("Utilities")),
-	codeArchive = require(e:WaitForChild("CodeArchive")),
-	tableContainer = require(e:WaitForChild("TableContainer")),
-	attachmentAPI = require(e:WaitForChild("AttachmentAPI"))
+local carbonConfigs = {
+	globalConfig = require(carbonGlobalResource:WaitForChild("GlobalConfig")),
+	ignoreModule = require(carbonModules:WaitForChild("IgnoreModule")),
+	ragdollModule = require(carbonModules:WaitForChild("Ragdoll")),
+	setupModule = require(carbonModules:WaitForChild("SetupModule")),
+	springModule = require(carbonModules:WaitForChild("Spring")),
+	utilitiesModule = require(carbonModules:WaitForChild("Utilities")),
+	codeArchive = require(carbonModules:WaitForChild("CodeArchive")),
+	tableContainer = require(carbonModules:WaitForChild("TableContainer")),
+	attachmentAPI = require(carbonModules:WaitForChild("AttachmentAPI"))
 }
-local Ea = {
-	equipEvent = f:WaitForChild("Equip"),
-	updateCharEvent = f:WaitForChild("UpdateChar"),
-	halfStepEvent = f:WaitForChild("HalfStep"),
-	damageEvent = f:WaitForChild("DamageEvent"),
-	whizEvent = f:WaitForChild("WhizEvent"),
-	hitEvent = f:WaitForChild("HitEvent"),
-	flybyEvent = f:WaitForChild("flybyEvent"),
-	serverFXEvent = f:WaitForChild("ServerFXEvent"),
-	storeDataEvent = f:WaitForChild("StoreData"),
-	createOwnerEvent = f:WaitForChild("CreateOwner"),
-	manipEvent = f:WaitForChild("ManipEvent"),
-	resupplyEvent = f:WaitForChild("ResupplyEvent"),
-	medEvent = f:WaitForChild("MedEvent"),
-	explosiveEvent = f:WaitForChild("ExplosiveEvent"),
-	connectionEvent = f:WaitForChild("EventConnection"),
-	nadeEvent = f:WaitForChild("NadeEvent"),
-	placeC4Event = f:WaitForChild("PlaceC4"),
-	attachmentEvent = f:WaitForChild("AttachmentEvent"),
-	clearAttchEvent = f:WaitForChild("ClearAttachment")
+local carbonEvents = {
+	equipEvent = playerArms:WaitForChild("Equip"),
+	updateCharEvent = playerArms:WaitForChild("UpdateChar"),
+	halfStepEvent = playerArms:WaitForChild("HalfStep"),
+	damageEvent = playerArms:WaitForChild("DamageEvent"),
+	whizEvent = playerArms:WaitForChild("WhizEvent"),
+	hitEvent = playerArms:WaitForChild("HitEvent"),
+	flybyEvent = playerArms:WaitForChild("flybyEvent"),
+	serverFXEvent = playerArms:WaitForChild("ServerFXEvent"),
+	storeDataEvent = playerArms:WaitForChild("StoreData"),
+	createOwnerEvent = playerArms:WaitForChild("CreateOwner"),
+	manipEvent = playerArms:WaitForChild("ManipEvent"),
+	resupplyEvent = playerArms:WaitForChild("ResupplyEvent"),
+	medEvent = playerArms:WaitForChild("MedEvent"),
+	explosiveEvent = playerArms:WaitForChild("ExplosiveEvent"),
+	connectionEvent = playerArms:WaitForChild("EventConnection"),
+	nadeEvent = playerArms:WaitForChild("NadeEvent"),
+	placeC4Event = playerArms:WaitForChild("PlaceC4"),
+	attachmentEvent = playerArms:WaitForChild("AttachmentEvent"),
+	clearAttchEvent = playerArms:WaitForChild("ClearAttachment")
 }
 
 local function prnt(txt)
 	-- used this for debugging lol
 	--print("[CE HOOK] "..txt)
 end
-local Ka = {
+local massVariableArray = {
 	tool = nil,
 	curModel = nil,
 	curConfig = nil,
@@ -183,23 +181,23 @@ local Ka = {
 	newCamOffset = CFrame.new(),
 	camC0 = Vector3.new(),
 	camC1 = CFrame.new(),
-	origSens = ua.MouseDeltaSensitivity,
+	origSens = userInputService.MouseDeltaSensitivity,
 	baseSens = 1,
 	aimSens = 1,
-	NadeMode = Ia.globalConfig.NadeMode,
-	FragAmmo = Ia.globalConfig.FragAmmo,
-	FlashAmmo = Ia.globalConfig.FlashAmmo,
-	SmokeAmmo = Ia.globalConfig.SmokeAmmo,
-	C4Ammo = Ia.globalConfig.C4Ammo,
+	NadeMode = carbonConfigs.globalConfig.NadeMode,
+	FragAmmo = carbonConfigs.globalConfig.FragAmmo,
+	FlashAmmo = carbonConfigs.globalConfig.FlashAmmo,
+	SmokeAmmo = carbonConfigs.globalConfig.SmokeAmmo,
+	C4Ammo = carbonConfigs.globalConfig.C4Ammo,
 	readyMode = 0,
 	curZoom = nil,
 	queued = nil,
 	Stamina = 1,
-	StaminaMult = Ia.globalConfig.StaminaMult,
+	StaminaMult = carbonConfigs.globalConfig.StaminaMult,
 	HopUp = 0,
 	oHopUp = 0
 }
-local Ga = {
+local mathVariables = {
 	swayCF = CFrame.new(),
 	Sensitivity = 0.6,
 	Delta = 0.2,
@@ -209,7 +207,7 @@ local Ga = {
 	swayInputLimit = 35,
 	hipSway = 12,
 	aimSway = 5,
-	gunSway = Ia.springModule.new(Vector3.new()),
+	gunSway = carbonConfigs.springModule.new(Vector3.new()),
 	movinganim = CFrame.new(),
 	camanim = CFrame.new(),
 	walkTick = 0,
@@ -224,25 +222,25 @@ local Ga = {
 	oc1 = nil,
 	oc0 = nil
 }
-local u = Ia.tableContainer.AimInSounds
-local v = Ia.tableContainer.AimOutSounds
-local ha = {Fa, ca, xa}
-local y = {Fa, ca, xa}
-local b = Ia.tableContainer.DarkNoise
-local a = Ia.tableContainer.LightNoise
-local r = {}
-local Ha = {}
-Ha.recoilSpring = Ia.springModule.new(Vector3.new())
-Ha.recoilSpring.s = 45
-Ha.recoilSpring.d = 0.45
-Ha.recoilSpring2 = Ia.springModule.new(Vector3.new())
-Ha.recoilSpring2.s = 35
-Ha.recoilSpring2.d = 0.45
-Ha.cornerPeek = Ia.springModule.new(0)
-Ha.cornerPeek.d = 0.8
-Ha.cornerPeek.s = 16
-Ha.peekFactor = math.rad(10)
-Ha.dirPeek = 0
+local aimInSounds = carbonConfigs.tableContainer.AimInSounds
+local aimOutSounds = carbonConfigs.tableContainer.AimOutSounds
+local componentCollection = {playerCharacter, carbonAudio, currentCamera}
+local componentList = {playerCharacter, carbonAudio, currentCamera}
+local darkNoiseTable = carbonConfigs.tableContainer.DarkNoise
+local lightNoiseTableContainer = carbonConfigs.tableContainer.LightNoise
+local resultData = {}
+local recoilData = {}
+recoilData.recoilSpring = carbonConfigs.springModule.new(Vector3.new())
+recoilData.recoilSpring.s = 45
+recoilData.recoilSpring.d = 0.45
+recoilData.recoilSpring2 = carbonConfigs.springModule.new(Vector3.new())
+recoilData.recoilSpring2.s = 35
+recoilData.recoilSpring2.d = 0.45
+recoilData.cornerPeek = carbonConfigs.springModule.new(0)
+recoilData.cornerPeek.d = 0.8
+recoilData.cornerPeek.s = 16
+recoilData.peekFactor = math.rad(10)
+recoilData.dirPeek = 0
 local Ca = false
 local va = false
 local L = false
@@ -259,7 +257,7 @@ local ta = false
 local Aa = false
 local H = false
 local T = false
-local h = Fa:WaitForChild("Humanoid").Health
+local h = playerCharacter:WaitForChild("Humanoid").Health
 local f = false
 local X = "Option"
 local O = false
@@ -306,76 +304,76 @@ local D
 local ga
 local e
 local J
-Ka.hud = c:WaitForChild("WeaponHUD"):clone()
-Ka.hud.Parent = Ba.PlayerGui
-for _, _ in pairs(Ka.hud:GetDescendants()) do
+massVariableArray.hud = carbonHUD:WaitForChild("WeaponHUD"):clone()
+massVariableArray.hud.Parent = localPlayer.PlayerGui
+for _, _ in pairs(massVariableArray.hud:GetDescendants()) do
 	if _ then
 		if _.Name == "MainFrame" then
-			Ka.mainFrame = _
-			Ka.mainFrame.Visible = false
+			massVariableArray.mainFrame = _
+			massVariableArray.mainFrame.Visible = false
 		elseif _.Name == "Mode1" then
-			Ka.mode1 = _
+			massVariableArray.mode1 = _
 		elseif _.Name == "Mode2" then
-			Ka.mode2 = _
+			massVariableArray.mode2 = _
 		elseif _.Name == "Mode3" then
-			Ka.mode3 = _
+			massVariableArray.mode3 = _
 		elseif _.Name == "Mode4" then
-			Ka.mode4 = _
+			massVariableArray.mode4 = _
 		elseif _.Name == "Mode5" then
-			Ka.mode5 = _
+			massVariableArray.mode5 = _
 		elseif _.Name == "Ammo" then
-			Ka.ammoDisplay = _
+			massVariableArray.ammoDisplay = _
 		elseif _.Name == "MagCount" then
-			Ka.magCountDisplay = _
+			massVariableArray.magCountDisplay = _
 		elseif _.Name == "Title" then
-			Ka.title = _
+			massVariableArray.title = _
 		elseif _.Name == "Stances" then
-			Ka.stanceDisplay = _
+			massVariableArray.stanceDisplay = _
 		elseif _.Name == "WeapDisplay" then
-			Ka.weapDisplay = _
+			massVariableArray.weapDisplay = _
 		elseif _.Name == "Intense" then
-			Ka.intenseShade = _
+			massVariableArray.intenseShade = _
 		elseif _.Name == "Pain" then
-			Ka.painShade = _
+			massVariableArray.painShade = _
 		elseif _.Name == "Sensitivity" then
-			Ka.sensDisplay = _
+			massVariableArray.sensDisplay = _
 		elseif _.Name == "Progress" then
-			Ka.progressBar = _
-			Ka.progressBar.Size = UDim2.new(1, 0, 1, -4)
+			massVariableArray.progressBar = _
+			massVariableArray.progressBar.Size = UDim2.new(1, 0, 1, -4)
 		elseif _.Name == "MenuFrame" then
-			Ka.menuFrame = _
+			massVariableArray.menuFrame = _
 		elseif _.Name == "OptionButton" then
-			Ka.optionButton = _
+			massVariableArray.optionButton = _
 		elseif _.Name == "KeybindButton" then
-			Ka.keybindButton = _
+			massVariableArray.keybindButton = _
 		elseif _.Name == "PatchButton" then
-			Ka.patchButton = _
+			massVariableArray.patchButton = _
 		elseif _.Name == "StoreButton" then
-			Ka.storeButton = _
+			massVariableArray.storeButton = _
 		elseif _.Name == "Radial_Menu" then
-			Ka.radialFrame = _
+			massVariableArray.radialFrame = _
 		elseif _.Name == "Radial_Outter" then
-			Ka.radialOutter = _
+			massVariableArray.radialOutter = _
 		elseif _.Name == "Radial_Inner" then
-			Ka.radialInner = _
+			massVariableArray.radialInner = _
 		elseif _.Name == "Radial_Top" then
-			Ka.radialTop = _
+			massVariableArray.radialTop = _
 		elseif _.Name == "Radial_Right" then
-			Ka.radialRight = _
+			massVariableArray.radialRight = _
 		elseif _.Name == "Radial_Bottom" then
-			Ka.radialBottom = _
+			massVariableArray.radialBottom = _
 		elseif _.Name == "Radial_Left" then
-			Ka.radialLeft = _
+			massVariableArray.radialLeft = _
 		elseif _.Name == "Radial_Center" then
-			Ka.radialCenter = _
+			massVariableArray.radialCenter = _
 		elseif _.Name == "CharView" then
-			Ka.charView = _
+			massVariableArray.charView = _
 			D = Instance.new("Camera")
-			D.Parent = Ka.charView
-			Ka.charView.CurrentCamera = D
+			D.Parent = massVariableArray.charView
+			massVariableArray.charView.CurrentCamera = D
 			D.CFrame = CFrame.new(10, 10, 10) * CFrame.Angles(10, 10, 10)
 			ga = Instance.new("Model")
-			ga.Parent = Ka.charView
+			ga.Parent = massVariableArray.charView
 			ga.Name = ""
 			e = Instance.new("Humanoid")
 			e.Parent = ga
@@ -392,7 +390,7 @@ for _, _ in pairs(Ka.hud:GetDescendants()) do
 			_.Parent = ga
 			_.CanCollide = false
 			_.Position = Vector3.new(0, 1.5, 0)
-			Fa:WaitForChild("Head"):WaitForChild("Mesh"):Clone().Parent = _
+			playerCharacter:WaitForChild("Head"):WaitForChild("Mesh"):Clone().Parent = _
 			_.BrickColor =
 				BrickColor.new("Institutional white")
 			local _ = Instance.new("Part")
@@ -429,49 +427,49 @@ for _, _ in pairs(Ka.hud:GetDescendants()) do
 				BrickColor.new("Institutional white")
 			ga.PrimaryPart = ga:WaitForChild("Torso")
 		elseif _.Name == "MenuButton" then
-			Ka.menuButton = _
+			massVariableArray.menuButton = _
 		elseif _.Name == "Overlay" then
-			Ka.overlay = _
+			massVariableArray.overlay = _
 		elseif _.Name == "MainFrame2" then
-			Ka.mainFrame2 = _
+			massVariableArray.mainFrame2 = _
 		elseif _.Name == "Aim_Button" then
-			Ka.aimButton = _
+			massVariableArray.aimButton = _
 		elseif _.Name == "Bolt_Button" then
-			Ka.boltButton = _
+			massVariableArray.boltButton = _
 		elseif _.Name == "Crouch_Button" then
-			Ka.crouchButton = _
+			massVariableArray.crouchButton = _
 		elseif _.Name == "Jump_Button" then
-			Ka.jumpButton = _
+			massVariableArray.jumpButton = _
 		elseif _.Name == "Prone_Button" then
-			Ka.proneButton = _
+			massVariableArray.proneButton = _
 		elseif _.Name == "Reload_Button" then
-			Ka.reloadButton = _
+			massVariableArray.reloadButton = _
 		elseif _.Name == "Shoot_Button" then
-			Ka.shootButton = _
+			massVariableArray.shootButton = _
 		elseif _.Name == "Mobile_Ammo" then
-			Ka.mobileAmmo = _
+			massVariableArray.mobileAmmo = _
 		elseif _.Name == "FireSelect_Button" then
-			Ka.fireSelectButton = _
+			massVariableArray.fireSelectButton = _
 		elseif _.Name == "Sprint_Button" then
-			Ka.sprintButton = _
+			massVariableArray.sprintButton = _
 		elseif _.Name == "TemplateFolder" then
-			Ka.tempFolder = _
+			massVariableArray.tempFolder = _
 		elseif _.Name == "Attachment_Frame" then
-			Ka.attachFrame = _
+			massVariableArray.attachFrame = _
 		end
 	end
 end
-Ka.cc =
+massVariableArray.cc =
 	game.Lighting:FindFirstChild("NVGColor") or
 	Instance.new("ColorCorrectionEffect")
-Ka.cc.Parent = game.Lighting
-Ka.cc.Name = "NVGColor"
-Ka.noise = Ka.hud:WaitForChild("Noise")
-k = Ia.globalConfig.CanHeal
+massVariableArray.cc.Parent = game.Lighting
+massVariableArray.cc.Name = "NVGColor"
+massVariableArray.noise = massVariableArray.hud:WaitForChild("Noise")
+k = carbonConfigs.globalConfig.CanHeal
 local _ =
-	game.ReplicatedStorage:FindFirstChild(Ba.UserId .. "Sensi") or
+	game.ReplicatedStorage:FindFirstChild(localPlayer.UserId .. "Sensi") or
 	Instance.new("Folder")
-_.Name = Ba.UserId .. "Sensi"
+_.Name = localPlayer.UserId .. "Sensi"
 _.Parent = game.ReplicatedStorage
 local e =
 	_:FindFirstChild("BaseSens") or Instance.new("NumberValue")
@@ -482,177 +480,177 @@ local c =
 c.Parent = _
 c.Name = "AimSens"
 if e.Value ~= 0 then
-	Ka.baseSens = e.Value
+	massVariableArray.baseSens = e.Value
 else
-	e.Value = Ka.baseSens
+	e.Value = massVariableArray.baseSens
 end
 if c.Value ~= 0 then
-	Ka.aimSens = c.Value
+	massVariableArray.aimSens = c.Value
 else
-	c.Value = Ka.aimSens
+	c.Value = massVariableArray.aimSens
 end
-Ka.menuFrame:WaitForChild("PagesFrame"):WaitForChild("Option"):WaitForChild(
+massVariableArray.menuFrame:WaitForChild("PagesFrame"):WaitForChild("Option"):WaitForChild(
 "BaseSens"
-):WaitForChild("Context").Text = Ka.baseSens
-Ka.menuFrame:WaitForChild("PagesFrame"):WaitForChild("Option"):WaitForChild(
+):WaitForChild("Context").Text = massVariableArray.baseSens
+massVariableArray.menuFrame:WaitForChild("PagesFrame"):WaitForChild("Option"):WaitForChild(
 "AimSens"
-):WaitForChild("Context").Text = Ka.aimSens
-for _, _ in pairs(Ea) do
+):WaitForChild("Context").Text = massVariableArray.aimSens
+for _, _ in pairs(carbonEvents) do
 	if _ then
-		table.insert(r, _.Name)
+		table.insert(resultData, _.Name)
 		_.Name = ""
 	end
 end
 function AttachAttachment(a, _)
 	if a and a.Name ~= "" then
-		Ia.attachmentAPI.Attach(a, _)
+		carbonConfigs.attachmentAPI.Attach(a, _)
 	end
 end
 function EquipModel(_)
 	prnt("Gun equipped")
 	va = true
-	Ka.mainFrame.Visible = true
-	ca =
+	massVariableArray.mainFrame.Visible = true
+	carbonAudio =
 		workspace:WaitForChild("BulletModel") or
 		Instance.new("Folder")
-	ca.Name = "BulletModel"
-	ca.Parent = workspace
-	table.insert(ha, ca)
-	Ba.CameraMaxZoomDistance = 0.5
-	U.TargetFilter = workspace
-	ua.MouseBehavior = Enum.MouseBehavior.LockCenter
-	ua.MouseIconEnabled = false
-	sa:BindAction("Shoot", MobileShoot, true)
-	sa:SetPosition("Shoot", UDim2.new(1, -85, 1, -75))
-	sa:SetImage(
+	carbonAudio.Name = "BulletModel"
+	carbonAudio.Parent = workspace
+	table.insert(componentCollection, carbonAudio)
+	localPlayer.CameraMaxZoomDistance = 0.5
+	mouse.TargetFilter = workspace
+	userInputService.MouseBehavior = Enum.MouseBehavior.LockCenter
+	userInputService.MouseIconEnabled = false
+	contextActionService:BindAction("Shoot", MobileShoot, true)
+	contextActionService:SetPosition("Shoot", UDim2.new(1, -85, 1, -75))
+	contextActionService:SetImage(
 		"Shoot",
 		"rbxassetid://5861899658"
 	)
 	if
-		Ba:WaitForChild("PlayerGui"):FindFirstChild(
+		localPlayer:WaitForChild("PlayerGui"):FindFirstChild(
 		"ContextActionGui"
 		)
 	then
-		Ba:WaitForChild("PlayerGui"):WaitForChild(
+		localPlayer:WaitForChild("PlayerGui"):WaitForChild(
 		"ContextActionGui"
 		):WaitForChild("ContextButtonFrame"):WaitForChild(
 		"ContextActionButton"
 		).Size = UDim2.new(0, 72, 0, 72)
-		Ba:WaitForChild("PlayerGui"):WaitForChild(
+		localPlayer:WaitForChild("PlayerGui"):WaitForChild(
 		"ContextActionGui"
 		):WaitForChild("ContextButtonFrame"):WaitForChild(
 		"ContextActionButton"
 		).Active = false
 	end
-	sa:BindAction("SelectFire", MobileSelectFire, true)
-	sa:SetPosition("SelectFire", UDim2.new(1, -162, 1, -140))
-	sa:SetImage(
+	contextActionService:BindAction("SelectFire", MobileSelectFire, true)
+	contextActionService:SetPosition("SelectFire", UDim2.new(1, -162, 1, -140))
+	contextActionService:SetImage(
 		"SelectFire",
 		"rbxassetid://5862289667"
 	)
-	sa:BindAction("Bolt", MobileBolt, true)
-	sa:SetPosition("Bolt", UDim2.new(1, -118, 1, -102))
-	sa:SetImage(
+	contextActionService:BindAction("Bolt", MobileBolt, true)
+	contextActionService:SetPosition("Bolt", UDim2.new(1, -118, 1, -102))
+	contextActionService:SetImage(
 		"Bolt",
 		"rbxassetid://5861959780"
 	)
-	sa:BindAction("Reload", MobileReload, true)
-	sa:SetPosition("Reload", UDim2.new(1, -130, 1, -55))
-	sa:SetImage(
+	contextActionService:BindAction("Reload", MobileReload, true)
+	contextActionService:SetPosition("Reload", UDim2.new(1, -130, 1, -55))
+	contextActionService:SetImage(
 		"Reload",
 		"rbxassetid://5861917803"
 	)
-	sa:BindAction("Jump", MobileJump, true)
-	sa:SetPosition("Jump", UDim2.new(1, -165, 1, -90))
-	sa:SetImage(
+	contextActionService:BindAction("Jump", MobileJump, true)
+	contextActionService:SetPosition("Jump", UDim2.new(1, -165, 1, -90))
+	contextActionService:SetImage(
 		"Jump",
 		"rbxassetid://5861963801"
 	)
-	sa:BindAction("Prone", MobileProne, true)
-	sa:SetPosition("Prone", UDim2.new(1, -112, 1, -152))
-	sa:SetImage(
+	contextActionService:BindAction("Prone", MobileProne, true)
+	contextActionService:SetPosition("Prone", UDim2.new(1, -112, 1, -152))
+	contextActionService:SetImage(
 		"Prone",
 		"rbxassetid://5861969398"
 	)
-	sa:BindAction("NewCrouch", MobileCrouch, true)
-	sa:SetPosition("NewCrouch", UDim2.new(1, -70, 1, -175))
-	sa:SetImage(
+	contextActionService:BindAction("NewCrouch", MobileCrouch, true)
+	contextActionService:SetPosition("NewCrouch", UDim2.new(1, -70, 1, -175))
+	contextActionService:SetImage(
 		"NewCrouch",
 		"rbxassetid://5861968749"
 	)
-	Ka.tool = _
-	Ka.ArmModel = xa:FindFirstChild("ArmModel") or Instance.new("Model")
-	Ka.ArmModel.Name = "ArmModel"
-	Ka.ArmModel.Parent = xa
-	Ka.BasePart = Instance.new("Part")
-	Ka.BasePart.Name = "BasePart"
-	Ka.BasePart.Parent = Ka.ArmModel
-	Ka.BasePart.Anchored = true
-	Ka.BasePart.CanCollide = false
-	Ka.BasePart.Transparency = 1
-	Ka.BasePart.Size = Vector3.new(0.1, 0.1, 0.1)
-	Ka.PrimeAnimBase = Instance.new("Part")
-	Ka.PrimeAnimBase.Name = "PrimeAnimBase"
-	Ka.PrimeAnimBase.Parent = Ka.ArmModel
-	Ka.PrimeAnimBase.Anchored = true
-	Ka.PrimeAnimBase.CanCollide = false
-	Ka.PrimeAnimBase.Transparency = 1
-	Ka.PrimeAnimBase.Size = Vector3.new(0.1, 0.1, 0.1)
-	Ka.PrimeAnimBaseW = Instance.new("Motor6D")
-	Ka.PrimeAnimBaseW.Parent = Ka.PrimeAnimBase
-	Ka.PrimeAnimBaseW.Name = "PrimeAnimBaseW"
-	Ka.PrimeAnimBaseW.Part0 = Ka.PrimeAnimBase
-	Ka.PrimeAnimBaseW.Part1 = Ka.BasePart
-	Ka.PrimeAnimBase.Anchored = false
-	Ka.AnimBase = Instance.new("Part")
-	Ka.AnimBase.Name = "AnimBase"
-	Ka.AnimBase.Parent = Ka.ArmModel
-	Ka.AnimBase.Anchored = true
-	Ka.AnimBase.CanCollide = false
-	Ka.AnimBase.Transparency = 1
-	Ka.AnimBase.Size = Vector3.new(0.1, 0.1, 0.1)
-	Ka.AnimBaseW = Instance.new("Motor6D")
-	Ka.AnimBaseW.Parent = Ka.AnimBase
-	Ka.AnimBaseW.Name = "AnimBaseW"
-	Ka.AnimBaseW.Part0 = Ka.AnimBase
-	Ka.AnimBaseW.Part1 = Ka.PrimeAnimBase
-	Ka.AnimBase.Anchored = false
-	Ka.curModel = p:WaitForChild(_.Name):clone()
-	if s then
-		local _, _, a, b = o:WaitForChild("DataRequest"):InvokeServer()
+	massVariableArray.tool = _
+	massVariableArray.ArmModel = currentCamera:FindFirstChild("ArmModel") or Instance.new("Model")
+	massVariableArray.ArmModel.Name = "ArmModel"
+	massVariableArray.ArmModel.Parent = currentCamera
+	massVariableArray.BasePart = Instance.new("Part")
+	massVariableArray.BasePart.Name = "BasePart"
+	massVariableArray.BasePart.Parent = massVariableArray.ArmModel
+	massVariableArray.BasePart.Anchored = true
+	massVariableArray.BasePart.CanCollide = false
+	massVariableArray.BasePart.Transparency = 1
+	massVariableArray.BasePart.Size = Vector3.new(0.1, 0.1, 0.1)
+	massVariableArray.PrimeAnimBase = Instance.new("Part")
+	massVariableArray.PrimeAnimBase.Name = "PrimeAnimBase"
+	massVariableArray.PrimeAnimBase.Parent = massVariableArray.ArmModel
+	massVariableArray.PrimeAnimBase.Anchored = true
+	massVariableArray.PrimeAnimBase.CanCollide = false
+	massVariableArray.PrimeAnimBase.Transparency = 1
+	massVariableArray.PrimeAnimBase.Size = Vector3.new(0.1, 0.1, 0.1)
+	massVariableArray.PrimeAnimBaseW = Instance.new("Motor6D")
+	massVariableArray.PrimeAnimBaseW.Parent = massVariableArray.PrimeAnimBase
+	massVariableArray.PrimeAnimBaseW.Name = "PrimeAnimBaseW"
+	massVariableArray.PrimeAnimBaseW.Part0 = massVariableArray.PrimeAnimBase
+	massVariableArray.PrimeAnimBaseW.Part1 = massVariableArray.BasePart
+	massVariableArray.PrimeAnimBase.Anchored = false
+	massVariableArray.AnimBase = Instance.new("Part")
+	massVariableArray.AnimBase.Name = "AnimBase"
+	massVariableArray.AnimBase.Parent = massVariableArray.ArmModel
+	massVariableArray.AnimBase.Anchored = true
+	massVariableArray.AnimBase.CanCollide = false
+	massVariableArray.AnimBase.Transparency = 1
+	massVariableArray.AnimBase.Size = Vector3.new(0.1, 0.1, 0.1)
+	massVariableArray.AnimBaseW = Instance.new("Motor6D")
+	massVariableArray.AnimBaseW.Parent = massVariableArray.AnimBase
+	massVariableArray.AnimBaseW.Name = "AnimBaseW"
+	massVariableArray.AnimBaseW.Part0 = massVariableArray.AnimBase
+	massVariableArray.AnimBaseW.Part1 = massVariableArray.PrimeAnimBase
+	massVariableArray.AnimBase.Anchored = false
+	massVariableArray.curModel = carbonClientResourceModels:WaitForChild(_.Name):clone()
+	if menuStorage then
+		local _, _, a, b = eventsStorage:WaitForChild("DataRequest"):InvokeServer()
 		local _ = a
 		local _ = b
-		local _, c = o:WaitForChild("AttchQueue"):InvokeServer()
-		if Ka.curModel.Name == a and _[1] then
-			AttachAttachment(Ka.curModel, _)
-		elseif Ka.curModel.Name == b and c[1] then
-			AttachAttachment(Ka.curModel, c)
+		local _, c = eventsStorage:WaitForChild("AttchQueue"):InvokeServer()
+		if massVariableArray.curModel.Name == a and _[1] then
+			AttachAttachment(massVariableArray.curModel, _)
+		elseif massVariableArray.curModel.Name == b and c[1] then
+			AttachAttachment(massVariableArray.curModel, c)
 		end
 	end
-	Ka.curModel.Parent = Ka.ArmModel
-	Ka.curConfig =
+	massVariableArray.curModel.Parent = massVariableArray.ArmModel
+	massVariableArray.curConfig =
 		require(
-			Ka.tool:WaitForChild("ConfigMods"):WaitForChild("CConfig")
+			massVariableArray.tool:WaitForChild("ConfigMods"):WaitForChild("CConfig")
 		)
 	local _ = {}
-	for _, _ in pairs(Ka.curModel:GetChildren()) do
+	for _, _ in pairs(massVariableArray.curModel:GetChildren()) do
 		if _:IsA("BasePart") and _.Name ~= "Grip" then
 			local a
 			if string.match(_.Name, "Hinge") then
-				a = Ka.curModel:FindFirstChild(string.sub(_.Name, 6, string.len(_.Name)))
+				a = massVariableArray.curModel:FindFirstChild(string.sub(_.Name, 6, string.len(_.Name)))
 			end
 			if a then
-				if Ka.curModel:FindFirstChild("Hinge" .. a.Name) then
-					Ia.utilitiesModule.Weld(a, Ka.curModel:WaitForChild("Hinge" .. a.Name))
+				if massVariableArray.curModel:FindFirstChild("Hinge" .. a.Name) then
+					carbonConfigs.utilitiesModule.Weld(a, massVariableArray.curModel:WaitForChild("Hinge" .. a.Name))
 				else
-					Ia.utilitiesModule.Weld(a, Ka.curModel:WaitForChild("Grip"))
+					carbonConfigs.utilitiesModule.Weld(a, massVariableArray.curModel:WaitForChild("Grip"))
 				end
 			end
 		end
 	end
-	for _, a in pairs(Ka.curModel:GetChildren()) do
+	for _, a in pairs(massVariableArray.curModel:GetChildren()) do
 		if a and not a:FindFirstChild(a.Name) and a:IsA("BasePart") then
-			Ia.utilitiesModule.Weld(a, Ka.curModel:WaitForChild("Grip"))
+			carbonConfigs.utilitiesModule.Weld(a, massVariableArray.curModel:WaitForChild("Grip"))
 		end
 		if
 			a and a.Name ~= "NoWeld" and
@@ -661,68 +659,68 @@ function EquipModel(_)
 			if a.Name ~= "Shield" then
 				for _, _ in pairs(a:GetDescendants()) do
 					if _ and _:IsA("BasePart") then
-						Ia.utilitiesModule.Weld(_, Ka.curModel:WaitForChild("Grip"))
+						carbonConfigs.utilitiesModule.Weld(_, massVariableArray.curModel:WaitForChild("Grip"))
 					end
 				end
 			elseif a.Name == "Shield" then
 				for _, _ in pairs(a:GetDescendants()) do
 					if _ and _:IsA("BasePart") and _.Name ~= "Grip" then
-						Ia.utilitiesModule.Weld(_, a:WaitForChild("Grip"))
+						carbonConfigs.utilitiesModule.Weld(_, a:WaitForChild("Grip"))
 					end
 				end
 			end
 		end
 	end
-	for _, _ in pairs(Ka.curModel:GetDescendants()) do
+	for _, _ in pairs(massVariableArray.curModel:GetDescendants()) do
 		if _:IsA("BasePart") and _.Name ~= "Grip" then
 			_.Anchored = false
 			_.CanCollide = false
 		end
 	end
-	Ka.NeckCW = Instance.new("Motor6D")
-	Ka.NeckCW.Name = "Clone"
-	Ka.NeckCW.Parent = Da.torso
-	Ka.NeckCW.Part0 = Da.rootPart
-	Ka.NeckCW.Part1 = Da.head
-	Ka.NeckCW.C0 = Da.neck.C0
-	Ka.NeckCW.C1 = Da.neck.C1
-	Ka.AimPart = Ka.curModel:WaitForChild("AimPart")
-	Ka.AimPart2 = Ka.curModel:FindFirstChild("AimPart2") or nil
-	Ka.CurAimPart = Ka.AimPart
-	Ka.lastAimPart = Ka.AimPart
-	Ka.FirePart = Ka.curModel:WaitForChild("FirePart")
-	Ka.Bolt = Ka.curModel:WaitForChild("Bolt")
-	Ka.BoltW = Ka.Bolt:WaitForChild("Bolt")
-	Ka.Mag = Ka.curModel:WaitForChild("Mag")
-	Ka.FirePart2 = Ka.curModel:FindFirstChild("FirePart2") or nil
-	local _ = ra:WaitForChild("EquipSound"):clone()
-	_.Parent = Ba.PlayerGui
+	massVariableArray.NeckCW = Instance.new("Motor6D")
+	massVariableArray.NeckCW.Name = "Clone"
+	massVariableArray.NeckCW.Parent = playerArms.torso
+	massVariableArray.NeckCW.Part0 = playerArms.rootPart
+	massVariableArray.NeckCW.Part1 = playerArms.head
+	massVariableArray.NeckCW.C0 = playerArms.neck.C0
+	massVariableArray.NeckCW.C1 = playerArms.neck.C1
+	massVariableArray.AimPart = massVariableArray.curModel:WaitForChild("AimPart")
+	massVariableArray.AimPart2 = massVariableArray.curModel:FindFirstChild("AimPart2") or nil
+	massVariableArray.CurAimPart = massVariableArray.AimPart
+	massVariableArray.lastAimPart = massVariableArray.AimPart
+	massVariableArray.FirePart = massVariableArray.curModel:WaitForChild("FirePart")
+	massVariableArray.Bolt = massVariableArray.curModel:WaitForChild("Bolt")
+	massVariableArray.BoltW = massVariableArray.Bolt:WaitForChild("Bolt")
+	massVariableArray.Mag = massVariableArray.curModel:WaitForChild("Mag")
+	massVariableArray.FirePart2 = massVariableArray.curModel:FindFirstChild("FirePart2") or nil
+	local _ = carbonFx:WaitForChild("EquipSound"):clone()
+	_.Parent = localPlayer.PlayerGui
 	_:Play()
 	game.Debris:AddItem(_, _.TimeLength)
-	Ka.aimSFX = Ba.PlayerGui:FindFirstChild("AimSFX") or Instance.new("Sound")
-	Ka.aimSFX.Name = "AimSFX"
-	Ka.aimSFX.Parent = Ba.PlayerGui
-	Ka.HopUp = Ka.curConfig.BulletHopUpMult
+	massVariableArray.aimSFX = localPlayer.PlayerGui:FindFirstChild("AimSFX") or Instance.new("Sound")
+	massVariableArray.aimSFX.Name = "AimSFX"
+	massVariableArray.aimSFX.Parent = localPlayer.PlayerGui
+	massVariableArray.HopUp = massVariableArray.curConfig.BulletHopUpMult
 	local n, e, f, d, b, _, _, c, a, l, _, g, m, h, i, k, j =
-		Ea.storeDataEvent:InvokeServer(
+		carbonEvents.storeDataEvent:InvokeServer(
 			"Retrieve",
-			Ka.tool.Name,
-			Ka.curConfig.Ammo,
-			(Ka.curConfig.StoredAmmo * Ka.curConfig.MagCount),
-			Ka.curConfig.ExplosiveAmmo,
-			Ka.curConfig.FireMode,
-			Ka.curConfig.MouseSensitivity,
+			massVariableArray.tool.Name,
+			massVariableArray.curConfig.Ammo,
+			(massVariableArray.curConfig.StoredAmmo * massVariableArray.curConfig.MagCount),
+			massVariableArray.curConfig.ExplosiveAmmo,
+			massVariableArray.curConfig.FireMode,
+			massVariableArray.curConfig.MouseSensitivity,
 			1,
 			nil,
 			nil,
 			"Auth"
 		)
 	if n then
-		Ka.Ammo = e
-		Ka.StoredAmmo = f
-		Ka.ExplosiveAmmo = d
-		Ka.FireMode = b
-		Ka.CanShoot = c
+		massVariableArray.Ammo = e
+		massVariableArray.StoredAmmo = f
+		massVariableArray.ExplosiveAmmo = d
+		massVariableArray.FireMode = b
+		massVariableArray.CanShoot = c
 		G = l
 		Q = _
 		ia = g
@@ -730,21 +728,21 @@ function EquipModel(_)
 		P = m
 		R = h
 		F = j
-		Ka.oHopUp = i
+		massVariableArray.oHopUp = i
 		if Q then
 			if not ia then
-				Ka.curZoom = Ka.curConfig.AltAimZoom
+				massVariableArray.curZoom = massVariableArray.curConfig.AltAimZoom
 			else
-				Ka.curZoom = R
+				massVariableArray.curZoom = R
 			end
-			Ka.CurAimPart = Ka.AimPart2
+			massVariableArray.CurAimPart = massVariableArray.AimPart2
 		else
 			if not ia then
-				Ka.curZoom = Ka.curConfig.AimZoom
+				massVariableArray.curZoom = massVariableArray.curConfig.AimZoom
 			else
-				Ka.curZoom = P
+				massVariableArray.curZoom = P
 			end
-			Ka.CurAimPart = Ka.AimPart
+			massVariableArray.CurAimPart = massVariableArray.AimPart
 		end
 	else
 		ia = g
@@ -752,25 +750,25 @@ function EquipModel(_)
 		P = m
 		R = h
 		F = j
-		Ka.oHopUp = i
-		Ka.Ammo = Ka.curConfig.Ammo
-		Ka.StoredAmmo = Ka.curConfig.StoredAmmo * Ka.curConfig.MagCount
-		Ka.ExplosiveAmmo = Ka.curConfig.ExplosiveAmmo
-		Ka.FireMode = Ka.curConfig.FireMode
-		Ka.CanShoot = false
+		massVariableArray.oHopUp = i
+		massVariableArray.Ammo = massVariableArray.curConfig.Ammo
+		massVariableArray.StoredAmmo = massVariableArray.curConfig.StoredAmmo * massVariableArray.curConfig.MagCount
+		massVariableArray.ExplosiveAmmo = massVariableArray.curConfig.ExplosiveAmmo
+		massVariableArray.FireMode = massVariableArray.curConfig.FireMode
+		massVariableArray.CanShoot = false
 		l = false
 		Q = false
 		if not ia then
-			Ka.curZoom = Ka.curConfig.AimZoom
+			massVariableArray.curZoom = massVariableArray.curConfig.AimZoom
 		else
-			Ka.curZoom = P
+			massVariableArray.curZoom = P
 		end
-		Ka.CurAimPart = Ka.AimPart
+		massVariableArray.CurAimPart = massVariableArray.AimPart
 	end
-	Ka.RAW, Ka.LAW, Ka.RA, Ka.LA, Ka.Grip, Ka.GripW, Ka.GripW2 =
-		Ia.setupModule(Ka.ArmModel, Fa, Ka.AnimBase, Ka.curConfig, Ka.curModel, K, F)
-	local b = p:WaitForChild(Ka.curModel.Name):clone()
-	b.Parent = Ka.weapDisplay
+	massVariableArray.RAW, massVariableArray.LAW, massVariableArray.RA, massVariableArray.LA, massVariableArray.Grip, massVariableArray.GripW, massVariableArray.GripW2 =
+		carbonConfigs.setupModule(massVariableArray.ArmModel, playerCharacter, massVariableArray.AnimBase, massVariableArray.curConfig, massVariableArray.curModel, K, F)
+	local b = carbonClientResourceModels:WaitForChild(massVariableArray.curModel.Name):clone()
+	b.Parent = massVariableArray.weapDisplay
 	b.PrimaryPart = b:WaitForChild("Grip")
 	for _, _ in pairs(b:GetDescendants()) do
 		if _ and _:IsA("Texture") or _:IsA("Decal") then
@@ -794,41 +792,41 @@ function EquipModel(_)
 		end
 	end
 	local _ = Instance.new("Camera")
-	Ka.weapDisplay.CurrentCamera = _
-	_.Parent = Ka.weapDisplay
+	massVariableArray.weapDisplay.CurrentCamera = _
+	_.Parent = massVariableArray.weapDisplay
 	_.CFrame = CFrame.new(10, 10, 10) * CFrame.Angles(10, 10, 10)
-	Ja:Create(
+	tweenService:Create(
 		_,
 		TweenInfo.new(0.5),
 		{CFrame = b.PrimaryPart.CFrame * CFrame.new(-2, 0, -0.4) * CFrame.Angles(0, math.rad(-90), 0)}
 	):Play()
 	if q then
 		q = false
-		Ka.Ammo = Ka.curConfig.Ammo
-		Ka.StoredAmmo = Ka.curConfig.StoredAmmo * Ka.curConfig.MagCount
+		massVariableArray.Ammo = massVariableArray.curConfig.Ammo
+		massVariableArray.StoredAmmo = massVariableArray.curConfig.StoredAmmo * massVariableArray.curConfig.MagCount
 	end
-	if Ka.FireMode == 6 and Ka.Ammo > 0 then
-		Ka.CanShoot = true
+	if massVariableArray.FireMode == 6 and massVariableArray.Ammo > 0 then
+		massVariableArray.CanShoot = true
 	end
 	UpdateAmmo()
 	if
-		Ba and Ba:FindFirstChild("PlayerGui") and
-		Ba.PlayerGui:FindFirstChild("TouchGui")
+		localPlayer and localPlayer:FindFirstChild("PlayerGui") and
+		localPlayer.PlayerGui:FindFirstChild("TouchGui")
 	then
-		Ka.mainFrame.Visible = false
-		Ka.mainFrame2.Visible = true
-		Ba.PlayerGui:FindFirstChild("TouchGui"):WaitForChild(
+		massVariableArray.mainFrame.Visible = false
+		massVariableArray.mainFrame2.Visible = true
+		localPlayer.PlayerGui:FindFirstChild("TouchGui"):WaitForChild(
 		"TouchControlFrame"
 		):WaitForChild("JumpButton").Visible = false
 	end
 	local _ =
 		require(
-			Ka.tool:WaitForChild("ConfigMods"):WaitForChild("SConfig")
+			massVariableArray.tool:WaitForChild("ConfigMods"):WaitForChild("SConfig")
 		)
-	Ea.equipEvent:FireServer(
+	carbonEvents.equipEvent:FireServer(
 		true,
 		"Auth",
-		Ka.tool.Name,
+		massVariableArray.tool.Name,
 		_.RightArmPos,
 		_.LeftArmPos,
 		_.GunPos,
@@ -840,10 +838,10 @@ function EquipModel(_)
 	)
 	va = false
 	Ca = true
-	if not n and Ia.globalConfig.StartUpBolt then
+	if not n and carbonConfigs.globalConfig.StartUpBolt then
 		ea = true
-		Ka.CanShoot, Aa, Ka.Ammo, a, ea =
-			Ia.codeArchive.StartUpBolt(Ka.Ammo, BoltBackAnim, BoltForwardAnim, IdleAnim, UpdateAmmo)
+		massVariableArray.CanShoot, Aa, massVariableArray.Ammo, a, ea =
+			carbonConfigs.codeArchive.StartUpBolt(massVariableArray.Ammo, BoltBackAnim, BoltForwardAnim, IdleAnim, UpdateAmmo)
 	end
 end
 function SpawnIso(a, b, _, _)
@@ -855,7 +853,7 @@ function SpawnIso(a, b, _, _)
 	c.PlaybackSpeed = _
 	local a
 	local _ =
-		(b.Position - Fa:WaitForChild("HumanoidRootPart").Position).magnitude
+		(b.Position - playerCharacter:WaitForChild("HumanoidRootPart").Position).magnitude
 	if _ > 10 then
 		a =
 			c:FindFirstChild("Isolation") or
@@ -881,38 +879,38 @@ function SpawnIso(a, b, _, _)
 	)
 end
 function UnequipModel()
-	if Ka.ArmModel and Ka.curConfig then
+	if massVariableArray.ArmModel and massVariableArray.curConfig then
 		va = true
-		Ha.dirPeek = 0
+		recoilData.dirPeek = 0
 		Lean()
-		Ka.mainFrame.Visible = false
-		Ka.mainFrame2.Visible = false
-		Ka.weapDisplay:ClearAllChildren()
-		local _ = ra:WaitForChild("UnequipSound"):clone()
-		_.Parent = Ba.PlayerGui
+		massVariableArray.mainFrame.Visible = false
+		massVariableArray.mainFrame2.Visible = false
+		massVariableArray.weapDisplay:ClearAllChildren()
+		local _ = carbonFx:WaitForChild("UnequipSound"):clone()
+		_.Parent = localPlayer.PlayerGui
 		_:Play()
 		game.Debris:AddItem(_, _.TimeLength)
-		Ka.ArmModel:Destroy()
-		Ka.curModel = nil
-		Ka.curConfig = nil
-		Ka.RA:Destroy()
-		Ka.RAW:Destroy()
-		Ka.LA:Destroy()
-		Ka.LAW:Destroy()
-		Ka.NeckCW:Destroy()
-		Ka.AnimBase = nil
-		Ka.AnimBaseW = nil
-		Ka.BasePart:Destroy()
-		Ka.Grip = nil
-		Ka.GripW:Destroy()
-		Ka.aimSFX:Destroy()
-		sa:UnbindAction("Shoot")
-		sa:UnbindAction("SelectFire")
-		sa:UnbindAction("Bolt")
-		sa:UnbindAction("Reload")
-		sa:UnbindAction("Jump")
-		sa:UnbindAction("Prone")
-		sa:UnbindAction("NewCrouch")
+		massVariableArray.ArmModel:Destroy()
+		massVariableArray.curModel = nil
+		massVariableArray.curConfig = nil
+		massVariableArray.RA:Destroy()
+		massVariableArray.RAW:Destroy()
+		massVariableArray.LA:Destroy()
+		massVariableArray.LAW:Destroy()
+		massVariableArray.NeckCW:Destroy()
+		massVariableArray.AnimBase = nil
+		massVariableArray.AnimBaseW = nil
+		massVariableArray.BasePart:Destroy()
+		massVariableArray.Grip = nil
+		massVariableArray.GripW:Destroy()
+		massVariableArray.aimSFX:Destroy()
+		contextActionService:UnbindAction("Shoot")
+		contextActionService:UnbindAction("SelectFire")
+		contextActionService:UnbindAction("Bolt")
+		contextActionService:UnbindAction("Reload")
+		contextActionService:UnbindAction("Jump")
+		contextActionService:UnbindAction("Prone")
+		contextActionService:UnbindAction("NewCrouch")
 		za = false
 		ya = false
 		ea = false
@@ -923,27 +921,27 @@ function UnequipModel()
 		ma = false
 		da = false
 		wa = false
-		Ka.CanShoot = Aa
-		ua.MouseBehavior = Enum.MouseBehavior.Default
-		ua.MouseIconEnabled = true
-		xa.CameraType = Enum.CameraType.Custom
-		Ba.CameraMaxZoomDistance = game.StarterPlayer.CameraMaxZoomDistance
-		if qa and not Ia.globalConfig.UniversalStances then
-			Da.humanoid.WalkSpeed = 16
-			Ka.StanceIndex = 0
+		massVariableArray.CanShoot = Aa
+		userInputService.MouseBehavior = Enum.MouseBehavior.Default
+		userInputService.MouseIconEnabled = true
+		currentCamera.CameraType = Enum.CameraType.Custom
+		localPlayer.CameraMaxZoomDistance = game.StarterPlayer.CameraMaxZoomDistance
+		if qa and not carbonConfigs.globalConfig.UniversalStances then
+			playerArms.humanoid.WalkSpeed = 16
+			massVariableArray.StanceIndex = 0
 			changeStance()
 		end
-		Ja:Create(xa, TweenInfo.new(0.1, Enum.EasingStyle.Quad), {FieldOfView = 70}):Play()
-		Ea.storeDataEvent:InvokeServer(
+		tweenService:Create(currentCamera, TweenInfo.new(0.1, Enum.EasingStyle.Quad), {FieldOfView = 70}):Play()
+		carbonEvents.storeDataEvent:InvokeServer(
 			"Store",
-			Ka.tool.Name,
-			Ka.Ammo,
-			Ka.StoredAmmo,
-			Ka.ExplosiveAmmo,
-			Ka.FireMode,
+			massVariableArray.tool.Name,
+			massVariableArray.Ammo,
+			massVariableArray.StoredAmmo,
+			massVariableArray.ExplosiveAmmo,
+			massVariableArray.FireMode,
 			0,
 			0,
-			Ka.CanShoot,
+			massVariableArray.CanShoot,
 			ta,
 			"Auth",
 			G,
@@ -951,20 +949,20 @@ function UnequipModel()
 			ia,
 			P,
 			R,
-			Ka.HopUp,
+			massVariableArray.HopUp,
 			K,
 			F
 		)
 		local _ =
 			require(
-				Ka.tool:WaitForChild("ConfigMods"):WaitForChild(
+				massVariableArray.tool:WaitForChild("ConfigMods"):WaitForChild(
 				"SConfig"
 				)
 			)
-		Ea.equipEvent:FireServer(
+		carbonEvents.equipEvent:FireServer(
 			false,
 			"Auth",
-			Ka.tool.Name,
+			massVariableArray.tool.Name,
 			_.RightArmPos,
 			_.LeftArmPos,
 			_.GunPos,
@@ -977,8 +975,8 @@ function UnequipModel()
 		va = false
 		Ca = false
 		ta = false
-		ua.MouseDeltaSensitivity = Ka.origSens
-		Da.humanoid.WalkSpeed = 16
+		userInputService.MouseDeltaSensitivity = massVariableArray.origSens
+		playerArms.humanoid.WalkSpeed = 16
 		if E then
 			E:Destroy()
 		end
@@ -993,16 +991,16 @@ function UnequipModel()
 		end
 		wa = false
 		na = false
-		for _, _ in pairs(Ka.hud:WaitForChild("RangeFrame"):GetChildren()) do
+		for _, _ in pairs(massVariableArray.hud:WaitForChild("RangeFrame"):GetChildren()) do
 			if _ then
 				_.Visible = false
 			end
 		end
 		if
-			Ba and Ba:FindFirstChild("PlayerGui") and
-			Ba.PlayerGui:FindFirstChild("TouchGui")
+			localPlayer and localPlayer:FindFirstChild("PlayerGui") and
+			localPlayer.PlayerGui:FindFirstChild("TouchGui")
 		then
-			Ba.PlayerGui:FindFirstChild("TouchGui"):WaitForChild(
+			localPlayer.PlayerGui:FindFirstChild("TouchGui"):WaitForChild(
 			"TouchControlFrame"
 			):WaitForChild("JumpButton").Visible = true
 		end
@@ -1011,30 +1009,30 @@ function UnequipModel()
 	end
 end
 function ChangeReady()
-	if Ka.curConfig then
+	if massVariableArray.curConfig then
 		if za then
 			Aim(false, true)
 		end
 		if ya then
 			Sprint(false)
 		end
-		if Ka.readyMode == 0 then
+		if massVariableArray.readyMode == 0 then
 			da = false
-			Ea.updateCharEvent:FireServer("Idle", true, "Auth")
-			Ka.CanShoot = true
+			carbonEvents.updateCharEvent:FireServer("Idle", true, "Auth")
+			massVariableArray.CanShoot = true
 			W = false
-		elseif Ka.readyMode == 1 then
+		elseif massVariableArray.readyMode == 1 then
 			da = true
-			Ja:Create(Ka.AnimBaseW, TweenInfo.new(0.5, Enum.EasingStyle.Quad), {C1 = Ka.curConfig.ReadyHighPos}):Play()
-			Ea.updateCharEvent:FireServer("ReadyHigh", true, "Auth")
+			tweenService:Create(massVariableArray.AnimBaseW, TweenInfo.new(0.5, Enum.EasingStyle.Quad), {C1 = massVariableArray.curConfig.ReadyHighPos}):Play()
+			carbonEvents.updateCharEvent:FireServer("ReadyHigh", true, "Auth")
 			if oa then
 				oa = false
 			end
 			W = true
-		elseif Ka.readyMode == -1 then
+		elseif massVariableArray.readyMode == -1 then
 			da = true
-			Ja:Create(Ka.AnimBaseW, TweenInfo.new(0.5, Enum.EasingStyle.Quad), {C1 = Ka.curConfig.ReadyLowPos}):Play()
-			Ea.updateCharEvent:FireServer("ReadyLow", true, "Auth")
+			tweenService:Create(massVariableArray.AnimBaseW, TweenInfo.new(0.5, Enum.EasingStyle.Quad), {C1 = massVariableArray.curConfig.ReadyLowPos}):Play()
+			carbonEvents.updateCharEvent:FireServer("ReadyLow", true, "Auth")
 			if oa then
 				oa = false
 			end
@@ -1043,136 +1041,136 @@ function ChangeReady()
 	end
 end
 function Aim(_, a)
-	if Ka.curConfig and not ka and not wa and not na then
+	if massVariableArray.curConfig and not ka and not wa and not na then
 		if _ then
 			if m then
 				if ya then
 					Sprint(false)
 				end
 				if da then
-					Ka.readyMode = 0
+					massVariableArray.readyMode = 0
 					ChangeReady()
 				end
 				if oa then
 					oa = false
 				end
 				if a then
-					Ea.updateCharEvent:FireServer("Aim", true, "Auth")
+					carbonEvents.updateCharEvent:FireServer("Aim", true, "Auth")
 				end
 				if
-					Fa:WaitForChild("CarbonValues"):WaitForChild(
+					playerCharacter:WaitForChild("CarbonValues"):WaitForChild(
 					"NVGActive"
 					).Value == true and
-						Ka.curModel:FindFirstChild("AimPart3") and
+						massVariableArray.curModel:FindFirstChild("AimPart3") and
 						O and
-						Ka.CurAimPart ~= Ka.curModel.AimPart3
+						massVariableArray.CurAimPart ~= massVariableArray.curModel.AimPart3
 				then
-					Ka.lastAimPart = Ka.CurAimPart
-					Ka.CurAimPart = Ka.curModel.AimPart3
+					massVariableArray.lastAimPart = massVariableArray.CurAimPart
+					massVariableArray.CurAimPart = massVariableArray.curModel.AimPart3
 				end
-				Ka.aimSFX.SoundId = "rbxassetid://" .. u[math.random(1, #u)]
-				Ka.aimSFX:Play()
-				Ja:Create(
-					xa,
-					TweenInfo.new(Ka.curConfig.AimZoomSpeed, Enum.EasingStyle.Quad),
-					{FieldOfView = Ka.curZoom}
+				massVariableArray.aimSFX.SoundId = "rbxassetid://" .. aimInSounds[math.random(1, #aimInSounds)]
+				massVariableArray.aimSFX:Play()
+				tweenService:Create(
+					currentCamera,
+					TweenInfo.new(massVariableArray.curConfig.AimZoomSpeed, Enum.EasingStyle.Quad),
+					{FieldOfView = massVariableArray.curZoom}
 				):Play()
-				if Ka.curConfig.aimAnim then
+				if massVariableArray.curConfig.aimAnim then
 					aimAnim()
 				end
 				za = true
 			end
 		else
-			Ka.aimWalkSpeed = 9
-			Ka.CurAimPart = Ka.lastAimPart
-			Ea.updateCharEvent:FireServer("Aim", false, "Auth")
-			Ka.aimSFX.SoundId = "rbxassetid://" .. v[math.random(1, #v)]
-			Ka.aimSFX:Play()
-			Ja:Create(xa, TweenInfo.new(Ka.curConfig.AimZoomSpeed, Enum.EasingStyle.Quad), {FieldOfView = 70}):Play()
+			massVariableArray.aimWalkSpeed = 9
+			massVariableArray.CurAimPart = massVariableArray.lastAimPart
+			carbonEvents.updateCharEvent:FireServer("Aim", false, "Auth")
+			massVariableArray.aimSFX.SoundId = "rbxassetid://" .. aimOutSounds[math.random(1, #aimOutSounds)]
+			massVariableArray.aimSFX:Play()
+			tweenService:Create(currentCamera, TweenInfo.new(massVariableArray.curConfig.AimZoomSpeed, Enum.EasingStyle.Quad), {FieldOfView = 70}):Play()
 			za = false
-			if Ka.curConfig.unaimAnim then
+			if massVariableArray.curConfig.unaimAnim then
 				unaimAnim()
 			end
-			Ga.walkAnimIntensity = Ia.globalConfig.WalkIntensity
-			Ga.walkAnimSpeed = Ia.globalConfig.WalkAnimSpeed
+			mathVariables.walkAnimIntensity = carbonConfigs.globalConfig.WalkIntensity
+			mathVariables.walkAnimSpeed = carbonConfigs.globalConfig.WalkAnimSpeed
 		end
 	end
 end
 function Sprint(_)
-	if Ka.curConfig and not ka and not wa and not na then
+	if massVariableArray.curConfig and not ka and not wa and not na then
 		if _ and L then
 			if za then
 				Aim(false, true)
 			end
-			Ha.dirPeek = 0
+			recoilData.dirPeek = 0
 			Lean()
-			Ja:Create(xa, TweenInfo.new(Ka.curConfig.AimZoomSpeed, Enum.EasingStyle.Quad), {FieldOfView = 70}):Play()
+			tweenService:Create(currentCamera, TweenInfo.new(massVariableArray.curConfig.AimZoomSpeed, Enum.EasingStyle.Quad), {FieldOfView = 70}):Play()
 			if da then
-				Ka.readyMode = 0
+				massVariableArray.readyMode = 0
 				ChangeReady()
 			end
 			if oa then
 				oa = false
 			end
-			Ea.updateCharEvent:FireServer("Sprint", true, "Auth")
-			if Ka.curConfig.sprintAnim then
+			carbonEvents.updateCharEvent:FireServer("Sprint", true, "Auth")
+			if massVariableArray.curConfig.sprintAnim then
 				sprintAnim()
 			end
 			ya = true
-			Ga.walkAnimIntensity = Ka.curConfig.SprintWalkIntensity
-			Ga.walkAnimSpeed = Ka.curConfig.SprintWalkAnimSpeed
+			mathVariables.walkAnimIntensity = massVariableArray.curConfig.SprintWalkIntensity
+			mathVariables.walkAnimSpeed = massVariableArray.curConfig.SprintWalkAnimSpeed
 		else
-			Ea.updateCharEvent:FireServer("Sprint", false, "Auth")
+			carbonEvents.updateCharEvent:FireServer("Sprint", false, "Auth")
 			ya = false
-			if Ka.curConfig.unsprintAnim then
+			if massVariableArray.curConfig.unsprintAnim then
 				unsprintAnim()
 			end
-			Ga.walkAnimIntensity = Ia.globalConfig.WalkIntensity
-			Ga.walkAnimSpeed = Ia.globalConfig.WalkAnimSpeed
-			Ga.idleSpeed = 2
+			mathVariables.walkAnimIntensity = carbonConfigs.globalConfig.WalkIntensity
+			mathVariables.walkAnimSpeed = carbonConfigs.globalConfig.WalkAnimSpeed
+			mathVariables.idleSpeed = 2
 		end
 	end
 end
 function CalculateRecoil()
-	if Ka.curConfig then
+	if massVariableArray.curConfig then
 		local a
 		local _
 		local b
 		if not za then
 			if not qa then
-				a = math.rad(math.random(Ka.curConfig.SideKickMin, Ka.curConfig.SideKickMax))
-				_ = math.random(Ka.curConfig.gunRecoilMin, Ka.curConfig.gunRecoilMax)
-				b = math.rad(math.random(Ka.curConfig.KickbackMin, Ka.curConfig.KickbackMax))
+				a = math.rad(math.random(massVariableArray.curConfig.SideKickMin, massVariableArray.curConfig.SideKickMax))
+				_ = math.random(massVariableArray.curConfig.gunRecoilMin, massVariableArray.curConfig.gunRecoilMax)
+				b = math.rad(math.random(massVariableArray.curConfig.KickbackMin, massVariableArray.curConfig.KickbackMax))
 			elseif qa then
-				if Ka.StanceIndex == 1 then
-					a = math.rad(math.random(Ka.curConfig.SideKickMin / 1.5, Ka.curConfig.SideKickMax / 1.5))
-					_ = math.random(Ka.curConfig.gunRecoilMin / 1.5, Ka.curConfig.gunRecoilMax / 1.5)
-					b = math.rad(math.random(Ka.curConfig.KickbackMin / 1.5, Ka.curConfig.KickbackMax / 1.5))
+				if massVariableArray.StanceIndex == 1 then
+					a = math.rad(math.random(massVariableArray.curConfig.SideKickMin / 1.5, massVariableArray.curConfig.SideKickMax / 1.5))
+					_ = math.random(massVariableArray.curConfig.gunRecoilMin / 1.5, massVariableArray.curConfig.gunRecoilMax / 1.5)
+					b = math.rad(math.random(massVariableArray.curConfig.KickbackMin / 1.5, massVariableArray.curConfig.KickbackMax / 1.5))
 				end
-				if Ka.StanceIndex == 2 then
-					a = math.rad(math.random(Ka.curConfig.SideKickMin / 2, Ka.curConfig.SideKickMax / 2))
-					_ = math.random(Ka.curConfig.gunRecoilMin / 2, Ka.curConfig.gunRecoilMax / 2)
-					b = math.rad(math.random(Ka.curConfig.KickbackMin / 2, Ka.curConfig.KickbackMax / 2))
+				if massVariableArray.StanceIndex == 2 then
+					a = math.rad(math.random(massVariableArray.curConfig.SideKickMin / 2, massVariableArray.curConfig.SideKickMax / 2))
+					_ = math.random(massVariableArray.curConfig.gunRecoilMin / 2, massVariableArray.curConfig.gunRecoilMax / 2)
+					b = math.rad(math.random(massVariableArray.curConfig.KickbackMin / 2, massVariableArray.curConfig.KickbackMax / 2))
 				end
 			end
-			a = math.rad(math.random(Ka.curConfig.SideKickMin, Ka.curConfig.SideKickMax))
-			_ = math.random(Ka.curConfig.gunRecoilMin, Ka.curConfig.gunRecoilMax)
-			b = math.rad(math.random(Ka.curConfig.KickbackMin, Ka.curConfig.KickbackMax))
+			a = math.rad(math.random(massVariableArray.curConfig.SideKickMin, massVariableArray.curConfig.SideKickMax))
+			_ = math.random(massVariableArray.curConfig.gunRecoilMin, massVariableArray.curConfig.gunRecoilMax)
+			b = math.rad(math.random(massVariableArray.curConfig.KickbackMin, massVariableArray.curConfig.KickbackMax))
 		else
 			if not qa then
-				a = math.rad(math.random(Ka.curConfig.AimSideKickMin, Ka.curConfig.AimSideKickMax))
-				_ = math.random(Ka.curConfig.AimGunRecoilMin, Ka.curConfig.AimGunRecoilMax)
-				b = math.rad(math.random(Ka.curConfig.AimKickbackMin, Ka.curConfig.AimKickbackMax))
+				a = math.rad(math.random(massVariableArray.curConfig.AimSideKickMin, massVariableArray.curConfig.AimSideKickMax))
+				_ = math.random(massVariableArray.curConfig.AimGunRecoilMin, massVariableArray.curConfig.AimGunRecoilMax)
+				b = math.rad(math.random(massVariableArray.curConfig.AimKickbackMin, massVariableArray.curConfig.AimKickbackMax))
 			elseif qa then
-				if Ka.StanceIndex == 1 then
-					a = math.rad(math.random(Ka.curConfig.AimSideKickMin / 1.5, Ka.curConfig.AimSideKickMax / 1.5))
-					_ = math.random(Ka.curConfig.AimGunRecoilMin / 1.5, Ka.curConfig.AimGunRecoilMax / 1.5)
-					b = math.rad(math.random(Ka.curConfig.AimKickbackMin / 1.5, Ka.curConfig.AimKickbackMax / 1.5))
+				if massVariableArray.StanceIndex == 1 then
+					a = math.rad(math.random(massVariableArray.curConfig.AimSideKickMin / 1.5, massVariableArray.curConfig.AimSideKickMax / 1.5))
+					_ = math.random(massVariableArray.curConfig.AimGunRecoilMin / 1.5, massVariableArray.curConfig.AimGunRecoilMax / 1.5)
+					b = math.rad(math.random(massVariableArray.curConfig.AimKickbackMin / 1.5, massVariableArray.curConfig.AimKickbackMax / 1.5))
 				end
-				if Ka.StanceIndex == 2 then
-					a = math.rad(math.random(Ka.curConfig.AimSideKickMin / 2, Ka.curConfig.AimSideKickMax / 2))
-					_ = math.random(Ka.curConfig.AimGunRecoilMin / 2, Ka.curConfig.AimGunRecoilMax / 2)
-					b = math.rad(math.random(Ka.curConfig.AimKickbackMin / 2, Ka.curConfig.AimKickbackMax / 2))
+				if massVariableArray.StanceIndex == 2 then
+					a = math.rad(math.random(massVariableArray.curConfig.AimSideKickMin / 2, massVariableArray.curConfig.AimSideKickMax / 2))
+					_ = math.random(massVariableArray.curConfig.AimGunRecoilMin / 2, massVariableArray.curConfig.AimGunRecoilMax / 2)
+					b = math.rad(math.random(massVariableArray.curConfig.AimKickbackMin / 2, massVariableArray.curConfig.AimKickbackMax / 2))
 				end
 			end
 		end
@@ -1181,45 +1179,45 @@ function CalculateRecoil()
 	end
 end
 function CalculateCamRecoil()
-	if Ka.curConfig then
+	if massVariableArray.curConfig then
 		local b
 		local _
 		local a
 		if not za then
 			if not qa then
-				b = math.rad(math.random(Ka.curConfig.SideKickMin, Ka.curConfig.SideKickMax))
-				_ = Ka.curConfig.CamShakeMin or Ka.curConfig.CamShakeMax
-				a = math.rad(math.random(Ka.curConfig.KickbackMin, Ka.curConfig.KickbackMax))
+				b = math.rad(math.random(massVariableArray.curConfig.SideKickMin, massVariableArray.curConfig.SideKickMax))
+				_ = massVariableArray.curConfig.CamShakeMin or massVariableArray.curConfig.CamShakeMax
+				a = math.rad(math.random(massVariableArray.curConfig.KickbackMin, massVariableArray.curConfig.KickbackMax))
 			elseif qa then
-				if Ka.StanceIndex == 1 then
-					b = math.rad(math.random(Ka.curConfig.SideKickMin / 1.5, Ka.curConfig.SideKickMax / 1.5))
-					_ = Ka.curConfig.CamShakeMin / 1.5 or Ka.curConfig.CamShakeMax / 1.5
-					a = math.rad(math.random(Ka.curConfig.KickbackMin / 1.5, Ka.curConfig.KickbackMax / 1.5))
+				if massVariableArray.StanceIndex == 1 then
+					b = math.rad(math.random(massVariableArray.curConfig.SideKickMin / 1.5, massVariableArray.curConfig.SideKickMax / 1.5))
+					_ = massVariableArray.curConfig.CamShakeMin / 1.5 or massVariableArray.curConfig.CamShakeMax / 1.5
+					a = math.rad(math.random(massVariableArray.curConfig.KickbackMin / 1.5, massVariableArray.curConfig.KickbackMax / 1.5))
 				end
-				if Ka.StanceIndex == 2 then
-					b = math.rad(math.random(Ka.curConfig.SideKickMin / 2, Ka.curConfig.SideKickMax / 2))
-					_ = Ka.curConfig.CamShakeMin / 2 or Ka.curConfig.CamShakeMax / 2
-					a = math.rad(math.random(Ka.curConfig.KickbackMin / 2, Ka.curConfig.KickbackMax / 2))
+				if massVariableArray.StanceIndex == 2 then
+					b = math.rad(math.random(massVariableArray.curConfig.SideKickMin / 2, massVariableArray.curConfig.SideKickMax / 2))
+					_ = massVariableArray.curConfig.CamShakeMin / 2 or massVariableArray.curConfig.CamShakeMax / 2
+					a = math.rad(math.random(massVariableArray.curConfig.KickbackMin / 2, massVariableArray.curConfig.KickbackMax / 2))
 				end
 			end
-			b = math.rad(math.random(Ka.curConfig.SideKickMin, Ka.curConfig.SideKickMax))
-			_ = Ka.curConfig.CamShakeMin or Ka.curConfig.CamShakeMax
-			a = math.rad(math.random(Ka.curConfig.KickbackMin, Ka.curConfig.KickbackMax))
+			b = math.rad(math.random(massVariableArray.curConfig.SideKickMin, massVariableArray.curConfig.SideKickMax))
+			_ = massVariableArray.curConfig.CamShakeMin or massVariableArray.curConfig.CamShakeMax
+			a = math.rad(math.random(massVariableArray.curConfig.KickbackMin, massVariableArray.curConfig.KickbackMax))
 		else
 			if not qa then
-				b = math.rad(math.random(Ka.curConfig.AimSideKickMin, Ka.curConfig.AimSideKickMax))
-				_ = Ka.curConfig.AimCanShakeMin or Ka.curConfig.AimCamShakeMax
-				a = math.rad(math.random(Ka.curConfig.AimKickbackMin, Ka.curConfig.AimKickbackMax))
+				b = math.rad(math.random(massVariableArray.curConfig.AimSideKickMin, massVariableArray.curConfig.AimSideKickMax))
+				_ = massVariableArray.curConfig.AimCanShakeMin or massVariableArray.curConfig.AimCamShakeMax
+				a = math.rad(math.random(massVariableArray.curConfig.AimKickbackMin, massVariableArray.curConfig.AimKickbackMax))
 			elseif qa then
-				if Ka.StanceIndex == 1 then
-					b = math.rad(math.random(Ka.curConfig.AimSideKickMin / 1.5, Ka.curConfig.AimSideKickMax / 1.5))
-					_ = Ka.curConfig.AimCanShakeMin / 1.5 or Ka.curConfig.AimCamShakeMax / 1.5
-					a = math.rad(math.random(Ka.curConfig.AimKickbackMin / 1.5, Ka.curConfig.AimKickbackMax / 1.5))
+				if massVariableArray.StanceIndex == 1 then
+					b = math.rad(math.random(massVariableArray.curConfig.AimSideKickMin / 1.5, massVariableArray.curConfig.AimSideKickMax / 1.5))
+					_ = massVariableArray.curConfig.AimCanShakeMin / 1.5 or massVariableArray.curConfig.AimCamShakeMax / 1.5
+					a = math.rad(math.random(massVariableArray.curConfig.AimKickbackMin / 1.5, massVariableArray.curConfig.AimKickbackMax / 1.5))
 				end
-				if Ka.StanceIndex == 2 then
-					b = math.rad(math.random(Ka.curConfig.AimSideKickMin / 2, Ka.curConfig.AimSideKickMax / 2))
-					_ = Ka.curConfig.AimCanShakeMin / 2 or Ka.curConfig.AimCamShakeMax / 2
-					a = math.rad(math.random(Ka.curConfig.AimKickbackMin / 2, Ka.curConfig.AimKickbackMax / 2))
+				if massVariableArray.StanceIndex == 2 then
+					b = math.rad(math.random(massVariableArray.curConfig.AimSideKickMin / 2, massVariableArray.curConfig.AimSideKickMax / 2))
+					_ = massVariableArray.curConfig.AimCanShakeMin / 2 or massVariableArray.curConfig.AimCamShakeMax / 2
+					a = math.rad(math.random(massVariableArray.curConfig.AimKickbackMin / 2, massVariableArray.curConfig.AimKickbackMax / 2))
 				end
 			end
 		end
@@ -1228,51 +1226,51 @@ function CalculateCamRecoil()
 	end
 end
 function CalculateCamShake()
-	if Ia.globalConfig.CanDamageShake then
+	if carbonConfigs.globalConfig.CanDamageShake then
 		local b
 		local a
 		local _
 		if not za then
 			if not qa then
-				b = math.rad(math.random(Ia.globalConfig.SideKickMin, Ia.globalConfig.SideKickMax))
-				a = Ia.globalConfig.CamShakeMin or Ia.globalConfig.CamShakeMax
-				_ = math.rad(math.random(Ia.globalConfig.KickbackMin, Ia.globalConfig.KickbackMax))
+				b = math.rad(math.random(carbonConfigs.globalConfig.SideKickMin, carbonConfigs.globalConfig.SideKickMax))
+				a = carbonConfigs.globalConfig.CamShakeMin or carbonConfigs.globalConfig.CamShakeMax
+				_ = math.rad(math.random(carbonConfigs.globalConfig.KickbackMin, carbonConfigs.globalConfig.KickbackMax))
 			elseif qa then
-				if Ka.StanceIndex == 1 then
-					b = math.rad(math.random(Ia.globalConfig.SideKickMin / 1.5, Ia.globalConfig.SideKickMax / 1.5))
-					a = Ia.globalConfig.CamShakeMin / 1.5 or Ia.globalConfig.CamShakeMax / 1.5
-					_ = math.rad(math.random(Ia.globalConfig.KickbackMin / 1.5, Ia.globalConfig.KickbackMax / 1.5))
+				if massVariableArray.StanceIndex == 1 then
+					b = math.rad(math.random(carbonConfigs.globalConfig.SideKickMin / 1.5, carbonConfigs.globalConfig.SideKickMax / 1.5))
+					a = carbonConfigs.globalConfig.CamShakeMin / 1.5 or carbonConfigs.globalConfig.CamShakeMax / 1.5
+					_ = math.rad(math.random(carbonConfigs.globalConfig.KickbackMin / 1.5, carbonConfigs.globalConfig.KickbackMax / 1.5))
 				end
-				if Ka.StanceIndex == 2 then
-					b = math.rad(math.random(Ia.globalConfig.SideKickMin / 2, Ia.globalConfig.SideKickMax / 2))
-					a = Ia.globalConfig.CamShakeMin / 2 or Ia.globalConfig.CamShakeMax / 2
-					_ = math.rad(math.random(Ia.globalConfig.KickbackMin / 2, Ia.globalConfig.KickbackMax / 2))
+				if massVariableArray.StanceIndex == 2 then
+					b = math.rad(math.random(carbonConfigs.globalConfig.SideKickMin / 2, carbonConfigs.globalConfig.SideKickMax / 2))
+					a = carbonConfigs.globalConfig.CamShakeMin / 2 or carbonConfigs.globalConfig.CamShakeMax / 2
+					_ = math.rad(math.random(carbonConfigs.globalConfig.KickbackMin / 2, carbonConfigs.globalConfig.KickbackMax / 2))
 				end
 			end
-			b = math.rad(math.random(Ia.globalConfig.SideKickMin, Ia.globalConfig.SideKickMax))
-			a = Ia.globalConfig.CamShakeMin or Ia.globalConfig.CamShakeMax
-			_ = math.rad(math.random(Ia.globalConfig.KickbackMin, Ia.globalConfig.KickbackMax))
+			b = math.rad(math.random(carbonConfigs.globalConfig.SideKickMin, carbonConfigs.globalConfig.SideKickMax))
+			a = carbonConfigs.globalConfig.CamShakeMin or carbonConfigs.globalConfig.CamShakeMax
+			_ = math.rad(math.random(carbonConfigs.globalConfig.KickbackMin, carbonConfigs.globalConfig.KickbackMax))
 		else
 			if not qa then
-				b = math.rad(math.random(Ia.globalConfig.AimSideKickMin, Ia.globalConfig.AimSideKickMax))
-				a = Ia.globalConfig.AimCanShakeMin or Ia.globalConfig.AimCamShakeMax
-				_ = math.rad(math.random(Ia.globalConfig.AimKickbackMin, Ia.globalConfig.AimKickbackMax))
+				b = math.rad(math.random(carbonConfigs.globalConfig.AimSideKickMin, carbonConfigs.globalConfig.AimSideKickMax))
+				a = carbonConfigs.globalConfig.AimCanShakeMin or carbonConfigs.globalConfig.AimCamShakeMax
+				_ = math.rad(math.random(carbonConfigs.globalConfig.AimKickbackMin, carbonConfigs.globalConfig.AimKickbackMax))
 			elseif qa then
-				if Ka.StanceIndex == 1 then
+				if massVariableArray.StanceIndex == 1 then
 					b =
 						math.rad(
-							math.random(Ia.globalConfig.AimSideKickMin / 1.5, Ia.globalConfig.AimSideKickMax / 1.5)
+							math.random(carbonConfigs.globalConfig.AimSideKickMin / 1.5, carbonConfigs.globalConfig.AimSideKickMax / 1.5)
 						)
-					a = Ia.globalConfig.AimCanShakeMin / 1.5 or Ia.globalConfig.AimCamShakeMax / 1.5
+					a = carbonConfigs.globalConfig.AimCanShakeMin / 1.5 or carbonConfigs.globalConfig.AimCamShakeMax / 1.5
 					_ =
 						math.rad(
-							math.random(Ia.globalConfig.AimKickbackMin / 1.5, Ia.globalConfig.AimKickbackMax / 1.5)
+							math.random(carbonConfigs.globalConfig.AimKickbackMin / 1.5, carbonConfigs.globalConfig.AimKickbackMax / 1.5)
 						)
 				end
-				if Ka.StanceIndex == 2 then
-					b = math.rad(math.random(Ia.globalConfig.AimSideKickMin / 2, Ia.globalConfig.AimSideKickMax / 2))
-					a = Ia.globalConfig.AimCanShakeMin / 2 or Ia.globalConfig.AimCamShakeMax / 2
-					_ = math.rad(math.random(Ia.globalConfig.AimKickbackMin / 2, Ia.globalConfig.AimKickbackMax / 2))
+				if massVariableArray.StanceIndex == 2 then
+					b = math.rad(math.random(carbonConfigs.globalConfig.AimSideKickMin / 2, carbonConfigs.globalConfig.AimSideKickMax / 2))
+					a = carbonConfigs.globalConfig.AimCanShakeMin / 2 or carbonConfigs.globalConfig.AimCamShakeMax / 2
+					_ = math.rad(math.random(carbonConfigs.globalConfig.AimKickbackMin / 2, carbonConfigs.globalConfig.AimKickbackMax / 2))
 				end
 			end
 		end
@@ -1282,43 +1280,43 @@ function CalculateCamShake()
 end
 function Shoot() -- why broccoli bob is getting canceled for eating mac and cheese (EMOTIONAL) (EXPOSED) (COPS CALLED) (DELETED VIDEO) NOT CLICKBAIT, 1440p copyright dintisepic 2027
 	prnt("Shoot")
-	if Ca and Ka.CanShoot and not ya and not ma and not da and not oa and not ea and not la then
-		if (xa.CFrame.Position - Fa:WaitForChild("Head").Position).magnitude > 10 then
-			Ba:Kick(
+	if Ca and massVariableArray.CanShoot and not ya and not ma and not da and not oa and not ea and not la then
+		if (currentCamera.CFrame.Position - playerCharacter:WaitForChild("Head").Position).magnitude > 10 then
+			localPlayer:Kick(
 				"Exploiting is a bannable offense. This action log has been submitted to ROBLOX."
 			)
 		end
 		if not ja then
-			if Ka.FireMode == 1 then
+			if massVariableArray.FireMode == 1 then
 				fireSemi()
-				if Ka.Ammo > 0 then
+				if massVariableArray.Ammo > 0 then
 					ta = true
-				elseif Ka.Ammo <= 0 then
+				elseif massVariableArray.Ammo <= 0 then
 					ta = false
 				end
-			elseif Ka.FireMode == 2 then
+			elseif massVariableArray.FireMode == 2 then
 				fireAuto()
-				if Ka.Ammo > 0 then
+				if massVariableArray.Ammo > 0 then
 					ta = true
-				elseif Ka.Ammo <= 0 then
+				elseif massVariableArray.Ammo <= 0 then
 					ta = false
 				end
-			elseif Ka.FireMode == 3 then
+			elseif massVariableArray.FireMode == 3 then
 				fireBurst()
-				if Ka.Ammo > 0 then
+				if massVariableArray.Ammo > 0 then
 					ta = true
-				elseif Ka.Ammo <= 0 then
+				elseif massVariableArray.Ammo <= 0 then
 					ta = false
 				end
-			elseif Ka.FireMode == 4 then
+			elseif massVariableArray.FireMode == 4 then
 				fireBoltAction()
-			elseif Ka.FireMode == 5 then
+			elseif massVariableArray.FireMode == 5 then
 				fireShot()
-			elseif Ka.FireMode == 6 then
+			elseif massVariableArray.FireMode == 6 then
 				fireRPG()
 			end
 		else
-			if Ka.ExplosiveAmmo > 0 then
+			if massVariableArray.ExplosiveAmmo > 0 then
 				fireExplosive()
 			end
 		end
@@ -1326,44 +1324,44 @@ function Shoot() -- why broccoli bob is getting canceled for eating mac and chee
 	end
 end
 function Update()
-	if Fa:WaitForChild("Humanoid").Health > 0 and Ca then
-		local d = Ha.recoilSpring2.p
+	if playerCharacter:WaitForChild("Humanoid").Health > 0 and Ca then
+		local d = recoilData.recoilSpring2.p
 		local _ = CFrame.new(0, 0, d.z / 5)
 		local a = CFrame.fromAxisAngle(Vector3.new(1, 0, 0), d.x / 10)
 		local b = CFrame.fromAxisAngle(Vector3.new(0, 1, 0), d.y / 10)
 		local c = CFrame.fromAxisAngle(Vector3.new(0, 0, 1), d.z)
 		d = _ * a * b * c
-		Ha.cornerPeek.t = Ha.peekFactor * Ha.dirPeek
-		local _ = CFrame.fromAxisAngle(Vector3.new(0, 0, 1), Ha.cornerPeek.p)
-		xa.CFrame = xa.CFrame * _ * Ka.newCamOffset * d
+		recoilData.cornerPeek.t = recoilData.peekFactor * recoilData.dirPeek
+		local _ = CFrame.fromAxisAngle(Vector3.new(0, 0, 1), recoilData.cornerPeek.p)
+		currentCamera.CFrame = currentCamera.CFrame * _ * massVariableArray.newCamOffset * d
 	end
 end
 function changeStance()
-	if not f and not Ka.Seated then
-		if Ka.StanceIndex == 0 then
+	if not f and not massVariableArray.Seated then
+		if massVariableArray.StanceIndex == 0 then
 			qa = false
-			Ja:Create(Da.rootJoint, TweenInfo.new(0.6), {C0 = CFrame.new(0, 0, 0, -1, 0, 0, 0, 0, 1, 0, 1, -0)}):Play()
-			Ja:Create(Da.rightHip, TweenInfo.new(0.6), {C0 = CFrame.new(1, -1, 0, 0, 0, 1, 0, 1, -0, -1, 0, 0)}):Play()
-			Ja:Create(Da.leftHip, TweenInfo.new(0.6), {C0 = CFrame.new(-1, -1, 0, 0, 0, -1, 0, 1, 0, 1, 0, 0)}):Play()
-			Ja:Create(Da.neck, TweenInfo.new(0.6), {C1 = CFrame.new(0, -0.5, 0, -1, 0, 0, 0, 0, 1, 0, 1, -0)}):Play()
-			Ka.camC0 = Vector3.new()
-			Ja:Create(Da.humanoid, TweenInfo.new(0.5), {CameraOffset = Vector3.new(0, 0, 0)}):Play()
+			tweenService:Create(playerArms.rootJoint, TweenInfo.new(0.6), {C0 = CFrame.new(0, 0, 0, -1, 0, 0, 0, 0, 1, 0, 1, -0)}):Play()
+			tweenService:Create(playerArms.rightHip, TweenInfo.new(0.6), {C0 = CFrame.new(1, -1, 0, 0, 0, 1, 0, 1, -0, -1, 0, 0)}):Play()
+			tweenService:Create(playerArms.leftHip, TweenInfo.new(0.6), {C0 = CFrame.new(-1, -1, 0, 0, 0, -1, 0, 1, 0, 1, 0, 0)}):Play()
+			tweenService:Create(playerArms.neck, TweenInfo.new(0.6), {C1 = CFrame.new(0, -0.5, 0, -1, 0, 0, 0, 0, 1, 0, 1, -0)}):Play()
+			massVariableArray.camC0 = Vector3.new()
+			tweenService:Create(playerArms.humanoid, TweenInfo.new(0.5), {CameraOffset = Vector3.new(0, 0, 0)}):Play()
 			if Ca then
 				UpdateAmmo()
 			else
-				Da.humanoid.WalkSpeed = 16
+				playerArms.humanoid.WalkSpeed = 16
 			end
 			Lean()
-			Ea.updateCharEvent:FireServer("Stance", true, "Auth", Ka.StanceIndex)
-		elseif Ka.StanceIndex == 1 and not Da.humanoid.Sit then
+			carbonEvents.updateCharEvent:FireServer("Stance", true, "Auth", massVariableArray.StanceIndex)
+		elseif massVariableArray.StanceIndex == 1 and not playerArms.humanoid.Sit then
 			qa = true
-			Ja:Create(
-				Da.rootJoint,
+			tweenService:Create(
+				playerArms.rootJoint,
 				TweenInfo.new(0.6),
 				{C0 = CFrame.new(0, -1.20000005, 0, -1, 0, 0, 0, 0, 1, 0, 1, 0)}
 			):Play()
-			Ja:Create(
-				Da.rightHip,
+			tweenService:Create(
+				playerArms.rightHip,
 				TweenInfo.new(0.6),
 				{
 					C0 = CFrame.new(
@@ -1382,8 +1380,8 @@ function changeStance()
 					)
 				}
 			):Play()
-			Ja:Create(
-				Da.leftHip,
+			tweenService:Create(
+				playerArms.leftHip,
 				TweenInfo.new(0.6),
 				{
 					C0 = CFrame.new(
@@ -1402,27 +1400,27 @@ function changeStance()
 					)
 				}
 			):Play()
-			Ja:Create(Da.neck, TweenInfo.new(0.6), {C1 = CFrame.new(0, -0.5, 0, -1, 0, 0, 0, 0, 1, 0, 1, -0)}):Play()
-			Ka.camC0 = Vector3.new(0, -1, 0)
-			Ja:Create(Da.humanoid, TweenInfo.new(0.5), {CameraOffset = Vector3.new(0, -1.2, 0)}):Play()
+			tweenService:Create(playerArms.neck, TweenInfo.new(0.6), {C1 = CFrame.new(0, -0.5, 0, -1, 0, 0, 0, 0, 1, 0, 1, -0)}):Play()
+			massVariableArray.camC0 = Vector3.new(0, -1, 0)
+			tweenService:Create(playerArms.humanoid, TweenInfo.new(0.5), {CameraOffset = Vector3.new(0, -1.2, 0)}):Play()
 			if Ca then
 				UpdateAmmo()
 			end
 			Lean()
-			Ea.updateCharEvent:FireServer("Stance", true, "Auth", Ka.StanceIndex)
-		elseif Ka.StanceIndex == 2 and not Da.humanoid.Sit then
-			if Ca and Ka.curConfig then
-				Ha.dirPeek = 0
+			carbonEvents.updateCharEvent:FireServer("Stance", true, "Auth", massVariableArray.StanceIndex)
+		elseif massVariableArray.StanceIndex == 2 and not playerArms.humanoid.Sit then
+			if Ca and massVariableArray.curConfig then
+				recoilData.dirPeek = 0
 				Lean()
 			end
 			qa = true
-			Ja:Create(
-				Da.rootJoint,
+			tweenService:Create(
+				playerArms.rootJoint,
 				TweenInfo.new(0.6),
 				{C0 = CFrame.new(0, -2.5999999, 0, -1, 0, 0, 0, 1, 1.19248806e-08, 0, 1.19248806e-08, -1)}
 			):Play()
-			Ja:Create(
-				Da.rightHip,
+			tweenService:Create(
+				playerArms.rightHip,
 				TweenInfo.new(0.6),
 				{
 					C0 = CFrame.new(
@@ -1441,8 +1439,8 @@ function changeStance()
 					)
 				}
 			):Play()
-			Ja:Create(
-				Da.leftHip,
+			tweenService:Create(
+				playerArms.leftHip,
 				TweenInfo.new(0.6),
 				{
 					C0 = CFrame.new(
@@ -1461,8 +1459,8 @@ function changeStance()
 					)
 				}
 			):Play()
-			Ja:Create(
-				Da.neck,
+			tweenService:Create(
+				playerArms.neck,
 				TweenInfo.new(0.6),
 				{
 					C1 = CFrame.new(
@@ -1481,30 +1479,30 @@ function changeStance()
 					)
 				}
 			):Play()
-			Ka.camC0 = Vector3.new(0, -2.5, 0)
-			Ja:Create(
-				Fa:WaitForChild("Humanoid"),
+			massVariableArray.camC0 = Vector3.new(0, -2.5, 0)
+			tweenService:Create(
+				playerCharacter:WaitForChild("Humanoid"),
 				TweenInfo.new(0.5),
 				{CameraOffset = Vector3.new(0, -3, 0)}
 			):Play()
 			if Ca then
 				UpdateAmmo()
 			end
-			Ea.updateCharEvent:FireServer("Stance", true, "Auth", Ka.StanceIndex)
+			carbonEvents.updateCharEvent:FireServer("Stance", true, "Auth", massVariableArray.StanceIndex)
 		end
 	end
 end
 function Lean()
-	if not Ka.Seated then
-		if Ka.StanceIndex ~= 2 and not ya then
-			if Ha.dirPeek == 1 then
-				if Ka.StanceIndex == 0 then
-					Ja:Create(Da.humanoid, TweenInfo.new(0.5), {CameraOffset = Vector3.new(-1.5, 0, 0)}):Play()
-				elseif Ka.StanceIndex == 1 then
-					Ja:Create(Da.humanoid, TweenInfo.new(0.5), {CameraOffset = Vector3.new(-1.5, -1.2, 0)}):Play()
+	if not massVariableArray.Seated then
+		if massVariableArray.StanceIndex ~= 2 and not ya then
+			if recoilData.dirPeek == 1 then
+				if massVariableArray.StanceIndex == 0 then
+					tweenService:Create(playerArms.humanoid, TweenInfo.new(0.5), {CameraOffset = Vector3.new(-1.5, 0, 0)}):Play()
+				elseif massVariableArray.StanceIndex == 1 then
+					tweenService:Create(playerArms.humanoid, TweenInfo.new(0.5), {CameraOffset = Vector3.new(-1.5, -1.2, 0)}):Play()
 				end
-				Ja:Create(
-					Da.rootJoint,
+				tweenService:Create(
+					playerArms.rootJoint,
 					TweenInfo.new(0.6),
 					{
 						C1 = CFrame.new(
@@ -1523,13 +1521,13 @@ function Lean()
 						)
 					}
 				):Play()
-				Ja:Create(
-					Da.rightHip,
+				tweenService:Create(
+					playerArms.rightHip,
 					TweenInfo.new(0.6),
 					{C1 = CFrame.new(0.5, 1, 0, 0, 0.087155737, 0.99619472, 0, 0.99619472, -0.087155737, -1, 0, 0)}
 				):Play()
-				Ja:Create(
-					Da.leftHip,
+				tweenService:Create(
+					playerArms.leftHip,
 					TweenInfo.new(0.6),
 					{
 						C1 = CFrame.new(
@@ -1548,14 +1546,14 @@ function Lean()
 						)
 					}
 				):Play()
-			elseif Ha.dirPeek == -1 then
-				if Ka.StanceIndex == 0 then
-					Ja:Create(Da.humanoid, TweenInfo.new(0.5), {CameraOffset = Vector3.new(1.5, 0, 0)}):Play()
-				elseif Ka.StanceIndex == 1 then
-					Ja:Create(Da.humanoid, TweenInfo.new(0.5), {CameraOffset = Vector3.new(1.5, -1.2, 0)}):Play()
+			elseif recoilData.dirPeek == -1 then
+				if massVariableArray.StanceIndex == 0 then
+					tweenService:Create(playerArms.humanoid, TweenInfo.new(0.5), {CameraOffset = Vector3.new(1.5, 0, 0)}):Play()
+				elseif massVariableArray.StanceIndex == 1 then
+					tweenService:Create(playerArms.humanoid, TweenInfo.new(0.5), {CameraOffset = Vector3.new(1.5, -1.2, 0)}):Play()
 				end
-				Ja:Create(
-					Da.rootJoint,
+				tweenService:Create(
+					playerArms.rootJoint,
 					TweenInfo.new(0.6),
 					{
 						C1 = CFrame.new(
@@ -1574,8 +1572,8 @@ function Lean()
 						)
 					}
 				):Play()
-				Ja:Create(
-					Da.rightHip,
+				tweenService:Create(
+					playerArms.rightHip,
 					TweenInfo.new(0.6),
 					{
 						C1 = CFrame.new(
@@ -1594,46 +1592,46 @@ function Lean()
 						)
 					}
 				):Play()
-				Ja:Create(
-					Da.leftHip,
+				tweenService:Create(
+					playerArms.leftHip,
 					TweenInfo.new(0.6),
 					{C1 = CFrame.new(-0.5, 1, 0, 0, 0, -0.99999994, 0, 0.99999994, 0, 1, 0, 0)}
 				):Play()
-			elseif Ha.dirPeek == 0 then
-				if Ka.StanceIndex == 0 then
-					Ja:Create(Da.humanoid, TweenInfo.new(0.5), {CameraOffset = Vector3.new(0, 0, 0)}):Play()
-				elseif Ka.StanceIndex == 1 then
-					Ja:Create(Da.humanoid, TweenInfo.new(0.5), {CameraOffset = Vector3.new(0, -1.2, 0)}):Play()
+			elseif recoilData.dirPeek == 0 then
+				if massVariableArray.StanceIndex == 0 then
+					tweenService:Create(playerArms.humanoid, TweenInfo.new(0.5), {CameraOffset = Vector3.new(0, 0, 0)}):Play()
+				elseif massVariableArray.StanceIndex == 1 then
+					tweenService:Create(playerArms.humanoid, TweenInfo.new(0.5), {CameraOffset = Vector3.new(0, -1.2, 0)}):Play()
 				end
-				Ja:Create(Da.rootJoint, TweenInfo.new(0.6), {C1 = CFrame.new(0, 0, 0, -1, 0, 0, 0, 0, 1, 0, 1, -0)}):Play(
+				tweenService:Create(playerArms.rootJoint, TweenInfo.new(0.6), {C1 = CFrame.new(0, 0, 0, -1, 0, 0, 0, 0, 1, 0, 1, -0)}):Play(
 
 				)
-				Ja:Create(Da.rightHip, TweenInfo.new(0.6), {C1 = CFrame.new(0.5, 1, 0, 0, 0, 1, 0, 1, -0, -1, 0, 0)}):Play(
+				tweenService:Create(playerArms.rightHip, TweenInfo.new(0.6), {C1 = CFrame.new(0.5, 1, 0, 0, 0, 1, 0, 1, -0, -1, 0, 0)}):Play(
 
 				)
-				Ja:Create(Da.leftHip, TweenInfo.new(0.6), {C1 = CFrame.new(-0.5, 1, 0, 0, 0, -1, 0, 1, 0, 1, 0, 0)}):Play(
+				tweenService:Create(playerArms.leftHip, TweenInfo.new(0.6), {C1 = CFrame.new(-0.5, 1, 0, 0, 0, -1, 0, 1, 0, 1, 0, 0)}):Play(
 
 				)
 			end
-		elseif Ka.StanceIndex == 2 then
-			Ha.dirPeek = 0
-			Ja:Create(
-				Fa:WaitForChild("Humanoid"),
+		elseif massVariableArray.StanceIndex == 2 then
+			recoilData.dirPeek = 0
+			tweenService:Create(
+				playerCharacter:WaitForChild("Humanoid"),
 				TweenInfo.new(0.5),
 				{CameraOffset = Vector3.new(0, -3, 0)}
 			):Play()
-			Ja:Create(Da.rootJoint, TweenInfo.new(0.6), {C1 = CFrame.new(0, 0, 0, -1, 0, 0, 0, 0, 1, 0, 1, -0)}):Play()
-			Ja:Create(Da.rightHip, TweenInfo.new(0.6), {C1 = CFrame.new(0.5, 1, 0, 0, 0, 1, 0, 1, -0, -1, 0, 0)}):Play()
-			Ja:Create(Da.leftHip, TweenInfo.new(0.6), {C1 = CFrame.new(-0.5, 1, 0, 0, 0, -1, 0, 1, 0, 1, 0, 0)}):Play()
+			tweenService:Create(playerArms.rootJoint, TweenInfo.new(0.6), {C1 = CFrame.new(0, 0, 0, -1, 0, 0, 0, 0, 1, 0, 1, -0)}):Play()
+			tweenService:Create(playerArms.rightHip, TweenInfo.new(0.6), {C1 = CFrame.new(0.5, 1, 0, 0, 0, 1, 0, 1, -0, -1, 0, 0)}):Play()
+			tweenService:Create(playerArms.leftHip, TweenInfo.new(0.6), {C1 = CFrame.new(-0.5, 1, 0, 0, 0, -1, 0, 1, 0, 1, 0, 0)}):Play()
 		end
-		Ea.updateCharEvent:FireServer("Lean", true, "Auth", Ka.StanceIndex, Ha.dirPeek)
+		carbonEvents.updateCharEvent:FireServer("Lean", true, "Auth", massVariableArray.StanceIndex, recoilData.dirPeek)
 	end
 end
 function HalfStepFunc(_)
-	if Ka.HalfStep then
-		Ea.halfStepEvent:FireServer("Auth", _, Ca)
+	if massVariableArray.HalfStep then
+		carbonEvents.halfStepEvent:FireServer("Auth", _, Ca)
 	end
-	Ka.HalfStep = not Ka.HalfStep
+	massVariableArray.HalfStep = not massVariableArray.HalfStep
 end
 function SpawnTracer(c, b, _, a)
 	local a = Instance.new("Trail", a)
@@ -1650,12 +1648,12 @@ function SpawnTracer(c, b, _, a)
 	a.Color = ColorSequence.new(c.TracerColor.Color)
 end
 function reCast(_, a)
-	if Ka.curConfig then
+	if massVariableArray.curConfig then
 		local _ = _
 		local a = a
 		local _ = CFrame.new(_, _ + a)
 		local c = Instance.new("Part")
-		c.Parent = ca
+		c.Parent = carbonAudio
 		c.Name = "Bullet"
 		game.Debris:AddItem(c, 10)
 		c.Shape = Enum.PartType.Ball
@@ -1670,42 +1668,42 @@ function reCast(_, a)
 		c.Transparency = 1
 		local _ = c:GetMass()
 		local _ = Instance.new("BodyForce", c)
-		_.Force = Ia.globalConfig.BulletPhysics
-		c.Velocity = a * Ia.globalConfig.BulletSpeed
+		_.Force = carbonConfigs.globalConfig.BulletPhysics
+		c.Velocity = a * carbonConfigs.globalConfig.BulletSpeed
 		local b = Instance.new("Attachment", c)
 		b.Position = Vector3.new(0.1, 0, 0)
 		local a = Instance.new("Attachment", c)
 		a.Position = Vector3.new(-0.1, 0, 0)
-		local _ = Ia.codeArchive.TracerCalculation(Ka.curConfig.TracerChance)
-		if Ka.curConfig.TracerEnabled == true and _ then
-			if Ia.globalConfig.NightTimeTracers then
+		local _ = carbonConfigs.codeArchive.TracerCalculation(massVariableArray.curConfig.TracerChance)
+		if massVariableArray.curConfig.TracerEnabled == true and _ then
+			if carbonConfigs.globalConfig.NightTimeTracers then
 				if
-					game.Lighting.ClockTime > Ia.globalConfig.MinTime or
-					game.Lighting.ClockTime < Ia.globalConfig.MaxTime
+					game.Lighting.ClockTime > carbonConfigs.globalConfig.MinTime or
+					game.Lighting.ClockTime < carbonConfigs.globalConfig.MaxTime
 				then
-					SpawnTracer(Ka.curConfig, b, a, c)
+					SpawnTracer(massVariableArray.curConfig, b, a, c)
 				end
 			else
-				SpawnTracer(Ka.curConfig, b, a, c)
+				SpawnTracer(massVariableArray.curConfig, b, a, c)
 			end
 		end
 		return c
 	end
 end
 function CreateBullet(c, _, a)
-	if Ka.curConfig then
+	if massVariableArray.curConfig then
 		local b
 		if not _ then
-			b = Ka.FirePart.Position
+			b = massVariableArray.FirePart.Position
 		else
 			b = _
 		end
 		local d
 		if not a then
 			if not ia then
-				d = Ka.FirePart.CFrame.lookVector + (Ka.FirePart.CFrame.upVector * Ka.HopUp)
+				d = massVariableArray.FirePart.CFrame.lookVector + (massVariableArray.FirePart.CFrame.upVector * massVariableArray.HopUp)
 			else
-				d = Ka.FirePart.CFrame.lookVector + (Ka.FirePart.CFrame.upVector * Ka.oHopUp)
+				d = massVariableArray.FirePart.CFrame.lookVector + (massVariableArray.FirePart.CFrame.upVector * massVariableArray.oHopUp)
 			end
 		else
 			d = a
@@ -1715,8 +1713,8 @@ function CreateBullet(c, _, a)
 		d = _ * d
 		local a = CFrame.new(b, b + d)
 		local e = Instance.new("Part")
-		e.Parent = ca
-		table.insert(ha, e)
+		e.Parent = carbonAudio
+		table.insert(componentCollection, e)
 		e.Name = "Bullet"
 		game.Debris:AddItem(e, 10)
 		e.Shape = Enum.PartType.Ball
@@ -1732,49 +1730,49 @@ function CreateBullet(c, _, a)
 		local _ = e:GetMass()
 		local _ = Instance.new("BodyForce", e)
 		if not ja then
-			_.Force = Vector3.new(0, Ia.globalConfig.BulletPhysics, 0)
-			e.Velocity = d * Ia.globalConfig.BulletSpeed
+			_.Force = Vector3.new(0, carbonConfigs.globalConfig.BulletPhysics, 0)
+			e.Velocity = d * carbonConfigs.globalConfig.BulletSpeed
 		else
-			_.Force = Ka.curConfig.ExploPhysics
-			e.Velocity = d * Ka.curConfig.ExploSpeed
+			_.Force = massVariableArray.curConfig.ExploPhysics
+			e.Velocity = d * massVariableArray.curConfig.ExploSpeed
 		end
 		local b = Instance.new("Attachment", e)
 		b.Position = Vector3.new(0.1, 0, 0)
 		local c = Instance.new("Attachment", e)
 		c.Position = Vector3.new(-0.1, 0, 0)
-		local _ = Ia.codeArchive.TracerCalculation(Ka.curConfig.TracerChance)
-		if Ka.FireMode == 6 then
-			local _ = ra:WaitForChild("RocketFire"):Clone()
+		local _ = carbonConfigs.codeArchive.TracerCalculation(massVariableArray.curConfig.TracerChance)
+		if massVariableArray.FireMode == 6 then
+			local _ = carbonFx:WaitForChild("RocketFire"):Clone()
 			_.Parent = e
 			_.Enabled = true
-			local _ = ra:WaitForChild("RocketLoop"):Clone()
+			local _ = carbonFx:WaitForChild("RocketLoop"):Clone()
 			_.Parent = e
 			_:Play()
 		end
-		if Ka.curConfig.TracerEnabled == true and _ then
-			if Ia.globalConfig.NightTimeTracers then
+		if massVariableArray.curConfig.TracerEnabled == true and _ then
+			if carbonConfigs.globalConfig.NightTimeTracers then
 				if
-					game.Lighting.ClockTime > Ia.globalConfig.MinTime or
-					game.Lighting.ClockTime < Ia.globalConfig.MaxTime
+					game.Lighting.ClockTime > carbonConfigs.globalConfig.MinTime or
+					game.Lighting.ClockTime < carbonConfigs.globalConfig.MaxTime
 				then
-					SpawnTracer(Ka.curConfig, b, c, e)
+					SpawnTracer(massVariableArray.curConfig, b, c, e)
 				end
 			else
-				SpawnTracer(Ka.curConfig, b, c, e)
+				SpawnTracer(massVariableArray.curConfig, b, c, e)
 			end
 		end
 		CreateShell()
-		if Ia.globalConfig.ReplicatedBullets then
-			Ea.whizEvent:FireServer(
+		if carbonConfigs.globalConfig.ReplicatedBullets then
+			carbonEvents.whizEvent:FireServer(
 				a,
-				Ka.curConfig.TracerEnabled,
+				massVariableArray.curConfig.TracerEnabled,
 				_,
-				Ka.curConfig.BulletPhysics,
-				Ka.curConfig.BulletSpeed,
+				massVariableArray.curConfig.BulletPhysics,
+				massVariableArray.curConfig.BulletSpeed,
 				d,
-				Ka.curConfig.TracerColor,
+				massVariableArray.curConfig.TracerColor,
 				"Auth",
-				Ka.FireMode
+				massVariableArray.FireMode
 			)
 		end
 		return e
@@ -1783,7 +1781,7 @@ end
 function CreateExternalBullet(f, g, b, d, e, a, _, c)
 	local _ = f
 	local f = Instance.new("Part")
-	f.Parent = ca
+	f.Parent = carbonAudio
 	f.Name = "Bullet"
 	game.Debris:AddItem(f, 10)
 	f.Shape = Enum.PartType.Ball
@@ -1820,23 +1818,23 @@ function CreateExternalBullet(f, g, b, d, e, a, _, c)
 		b.Color = ColorSequence.new(BrickColor.new("Deep orange").Color)
 	end
 	if c == 6 then
-		local _ = ra:WaitForChild("RocketFire"):Clone()
+		local _ = carbonFx:WaitForChild("RocketFire"):Clone()
 		_.Parent = f
 		_.Enabled = true
-		local _ = ra:WaitForChild("RocketLoop"):Clone()
+		local _ = carbonFx:WaitForChild("RocketLoop"):Clone()
 		_.Parent = f
 		_:Play()
 	end
 	return f
 end
 function HandleDamage(e, _, d, a, b, c)
-	if Ka.curConfig then
-		Ea.createOwnerEvent:FireServer(d, nil, nil, nil, nil, nil, nil, nil, "Auth")
+	if massVariableArray.curConfig then
+		carbonEvents.createOwnerEvent:FireServer(d, nil, nil, nil, nil, nil, nil, nil, "Auth")
 		if (e.Name == "Head" or e:FindFirstAncestorWhichIsA("Accessory")) then
 			if e.Name == "Head" then
-				Ea.damageEvent:FireServer(
+				carbonEvents.damageEvent:FireServer(
 					d,
-					Ka.curConfig.HeadDamage,
+					massVariableArray.curConfig.HeadDamage,
 					e.Name,
 					{"nil", "Auth", "nil", "nil"}
 				)
@@ -1847,9 +1845,9 @@ function HandleDamage(e, _, d, a, b, c)
 					"AccessoryWeld"
 					).Part1.Name == "Head"
 				then
-					Ea.damageEvent:FireServer(
+					carbonEvents.damageEvent:FireServer(
 						d,
-						Ka.curConfig.HeadDamage,
+						massVariableArray.curConfig.HeadDamage,
 						e.Name,
 						{"nil", "Auth", "nil", "nil"}
 					)
@@ -1858,9 +1856,9 @@ function HandleDamage(e, _, d, a, b, c)
 					"AccessoryWeld"
 					).Part1.Name == "Torso"
 				then
-					Ea.damageEvent:FireServer(
+					carbonEvents.damageEvent:FireServer(
 						d,
-						Ka.curConfig.BaseDamage,
+						massVariableArray.curConfig.BaseDamage,
 						e.Name,
 						{"nil", "Auth", "nil", "nil"}
 					)
@@ -1870,9 +1868,9 @@ function HandleDamage(e, _, d, a, b, c)
 			e.Name == "Torso" or
 			e.Name == "HumanoidRootPart"
 		then
-			Ea.damageEvent:FireServer(
+			carbonEvents.damageEvent:FireServer(
 				d,
-				Ka.curConfig.BaseDamage,
+				massVariableArray.curConfig.BaseDamage,
 				e.Name,
 				{"nil", "Auth", "nil", "nil"}
 			)
@@ -1881,16 +1879,16 @@ function HandleDamage(e, _, d, a, b, c)
 				e.Name == "Left Leg" or
 				e.Name == "Right Leg")
 		then
-			Ea.damageEvent:FireServer(
+			carbonEvents.damageEvent:FireServer(
 				d,
-				Ka.curConfig.LimbDamage,
+				massVariableArray.curConfig.LimbDamage,
 				e.Name,
 				{"nil", "Auth", "nil", "nil"}
 			)
 		elseif e.Name == "Armor" then
-			Ea.damageEvent:FireServer(
+			carbonEvents.damageEvent:FireServer(
 				d,
-				Ka.curConfig.ArmorDamage,
+				massVariableArray.curConfig.ArmorDamage,
 				e.Name,
 				{"nil", "Auth", "nil", "nil"}
 			)
@@ -1906,49 +1904,49 @@ function HandleDamage(e, _, d, a, b, c)
 			end
 			if _ then
 				if _.Parent.Name == "Chest" then
-					Ea.damageEvent:FireServer(
+					carbonEvents.damageEvent:FireServer(
 						d,
-						Ka.curConfig.BaseDamage - (Ka.curConfig.BaseDamage * (Ia.globalConfig.ArmorBase / 100)),
+						massVariableArray.curConfig.BaseDamage - (massVariableArray.curConfig.BaseDamage * (carbonConfigs.globalConfig.ArmorBase / 100)),
 						e.Name,
 						{"nil", "Auth", "nil", "nil"}
 					)
 				elseif _.Parent.Name == "HeadWear" then
-					Ea.damageEvent:FireServer(
+					carbonEvents.damageEvent:FireServer(
 						d,
-						Ka.curConfig.BaseDamage - (Ka.curConfig.HeadDamage * (Ia.globalConfig.ArmorHead / 100)),
+						massVariableArray.curConfig.BaseDamage - (massVariableArray.curConfig.HeadDamage * (carbonConfigs.globalConfig.ArmorHead / 100)),
 						e.Name,
 						{"nil", "Auth", "nil", "nil"}
 					)
 				else
-					Ea.damageEvent:FireServer(
+					carbonEvents.damageEvent:FireServer(
 						d,
-						Ka.curConfig.BaseDamage - (Ka.curConfig.LimbDamage * (Ia.globalConfig.ArmorLimb / 100)),
+						massVariableArray.curConfig.BaseDamage - (massVariableArray.curConfig.LimbDamage * (carbonConfigs.globalConfig.ArmorLimb / 100)),
 						e.Name,
 						{"nil", "Auth", "nil", "nil"}
 					)
 				end
 			end
 		else
-			Ea.damageEvent:FireServer(
+			carbonEvents.damageEvent:FireServer(
 				d,
-				Ka.curConfig.BaseDamage,
+				massVariableArray.curConfig.BaseDamage,
 				e.Name,
 				{"nil", "Auth", "nil", "nil"}
 			)
 		end
-		local d = ra:WaitForChild("BodyHit"):clone()
-		d.Parent = Ba.PlayerGui
+		local d = carbonFx:WaitForChild("BodyHit"):clone()
+		d.Parent = localPlayer.PlayerGui
 		d:Play()
 		game:GetService("Debris"):addItem(d, d.TimeLength)
-		Ea.hitEvent:FireServer(_, a, b, c, "Auth", "Human", e)
+		carbonEvents.hitEvent:FireServer(_, a, b, c, "Auth", "Human", e)
 	end
 end
 function CastRay(i, c, a, _)
-	if Ka.curConfig then
+	if massVariableArray.curConfig then
 		local l, k, j
 		local g
 		if not c then
-			g = Ka.CurAimPart.Position
+			g = massVariableArray.CurAimPart.Position
 		else
 			g = a
 		end
@@ -1956,32 +1954,32 @@ function CastRay(i, c, a, _)
 		local d = 0
 		local b = false
 		while true do
-			B:Wait()
+			renderLoop:Wait()
 			e = i.Position
 			d = d + (e - g).magnitude
 			if _ then
-				table.insert(ha, 1, _)
+				table.insert(componentCollection, 1, _)
 			end
-			l, k, j = workspace:FindPartOnRayWithIgnoreList(Ray.new(g, (e - g)), ha)
+			l, k, j = workspace:FindPartOnRayWithIgnoreList(Ray.new(g, (e - g)), componentCollection)
 			local h = Vector3.new(0, 1, 0):Cross(j)
 			local f = math.asin(h.magnitude)
 			if _ then
-				table.remove(ha, 1)
+				table.remove(componentCollection, 1)
 			end
 			for _, _ in pairs(game.Players:GetChildren()) do
 				if
-					_:IsA("Player") and _ ~= Ba and _.Character and
+					_:IsA("Player") and _ ~= localPlayer and _.Character and
 					_.Character:FindFirstChild("Head") and
 					(_.Character.Head.Position - k).magnitude <= 25 and
 					not b
 				then
-					Ea.flybyEvent:FireServer(_, nil, nil, nil, nil, "Auth")
+					carbonEvents.flybyEvent:FireServer(_, nil, nil, nil, nil, "Auth")
 					b = true
 				end
 			end
-			for _, a in pairs(ha) do
-				if a and #ha > 3 and a == c then
-					table.remove(ha, _)
+			for _, a in pairs(componentCollection) do
+				if a and #componentCollection > 3 and a == c then
+					table.remove(componentCollection, _)
 				end
 			end
 			if d > 10000 then
@@ -2001,7 +1999,7 @@ function CastRay(i, c, a, _)
 					not l.Parent.Parent:FindFirstChild("Middle") and
 					l.Material ~= Enum.Material.Water
 				then
-					table.insert(ha, l)
+					table.insert(componentCollection, l)
 					local _, _ =
 						spawn(
 							function()
@@ -2010,7 +2008,7 @@ function CastRay(i, c, a, _)
 						)
 					break
 				elseif l.Name == "HumanoidRootPart" then
-					table.insert(ha, l)
+					table.insert(componentCollection, l)
 					local _, _ =
 						spawn(
 							function()
@@ -2020,11 +2018,11 @@ function CastRay(i, c, a, _)
 					break
 				else
 					if l then
-						if Ia.globalConfig.RicochetEnabled then
-							local a, _ = Ia.codeArchive.richoCalc(l)
+						if carbonConfigs.globalConfig.RicochetEnabled then
+							local a, _ = carbonConfigs.codeArchive.richoCalc(l)
 							if a then
 								local a = i.CFrame.LookVector
-								i.Velocity = (a - (2 * a:Dot(j) * j)) * (Ka.curConfig.BulletSpeed / 2)
+								i.Velocity = (a - (2 * a:Dot(j) * j)) * (massVariableArray.curConfig.BulletSpeed / 2)
 								local _, _ =
 									spawn(
 										function()
@@ -2033,15 +2031,15 @@ function CastRay(i, c, a, _)
 									)
 							end
 						end
-						Ea.serverFXEvent:FireServer(k, nil, nil, nil, nil, nil, "Auth")
+						carbonEvents.serverFXEvent:FireServer(k, nil, nil, nil, nil, nil, "Auth")
 						if not ja then
-							if Ka.FireMode ~= 6 then
-								local _, b = Ia.utilitiesModule.CheckForHumanoid(l)
+							if massVariableArray.FireMode ~= 6 then
+								local _, b = carbonConfigs.utilitiesModule.CheckForHumanoid(l)
 								if _ then
-									if Ka.curConfig.AntiTK then
+									if massVariableArray.curConfig.AntiTK then
 										if
 											game.Players:GetPlayerFromCharacter(b.Parent) and
-											game.Players:GetPlayerFromCharacter(b.Parent).Team ~= Ba.Team
+											game.Players:GetPlayerFromCharacter(b.Parent).Team ~= localPlayer.Team
 										then
 											HandleDamage(l, k, b, h, f, j)
 										end
@@ -2051,7 +2049,7 @@ function CastRay(i, c, a, _)
 										if not game.Players:FindFirstChild(b.Parent.Name) then
 											if b.Parent:FindFirstChild("Vars") then
 												if b.Parent.Vars:FindFirstChild("teamColor") then
-													if b.Parent.Vars.teamColor.Value ~= Ba.TeamColor then
+													if b.Parent.Vars.teamColor.Value ~= localPlayer.TeamColor then
 														HandleDamage(l, k, b, h, f, j)
 													end
 												end
@@ -2070,14 +2068,14 @@ function CastRay(i, c, a, _)
 										) and
 											l.Parent.CEVARS.IsExplosive.Value == true
 									then
-										Ea.explosiveEvent:FireServer(
+										carbonEvents.explosiveEvent:FireServer(
 											c,
 											a,
-											Ia.globalConfig.C4BlastPressue,
-											Ia.globalConfig.C4BlastRadius,
-											Ia.globalConfig.C4DestroyJointRadius,
-											Ia.globalConfig.C4ExplosionType,
-											Ia.globalConfig.C4DeletePart,
+											carbonConfigs.globalConfig.C4BlastPressue,
+											carbonConfigs.globalConfig.C4BlastRadius,
+											carbonConfigs.globalConfig.C4DestroyJointRadius,
+											carbonConfigs.globalConfig.C4ExplosionType,
+											carbonConfigs.globalConfig.C4DeletePart,
 											l.Parent,
 											nil,
 											nil,
@@ -2087,7 +2085,7 @@ function CastRay(i, c, a, _)
 											nil
 										)
 									end
-									Ea.createOwnerEvent:FireServer(
+									carbonEvents.createOwnerEvent:FireServer(
 										l,
 										nil,
 										nil,
@@ -2098,16 +2096,16 @@ function CastRay(i, c, a, _)
 										nil,
 										"Auth"
 									)
-									Ea.hitEvent:FireServer(k, h, f, j, "Auth", "Part", l)
+									carbonEvents.hitEvent:FireServer(k, h, f, j, "Auth", "Part", l)
 								end
-							elseif Ka.FireMode == 6 and Ka.curConfig.RPGEnabled then
-								Ea.explosiveEvent:FireServer(
+							elseif massVariableArray.FireMode == 6 and massVariableArray.curConfig.RPGEnabled then
+								carbonEvents.explosiveEvent:FireServer(
 									l,
 									k,
-									Ka.curConfig.BlastPressue,
-									Ka.curConfig.BlastRadius,
-									Ka.curConfig.DestroyJointRadius,
-									Ka.curConfig.ExplosionType,
+									massVariableArray.curConfig.BlastPressue,
+									massVariableArray.curConfig.BlastRadius,
+									massVariableArray.curConfig.DestroyJointRadius,
+									massVariableArray.curConfig.ExplosionType,
 									nil,
 									nil,
 									nil,
@@ -2119,13 +2117,13 @@ function CastRay(i, c, a, _)
 								)
 							end
 						else
-							Ea.explosiveEvent:FireServer(
+							carbonEvents.explosiveEvent:FireServer(
 								l,
 								k,
-								Ka.curConfig.BlastPressue,
-								Ka.curConfig.BlastRadius,
-								Ka.curConfig.DestroyJointRadius,
-								Ka.curConfig.ExplosionType,
+								massVariableArray.curConfig.BlastPressue,
+								massVariableArray.curConfig.BlastRadius,
+								massVariableArray.curConfig.DestroyJointRadius,
+								massVariableArray.curConfig.ExplosionType,
 								nil,
 								nil,
 								nil,
@@ -2147,25 +2145,25 @@ function CastRay(i, c, a, _)
 end
 function CreateShell()
 	local _
-	if Ka.curConfig.RoundType then
-		if ra:FindFirstChild(Ka.curConfig.RoundType) then
-			_ = ra:WaitForChild(Ka.curConfig.RoundType):clone()
+	if massVariableArray.curConfig.RoundType then
+		if carbonFx:FindFirstChild(massVariableArray.curConfig.RoundType) then
+			_ = carbonFx:WaitForChild(massVariableArray.curConfig.RoundType):clone()
 		else
-			_ = ra:WaitForChild("Shell"):clone()
+			_ = carbonFx:WaitForChild("Shell"):clone()
 		end
 	else
-		_ = ra:WaitForChild("Shell"):clone()
+		_ = carbonFx:WaitForChild("Shell"):clone()
 	end
 	_.Anchored = false
-	d = Ia.codeArchive.getQuality()
+	d = carbonConfigs.codeArchive.getQuality()
 	_.CanCollide = false
 	if _:FindFirstChildOfClass("Motor6D") then
 		_:FindFirstChildOfClass("Motor6D"):Destroy()
 	end
-	_.CFrame = Ka.curModel.Chamber.CFrame
-	_.Velocity = Ka.curModel.Chamber.CFrame.lookVector * 30 + Vector3.new(0, 4, 0)
+	_.CFrame = massVariableArray.curModel.Chamber.CFrame
+	_.Velocity = massVariableArray.curModel.Chamber.CFrame.lookVector * 30 + Vector3.new(0, 4, 0)
 	_.RotVelocity = Vector3.new(math.random(-180, 180), math.random(-180, 180), math.random(-180, 180))
-    _.Parent = ca
+    _.Parent = carbonAudio
     game:GetService("Debris"):addItem(_, 10)
     delay(
         0.1,
@@ -2177,7 +2175,7 @@ function CreateShell()
             end
         end
     )
-    for _, _ in pairs(Ka.curModel.Chamber:GetChildren()) do
+    for _, _ in pairs(massVariableArray.curModel.Chamber:GetChildren()) do
         if _ and _.Name == "Gas_Discharge" then
             _.Enabled = true
             delay(
@@ -2190,19 +2188,19 @@ function CreateShell()
     end
 end
 function CreateDustUp()
-    if Ia.globalConfig.DustUpFX then
+    if carbonConfigs.globalConfig.DustUpFX then
         local b, a, _ =
-            workspace:FindPartOnRayWithIgnoreList(Ray.new(Ka.FirePart.Position, Ka.FirePart.CFrame.upVector * -3), ha)
+            workspace:FindPartOnRayWithIgnoreList(Ray.new(massVariableArray.FirePart.Position, massVariableArray.FirePart.CFrame.upVector * -3), componentCollection)
         local c = Vector3.new(0, 1, 0):Cross(_)
         local _ = math.asin(c.magnitude)
         if b then
             local b = Instance.new("Part")
-            b.Parent = ca
+            b.Parent = carbonAudio
             b.Anchored = false
             b.CanCollide = false
             b.Transparency = 1
             b.CFrame = CFrame.new(a) * CFrame.fromAxisAngle(c.magnitude == 0 and Vector3.new(1) or c.unit, _)
-            local _ = ra:WaitForChild("DustUp"):Clone()
+            local _ = carbonFx:WaitForChild("DustUp"):Clone()
             _.Parent = b
             _.Enabled = true
             game.Debris:AddItem(b, 2)
@@ -2214,17 +2212,17 @@ function CreateDustUp()
             )
         end
         local b, a, _ =
-            workspace:FindPartOnRayWithIgnoreList(Ray.new(Ka.FirePart.Position, Ka.FirePart.CFrame.upVector * 3), ha)
+            workspace:FindPartOnRayWithIgnoreList(Ray.new(massVariableArray.FirePart.Position, massVariableArray.FirePart.CFrame.upVector * 3), componentCollection)
         local c = Vector3.new(0, 1, 0):Cross(_)
         local _ = math.asin(c.magnitude)
         if b then
             local b = Instance.new("Part")
-            b.Parent = ca
+            b.Parent = carbonAudio
             b.Anchored = false
             b.CanCollide = false
             b.Transparency = 1
             b.CFrame = CFrame.new(a) * CFrame.fromAxisAngle(c.magnitude == 0 and Vector3.new(1) or c.unit, _)
-            local _ = ra:WaitForChild("DustUp"):Clone()
+            local _ = carbonFx:WaitForChild("DustUp"):Clone()
             _.Parent = b
             _.Enabled = true
             game.Debris:AddItem(b, 2)
@@ -2237,19 +2235,19 @@ function CreateDustUp()
         end
         local b, _, a =
             workspace:FindPartOnRayWithIgnoreList(
-            Ray.new(Ka.FirePart.Position, Ka.FirePart.CFrame.rightVector * -3),
-            ha
+            Ray.new(massVariableArray.FirePart.Position, massVariableArray.FirePart.CFrame.rightVector * -3),
+            componentCollection
         )
         local c = Vector3.new(0, 1, 0):Cross(a)
         local a = math.asin(c.magnitude)
         if b then
             local b = Instance.new("Part")
-            b.Parent = ca
+            b.Parent = carbonAudio
             b.Anchored = false
             b.CanCollide = false
             b.Transparency = 1
             b.CFrame = CFrame.new(_) * CFrame.fromAxisAngle(c.magnitude == 0 and Vector3.new(1) or c.unit, a)
-            local _ = ra:WaitForChild("DustUp"):Clone()
+            local _ = carbonFx:WaitForChild("DustUp"):Clone()
             _.Parent = b
             _.Enabled = true
             game.Debris:AddItem(b, 2)
@@ -2261,17 +2259,17 @@ function CreateDustUp()
             )
         end
         local _, b, a =
-            workspace:FindPartOnRayWithIgnoreList(Ray.new(Ka.FirePart.Position, Ka.FirePart.CFrame.rightVector * 3), ha)
+            workspace:FindPartOnRayWithIgnoreList(Ray.new(massVariableArray.FirePart.Position, massVariableArray.FirePart.CFrame.rightVector * 3), componentCollection)
         local c = Vector3.new(0, 1, 0):Cross(a)
         local a = math.asin(c.magnitude)
         if _ then
             local d = Instance.new("Part")
-            d.Parent = ca
+            d.Parent = carbonAudio
             d.Anchored = false
             d.CanCollide = false
             d.Transparency = 1
             d.CFrame = CFrame.new(b) * CFrame.fromAxisAngle(c.magnitude == 0 and Vector3.new(1) or c.unit, a)
-            local _ = ra:WaitForChild("DustUp"):Clone()
+            local _ = carbonFx:WaitForChild("DustUp"):Clone()
             _.Parent = d
             _.Enabled = true
             game.Debris:AddItem(d, 2)
@@ -2285,33 +2283,33 @@ function CreateDustUp()
     end
 end
 function fireSemi()
-    if Ka.curConfig then
+    if massVariableArray.curConfig then
         if Ca then
             fa = true
-            Ka.CanShoot = false
+            massVariableArray.CanShoot = false
             Recoiling = true
             local a = CalculateRecoil()
             local _ = CalculateCamRecoil()
-            Ha.recoilSpring.t = Ha.recoilSpring.t + a
-            Ha.recoilSpring2.t = Ha.recoilSpring2.t + _
-            if Ka.curConfig.Firerate / 2 >= 0.025 then
+            recoilData.recoilSpring.t = recoilData.recoilSpring.t + a
+            recoilData.recoilSpring2.t = recoilData.recoilSpring2.t + _
+            if massVariableArray.curConfig.Firerate / 2 >= 0.025 then
                 delay(
                     0.025,
                     function()
-                        Ha.recoilSpring.t = Ha.recoilSpring.t - a
-                        Ha.recoilSpring2.t = Ha.recoilSpring2.t - _
+                        recoilData.recoilSpring.t = recoilData.recoilSpring.t - a
+                        recoilData.recoilSpring2.t = recoilData.recoilSpring2.t - _
                     end
                 )
-            elseif Ka.curConfig.Firerate / 2 < 0.025 then
+            elseif massVariableArray.curConfig.Firerate / 2 < 0.025 then
                 delay(
-                    Ka.curConfig.Firerate / 2,
+                    massVariableArray.curConfig.Firerate / 2,
                     function()
-                        Ha.recoilSpring.t = Ha.recoilSpring.t - a
-                        Ha.recoilSpring2.t = Ha.recoilSpring2.t - _
+                        recoilData.recoilSpring.t = recoilData.recoilSpring.t - a
+                        recoilData.recoilSpring2.t = recoilData.recoilSpring2.t - _
                     end
                 )
             end
-            if Ka.curConfig.fireAnim then
+            if massVariableArray.curConfig.fireAnim then
                 spawn(
                     function()
                         fireAnim()
@@ -2319,15 +2317,15 @@ function fireSemi()
                 )
             end
             CreateDustUp()
-            Ea.updateCharEvent:FireServer("Shoot", true, "Auth", Ka.curConfig.Firerate / 2)
+            carbonEvents.updateCharEvent:FireServer("Shoot", true, "Auth", massVariableArray.curConfig.Firerate / 2)
             Shooting = true
-            if Ia.globalConfig.SoundIso then
-                Ea.connectionEvent:FireServer(
-                    Fa:WaitForChild("@" .. Ka.curModel.Name):WaitForChild("Grip"):WaitForChild(
+            if carbonConfigs.globalConfig.SoundIso then
+                carbonEvents.connectionEvent:FireServer(
+                    playerCharacter:WaitForChild("@" .. massVariableArray.curModel.Name):WaitForChild("Grip"):WaitForChild(
                         "Fire"
                     ).SoundId,
-                    Fa:WaitForChild("@" .. Ka.curModel.Name):WaitForChild("Grip"),
-                    Fa:WaitForChild("@" .. Ka.curModel.Name):WaitForChild("Grip"):WaitForChild(
+                    playerCharacter:WaitForChild("@" .. massVariableArray.curModel.Name):WaitForChild("Grip"),
+                    playerCharacter:WaitForChild("@" .. massVariableArray.curModel.Name):WaitForChild("Grip"):WaitForChild(
                         "Fire"
                     ).PlaybackSpeed,
                     nil,
@@ -2342,13 +2340,13 @@ function fireSemi()
                     "Auth"
                 )
             end
-            Fa:WaitForChild("@" .. Ka.curModel.Name):WaitForChild("Grip"):WaitForChild(
+            playerCharacter:WaitForChild("@" .. massVariableArray.curModel.Name):WaitForChild("Grip"):WaitForChild(
                 "Fire"
             ):Play()
-            _a = CreateBullet(Ka.curConfig.BulletSpread)
-            Ka.Ammo = Ka.Ammo - 1
-            if Ka.Ammo <= 0 then
-                for _, _ in pairs(Ka.curModel:GetDescendants()) do
+            _aBullet = CreateBullet(massVariableArray.curConfig.BulletSpread)
+            massVariableArray.Ammo = massVariableArray.Ammo - 1
+            if massVariableArray.Ammo <= 0 then
+                for _, _ in pairs(massVariableArray.curModel:GetDescendants()) do
                     if _ and _.Name == "Ping" and _:IsA("Sound") then
                         _:Play()
                     end
@@ -2358,10 +2356,10 @@ function fireSemi()
             local _, _ =
                 spawn(
                 function()
-                    CastRay(_a)
+                    CastRay(_aBullet)
                 end
             )
-            for _, _ in pairs(Ka.FirePart:GetChildren()) do
+            for _, _ in pairs(massVariableArray.FirePart:GetChildren()) do
                 if _.Name:sub(1, 7) == "FlashFX" then
                     _.Enabled = true
                 end
@@ -2369,22 +2367,22 @@ function fireSemi()
             delay(
                 1 / 30,
                 function()
-                    for _, _ in pairs(Ka.FirePart:GetChildren()) do
+                    for _, _ in pairs(massVariableArray.FirePart:GetChildren()) do
                         if _.Name:sub(1, 7) == "FlashFX" then
                             _.Enabled = false
                         end
                     end
                 end
             )
-            if Ka.curConfig.CanBolt == true then
+            if massVariableArray.curConfig.CanBolt == true then
                 BoltingBackAnim()
                 delay(
-                    Ka.curConfig.Firerate / 2,
+                    massVariableArray.curConfig.Firerate / 2,
                     function()
-                        if Ka.curConfig.CanSlideLock == false then
+                        if massVariableArray.curConfig.CanSlideLock == false then
                             BoltingForwardAnim()
-                        elseif Ka.curConfig.CanSlideLock == true then
-                            if Ka.Ammo > 0 then
+                        elseif massVariableArray.curConfig.CanSlideLock == true then
+                            if massVariableArray.Ammo > 0 then
                                 BoltingForwardAnim()
                             end
                         end
@@ -2392,19 +2390,19 @@ function fireSemi()
                 )
             end
             delay(
-                Ka.curConfig.Firerate / 2,
+                massVariableArray.curConfig.Firerate / 2,
                 function()
                     Recoiling = false
                     RecoilFront = false
                 end
             )
-            task.wait(Ka.curConfig.Firerate)
+            task.wait(massVariableArray.curConfig.Firerate)
             Shooting = false
-            Ka.CanShoot = true
+            massVariableArray.CanShoot = true
         end
-        local _ = Ia.codeArchive.JamCalculation(Ia.globalConfig.JamChance)
+        local _ = carbonConfigs.codeArchive.JamCalculation(carbonConfigs.globalConfig.JamChance)
         if _ then
-            Ka.CanShoot = false
+            massVariableArray.CanShoot = false
             UpdateAmmo()
         end
         UpdateAmmo()
@@ -2412,34 +2410,34 @@ function fireSemi()
     fa = false
 end
 function fireRPG()
-    if Ka.curConfig and Ka.FirePart then
+    if massVariableArray.curConfig and massVariableArray.FirePart then
         if Ca then
             fa = true
-            Ka.CanShoot = false
+            massVariableArray.CanShoot = false
             Recoiling = true
             local _ = CalculateRecoil()
             local a = CalculateCamRecoil()
-            Ha.recoilSpring.t = Ha.recoilSpring.t + _
-            Ha.recoilSpring2.t = Ha.recoilSpring2.t + a
-            if Ka.curConfig.Firerate / 2 >= 0.025 then
+            recoilData.recoilSpring.t = recoilData.recoilSpring.t + _
+            recoilData.recoilSpring2.t = recoilData.recoilSpring2.t + a
+            if massVariableArray.curConfig.Firerate / 2 >= 0.025 then
                 delay(
                     0.025,
                     function()
-                        Ha.recoilSpring.t = Ha.recoilSpring.t - _
-                        Ha.recoilSpring2.t = Ha.recoilSpring2.t - a
+                        recoilData.recoilSpring.t = recoilData.recoilSpring.t - _
+                        recoilData.recoilSpring2.t = recoilData.recoilSpring2.t - a
                     end
                 )
-            elseif Ka.curConfig.Firerate / 2 < 0.025 then
+            elseif massVariableArray.curConfig.Firerate / 2 < 0.025 then
                 delay(
-                    Ka.curConfig.Firerate / 2,
+                    massVariableArray.curConfig.Firerate / 2,
                     function()
-                        Ha.recoilSpring.t = Ha.recoilSpring.t - _
-                        Ha.recoilSpring2.t = Ha.recoilSpring2.t - a
+                        recoilData.recoilSpring.t = recoilData.recoilSpring.t - _
+                        recoilData.recoilSpring2.t = recoilData.recoilSpring2.t - a
                     end
                 )
             end
-            Ka.Mag.Transparency = 1
-            if Ka.curConfig.fireAnim then
+            massVariableArray.Mag.Transparency = 1
+            if massVariableArray.curConfig.fireAnim then
                 spawn(
                     function()
                         fireAnim()
@@ -2447,15 +2445,15 @@ function fireRPG()
                 )
             end
             CreateDustUp()
-            Ea.updateCharEvent:FireServer("Shoot", true, "Auth", Ka.curConfig.Firerate / 2)
+            carbonEvents.updateCharEvent:FireServer("Shoot", true, "Auth", massVariableArray.curConfig.Firerate / 2)
             Shooting = true
-            if Ia.globalConfig.SoundIso then
-                Ea.connectionEvent:FireServer(
-                    Fa:WaitForChild("@" .. Ka.curModel.Name):WaitForChild("Grip"):WaitForChild(
+            if carbonConfigs.globalConfig.SoundIso then
+                carbonEvents.connectionEvent:FireServer(
+                    playerCharacter:WaitForChild("@" .. massVariableArray.curModel.Name):WaitForChild("Grip"):WaitForChild(
                         "Fire"
                     ).SoundId,
-                    Fa:WaitForChild("@" .. Ka.curModel.Name):WaitForChild("Grip"),
-                    Fa:WaitForChild("@" .. Ka.curModel.Name):WaitForChild("Grip"):WaitForChild(
+                    playerCharacter:WaitForChild("@" .. massVariableArray.curModel.Name):WaitForChild("Grip"),
+                    playerCharacter:WaitForChild("@" .. massVariableArray.curModel.Name):WaitForChild("Grip"):WaitForChild(
                         "Fire"
                     ).PlaybackSpeed,
                     nil,
@@ -2470,19 +2468,19 @@ function fireRPG()
                     "Auth"
                 )
             end
-            Fa:WaitForChild("@" .. Ka.curModel.Name):WaitForChild("Grip"):WaitForChild(
+            playerCharacter:WaitForChild("@" .. massVariableArray.curModel.Name):WaitForChild("Grip"):WaitForChild(
                 "Fire"
             ):Play()
-            _a = CreateBullet(0)
-            Ka.Ammo = Ka.Ammo - 1
+            _aBullet = CreateBullet(0)
+            massVariableArray.Ammo = massVariableArray.Ammo - 1
             RecoilFront = true
             local _, _ =
                 spawn(
                 function()
-                    CastRay(_a)
+                    CastRay(_aBullet)
                 end
             )
-            for _, _ in pairs(Ka.FirePart:GetChildren()) do
+            for _, _ in pairs(massVariableArray.FirePart:GetChildren()) do
                 if _.Name:sub(1, 7) == "FlashFX" then
                     _.Enabled = true
                 end
@@ -2490,7 +2488,7 @@ function fireRPG()
             delay(
                 1 / 30,
                 function()
-                    for _, _ in pairs(Ka.FirePart:GetChildren()) do
+                    for _, _ in pairs(massVariableArray.FirePart:GetChildren()) do
                         if _.Name:sub(1, 7) == "FlashFX" then
                             _.Enabled = false
                         end
@@ -2498,7 +2496,7 @@ function fireRPG()
                 end
             )
             delay(
-                Ka.curConfig.Firerate / 2,
+                massVariableArray.curConfig.Firerate / 2,
                 function()
                     Recoiling = false
                     RecoilFront = false
@@ -2511,34 +2509,34 @@ function fireRPG()
     fa = false
 end
 function fireExplosive()
-    if Ka.curConfig and Ka.FirePart2 then
+    if massVariableArray.curConfig and massVariableArray.FirePart2 then
         if Ca then
             fa = true
-            Ka.CanShoot = false
+            massVariableArray.CanShoot = false
             G = true
             Recoiling = true
             local a = CalculateRecoil()
             local _ = CalculateCamRecoil()
-            Ha.recoilSpring.t = Ha.recoilSpring.t + a
-            Ha.recoilSpring2.t = Ha.recoilSpring2.t + _
-            if Ka.curConfig.Firerate / 2 >= 0.025 then
+            recoilData.recoilSpring.t = recoilData.recoilSpring.t + a
+            recoilData.recoilSpring2.t = recoilData.recoilSpring2.t + _
+            if massVariableArray.curConfig.Firerate / 2 >= 0.025 then
                 delay(
                     0.025,
                     function()
-                        Ha.recoilSpring.t = Ha.recoilSpring.t - a
-                        Ha.recoilSpring2.t = Ha.recoilSpring2.t - _
+                        recoilData.recoilSpring.t = recoilData.recoilSpring.t - a
+                        recoilData.recoilSpring2.t = recoilData.recoilSpring2.t - _
                     end
                 )
-            elseif Ka.curConfig.Firerate / 2 < 0.025 then
+            elseif massVariableArray.curConfig.Firerate / 2 < 0.025 then
                 delay(
-                    Ka.curConfig.Firerate / 2,
+                    massVariableArray.curConfig.Firerate / 2,
                     function()
-                        Ha.recoilSpring.t = Ha.recoilSpring.t - a
-                        Ha.recoilSpring2.t = Ha.recoilSpring2.t - _
+                        recoilData.recoilSpring.t = recoilData.recoilSpring.t - a
+                        recoilData.recoilSpring2.t = recoilData.recoilSpring2.t - _
                     end
                 )
             end
-            if Ka.curConfig.fireAnim then
+            if massVariableArray.curConfig.fireAnim then
                 spawn(
                     function()
                         fireAnim()
@@ -2546,15 +2544,15 @@ function fireExplosive()
                 )
             end
             CreateDustUp()
-            Ea.updateCharEvent:FireServer("Shoot", true, "Auth", Ka.curConfig.Firerate / 2)
+            carbonEvents.updateCharEvent:FireServer("Shoot", true, "Auth", massVariableArray.curConfig.Firerate / 2)
             Shooting = true
-            if Ia.globalConfig.SoundIso then
-                Ea.connectionEvent:FireServer(
-                    Fa:WaitForChild("@" .. Ka.curModel.Name):WaitForChild("Grip"):WaitForChild(
+            if carbonConfigs.globalConfig.SoundIso then
+                carbonEvents.connectionEvent:FireServer(
+                    playerCharacter:WaitForChild("@" .. massVariableArray.curModel.Name):WaitForChild("Grip"):WaitForChild(
                         "Fire2"
                     ).SoundId,
-                    Fa:WaitForChild("@" .. Ka.curModel.Name):WaitForChild("Grip"),
-                    Fa:WaitForChild("@" .. Ka.curModel.Name):WaitForChild("Grip"):WaitForChild(
+                    playerCharacter:WaitForChild("@" .. massVariableArray.curModel.Name):WaitForChild("Grip"),
+                    playerCharacter:WaitForChild("@" .. massVariableArray.curModel.Name):WaitForChild("Grip"):WaitForChild(
                         "Fire2"
                     ).PlaybackSpeed,
                     nil,
@@ -2569,19 +2567,19 @@ function fireExplosive()
                     "Auth"
                 )
             end
-            Fa:WaitForChild("@" .. Ka.curModel.Name):WaitForChild("Grip"):WaitForChild(
+            playerCharacter:WaitForChild("@" .. massVariableArray.curModel.Name):WaitForChild("Grip"):WaitForChild(
                 "Fire2"
             ):Play()
-            _a = CreateBullet(0)
-            Ka.ExplosiveAmmo = Ka.ExplosiveAmmo - 1
+            _aBullet = CreateBullet(0)
+            massVariableArray.ExplosiveAmmo = massVariableArray.ExplosiveAmmo - 1
             RecoilFront = true
             local _, _ =
                 spawn(
                 function()
-                    CastRay(_a)
+                    CastRay(_aBullet)
                 end
             )
-            for _, _ in pairs(Ka.FirePart2:GetChildren()) do
+            for _, _ in pairs(massVariableArray.FirePart2:GetChildren()) do
                 if _.Name:sub(1, 7) == "FlashFX" then
                     _.Enabled = true
                 end
@@ -2589,7 +2587,7 @@ function fireExplosive()
             delay(
                 1 / 30,
                 function()
-                    for _, _ in pairs(Ka.FirePart2:GetChildren()) do
+                    for _, _ in pairs(massVariableArray.FirePart2:GetChildren()) do
                         if _.Name:sub(1, 7) == "FlashFX" then
                             _.Enabled = false
                         end
@@ -2597,7 +2595,7 @@ function fireExplosive()
                 end
             )
             delay(
-                Ka.curConfig.Firerate / 2,
+                massVariableArray.curConfig.Firerate / 2,
                 function()
                     Recoiling = false
                     RecoilFront = false
@@ -2610,33 +2608,33 @@ function fireExplosive()
     fa = false
 end
 function fireShot()
-    if Ka.curConfig then
+    if massVariableArray.curConfig then
         if Ca then
             fa = true
-            Ka.CanShoot = false
+            massVariableArray.CanShoot = false
             Recoiling = true
             local _ = CalculateRecoil()
             local a = CalculateCamRecoil()
-            Ha.recoilSpring.t = Ha.recoilSpring.t + _
-            Ha.recoilSpring2.t = Ha.recoilSpring2.t + a
-            if Ka.curConfig.Firerate / 2 >= 0.025 then
+            recoilData.recoilSpring.t = recoilData.recoilSpring.t + _
+            recoilData.recoilSpring2.t = recoilData.recoilSpring2.t + a
+            if massVariableArray.curConfig.Firerate / 2 >= 0.025 then
                 delay(
                     0.025,
                     function()
-                        Ha.recoilSpring.t = Ha.recoilSpring.t - _
-                        Ha.recoilSpring2.t = Ha.recoilSpring2.t - a
+                        recoilData.recoilSpring.t = recoilData.recoilSpring.t - _
+                        recoilData.recoilSpring2.t = recoilData.recoilSpring2.t - a
                     end
                 )
-            elseif Ka.curConfig.Firerate / 2 < 0.025 then
+            elseif massVariableArray.curConfig.Firerate / 2 < 0.025 then
                 delay(
-                    Ka.curConfig.Firerate / 2,
+                    massVariableArray.curConfig.Firerate / 2,
                     function()
-                        Ha.recoilSpring.t = Ha.recoilSpring.t - _
-                        Ha.recoilSpring2.t = Ha.recoilSpring2.t - a
+                        recoilData.recoilSpring.t = recoilData.recoilSpring.t - _
+                        recoilData.recoilSpring2.t = recoilData.recoilSpring2.t - a
                     end
                 )
             end
-            if Ka.curConfig.fireAnim then
+            if massVariableArray.curConfig.fireAnim then
                 spawn(
                     function()
                         fireAnim()
@@ -2644,16 +2642,16 @@ function fireShot()
                 )
             end
             CreateDustUp()
-            Ea.updateCharEvent:FireServer("Shoot", true, "Auth", Ka.curConfig.Firerate / 2)
+            carbonEvents.updateCharEvent:FireServer("Shoot", true, "Auth", massVariableArray.curConfig.Firerate / 2)
             Shooting = true
             RecoilFront = true
-            if Ia.globalConfig.SoundIso then
-                Ea.connectionEvent:FireServer(
-                    Fa:WaitForChild("@" .. Ka.curModel.Name):WaitForChild("Grip"):WaitForChild(
+            if carbonConfigs.globalConfig.SoundIso then
+                carbonEvents.connectionEvent:FireServer(
+                    playerCharacter:WaitForChild("@" .. massVariableArray.curModel.Name):WaitForChild("Grip"):WaitForChild(
                         "Fire"
                     ).SoundId,
-                    Fa:WaitForChild("@" .. Ka.curModel.Name):WaitForChild("Grip"),
-                    Fa:WaitForChild("@" .. Ka.curModel.Name):WaitForChild("Grip"):WaitForChild(
+                    playerCharacter:WaitForChild("@" .. massVariableArray.curModel.Name):WaitForChild("Grip"),
+                    playerCharacter:WaitForChild("@" .. massVariableArray.curModel.Name):WaitForChild("Grip"):WaitForChild(
                         "Fire"
                     ).PlaybackSpeed,
                     nil,
@@ -2668,23 +2666,23 @@ function fireShot()
                     "Auth"
                 )
             end
-            Fa:WaitForChild("@" .. Ka.curModel.Name):WaitForChild("Grip"):WaitForChild(
+            playerCharacter:WaitForChild("@" .. massVariableArray.curModel.Name):WaitForChild("Grip"):WaitForChild(
                 "Fire"
             ):Play()
-            for _ = 1, Ka.curConfig.ShotNum do
+            for _ = 1, massVariableArray.curConfig.ShotNum do
                 spawn(
                     function()
-                        _a = CreateBullet(Ka.curConfig.BulletSpread)
+                        _aBullet = CreateBullet(massVariableArray.curConfig.BulletSpread)
                     end
                 )
                 local _, _ =
                     spawn(
                     function()
-                        CastRay(_a)
+                        CastRay(_aBullet)
                     end
                 )
             end
-            for _, _ in pairs(Ka.FirePart:GetChildren()) do
+            for _, _ in pairs(massVariableArray.FirePart:GetChildren()) do
                 if _.Name:sub(1, 7) == "FlashFX" then
                     _.Enabled = true
                 end
@@ -2692,22 +2690,22 @@ function fireShot()
             delay(
                 1 / 30,
                 function()
-                    for _, _ in pairs(Ka.FirePart:GetChildren()) do
+                    for _, _ in pairs(massVariableArray.FirePart:GetChildren()) do
                         if _.Name:sub(1, 7) == "FlashFX" then
                             _.Enabled = false
                         end
                     end
                 end
             )
-            if Ka.curConfig.CanBolt == true then
+            if massVariableArray.curConfig.CanBolt == true then
                 BoltingBackAnim()
                 delay(
-                    Ka.curConfig.Firerate / 2,
+                    massVariableArray.curConfig.Firerate / 2,
                     function()
-                        if Ka.curConfig.CanSlideLock == false then
+                        if massVariableArray.curConfig.CanSlideLock == false then
                             BoltingForwardAnim()
-                        elseif Ka.curConfig.CanSlideLock == true then
-                            if Ka.Ammo > 0 then
+                        elseif massVariableArray.curConfig.CanSlideLock == true then
+                            if massVariableArray.Ammo > 0 then
                                 BoltingForwardAnim()
                             end
                         end
@@ -2715,28 +2713,28 @@ function fireShot()
                 )
             end
             delay(
-                Ka.curConfig.Firerate / 2,
+                massVariableArray.curConfig.Firerate / 2,
                 function()
                     Recoiling = false
                     RecoilFront = false
                 end
             )
-            Ka.Ammo = Ka.Ammo - 1
-            task.wait(Ka.curConfig.Firerate)
+            massVariableArray.Ammo = massVariableArray.Ammo - 1
+            task.wait(massVariableArray.curConfig.Firerate)
             ta = false
-            if Ka.curConfig.CanAutoBolt then
+            if massVariableArray.curConfig.CanAutoBolt then
                 Actioning = true
                 BoltBackAnim()
                 BoltForwardAnim()
                 IdleAnim()
                 Actioning = false
-                Ka.CanShoot = true
+                massVariableArray.CanShoot = true
             end
             Shooting = false
             UpdateAmmo()
-            local _ = Ia.codeArchive.JamCalculation(Ia.globalConfig.JamChance)
+            local _ = carbonConfigs.codeArchive.JamCalculation(carbonConfigs.globalConfig.JamChance)
             if _ then
-                Ka.CanShoot = false
+                massVariableArray.CanShoot = false
                 UpdateAmmo()
             end
         end
@@ -2745,33 +2743,33 @@ function fireShot()
     fa = false
 end
 function fireBoltAction()
-    if Ka.curConfig then
+    if massVariableArray.curConfig then
         if Ca then
             fa = true
-            Ka.CanShoot = false
+            massVariableArray.CanShoot = false
             Recoiling = true
             local a = CalculateRecoil()
             local _ = CalculateCamRecoil()
-            Ha.recoilSpring.t = Ha.recoilSpring.t + a
-            Ha.recoilSpring2.t = Ha.recoilSpring2.t + _
-            if Ka.curConfig.Firerate / 2 >= 0.025 then
+            recoilData.recoilSpring.t = recoilData.recoilSpring.t + a
+            recoilData.recoilSpring2.t = recoilData.recoilSpring2.t + _
+            if massVariableArray.curConfig.Firerate / 2 >= 0.025 then
                 delay(
                     0.025,
                     function()
-                        Ha.recoilSpring.t = Ha.recoilSpring.t - a
-                        Ha.recoilSpring2.t = Ha.recoilSpring2.t - _
+                        recoilData.recoilSpring.t = recoilData.recoilSpring.t - a
+                        recoilData.recoilSpring2.t = recoilData.recoilSpring2.t - _
                     end
                 )
-            elseif Ka.curConfig.Firerate / 2 < 0.025 then
+            elseif massVariableArray.curConfig.Firerate / 2 < 0.025 then
                 delay(
-                    Ka.curConfig.Firerate / 2,
+                    massVariableArray.curConfig.Firerate / 2,
                     function()
-                        Ha.recoilSpring.t = Ha.recoilSpring.t - a
-                        Ha.recoilSpring2.t = Ha.recoilSpring2.t - _
+                        recoilData.recoilSpring.t = recoilData.recoilSpring.t - a
+                        recoilData.recoilSpring2.t = recoilData.recoilSpring2.t - _
                     end
                 )
             end
-            if Ka.curConfig.fireAnim then
+            if massVariableArray.curConfig.fireAnim then
                 spawn(
                     function()
                         fireAnim()
@@ -2779,15 +2777,15 @@ function fireBoltAction()
                 )
             end
             CreateDustUp()
-            Ea.updateCharEvent:FireServer("Shoot", true, "Auth", Ka.curConfig.Firerate / 2)
+            carbonEvents.updateCharEvent:FireServer("Shoot", true, "Auth", massVariableArray.curConfig.Firerate / 2)
             Shooting = true
-            if Ia.globalConfig.SoundIso then
-                Ea.connectionEvent:FireServer(
-                    Fa:WaitForChild("@" .. Ka.curModel.Name):WaitForChild("Grip"):WaitForChild(
+            if carbonConfigs.globalConfig.SoundIso then
+                carbonEvents.connectionEvent:FireServer(
+                    playerCharacter:WaitForChild("@" .. massVariableArray.curModel.Name):WaitForChild("Grip"):WaitForChild(
                         "Fire"
                     ).SoundId,
-                    Fa:WaitForChild("@" .. Ka.curModel.Name):WaitForChild("Grip"),
-                    Fa:WaitForChild("@" .. Ka.curModel.Name):WaitForChild("Grip"):WaitForChild(
+                    playerCharacter:WaitForChild("@" .. massVariableArray.curModel.Name):WaitForChild("Grip"),
+                    playerCharacter:WaitForChild("@" .. massVariableArray.curModel.Name):WaitForChild("Grip"):WaitForChild(
                         "Fire"
                     ).PlaybackSpeed,
                     nil,
@@ -2802,19 +2800,19 @@ function fireBoltAction()
                     "Auth"
                 )
             end
-            Fa:WaitForChild("@" .. Ka.curModel.Name):WaitForChild("Grip"):WaitForChild(
+            playerCharacter:WaitForChild("@" .. massVariableArray.curModel.Name):WaitForChild("Grip"):WaitForChild(
                 "Fire"
             ):Play()
-            _a = CreateBullet(Ka.curConfig.BulletSpread)
-            Ka.Ammo = Ka.Ammo - 1
+            _aBullet = CreateBullet(massVariableArray.curConfig.BulletSpread)
+            massVariableArray.Ammo = massVariableArray.Ammo - 1
             RecoilFront = true
             local _, _ =
                 spawn(
                 function()
-                    CastRay(_a)
+                    CastRay(_aBullet)
                 end
             )
-            for _, _ in pairs(Ka.FirePart:GetChildren()) do
+            for _, _ in pairs(massVariableArray.FirePart:GetChildren()) do
                 if _.Name:sub(1, 7) == "FlashFX" then
                     _.Enabled = true
                 end
@@ -2822,22 +2820,22 @@ function fireBoltAction()
             delay(
                 1 / 30,
                 function()
-                    for _, _ in pairs(Ka.FirePart:GetChildren()) do
+                    for _, _ in pairs(massVariableArray.FirePart:GetChildren()) do
                         if _.Name:sub(1, 7) == "FlashFX" then
                             _.Enabled = false
                         end
                     end
                 end
             )
-            if Ka.curConfig.CanBolt == true then
+            if massVariableArray.curConfig.CanBolt == true then
                 BoltingBackAnim()
                 delay(
-                    Ka.curConfig.Firerate / 2,
+                    massVariableArray.curConfig.Firerate / 2,
                     function()
-                        if Ka.curConfig.CanSlideLock == false then
+                        if massVariableArray.curConfig.CanSlideLock == false then
                             BoltingForwardAnim()
-                        elseif Ka.curConfig.CanSlideLock == true then
-                            if Ka.Ammo > 0 then
+                        elseif massVariableArray.curConfig.CanSlideLock == true then
+                            if massVariableArray.Ammo > 0 then
                                 BoltingForwardAnim()
                             end
                         end
@@ -2845,27 +2843,27 @@ function fireBoltAction()
                 )
             end
             delay(
-                Ka.curConfig.Firerate / 2,
+                massVariableArray.curConfig.Firerate / 2,
                 function()
                     Recoiling = false
                     RecoilFront = false
                 end
             )
             ta = false
-            task.wait(Ka.curConfig.Firerate)
-            if Ka.curConfig.CanAutoBolt then
+            task.wait(massVariableArray.curConfig.Firerate)
+            if massVariableArray.curConfig.CanAutoBolt then
                 Actioning = true
                 BoltBackAnim()
                 BoltForwardAnim()
                 IdleAnim()
                 Actioning = false
-                Ka.CanShoot = true
+                massVariableArray.CanShoot = true
             end
             Shooting = false
             UpdateAmmo()
-            local _ = Ia.codeArchive.JamCalculation(Ia.globalConfig.JamChance)
+            local _ = carbonConfigs.codeArchive.JamCalculation(carbonConfigs.globalConfig.JamChance)
             if _ then
-                Ka.CanShoot = false
+                massVariableArray.CanShoot = false
                 UpdateAmmo()
             end
         end
@@ -2874,38 +2872,38 @@ function fireBoltAction()
     fa = false
 end
 function fireAuto()
-    if Ka.curConfig then
-        while not Shooting and Ka.Ammo > 0 and Ka.MouseHeld and Ka.CanShoot and Ca and not W do
+    if massVariableArray.curConfig then
+        while not Shooting and massVariableArray.Ammo > 0 and massVariableArray.MouseHeld and massVariableArray.CanShoot and Ca and not W do
             if W then
-                Ka.CanShoot = false
+                massVariableArray.CanShoot = false
                 Shooting = false
                 break
             end
             fa = true
-            Ka.CanShoot = false
+            massVariableArray.CanShoot = false
             Recoiling = true
             local a = CalculateRecoil()
             local _ = CalculateCamRecoil()
-            Ha.recoilSpring.t = Ha.recoilSpring.t + a
-            Ha.recoilSpring2.t = Ha.recoilSpring2.t + _
-            if Ka.curConfig.Firerate / 2 >= 0.025 then
+            recoilData.recoilSpring.t = recoilData.recoilSpring.t + a
+            recoilData.recoilSpring2.t = recoilData.recoilSpring2.t + _
+            if massVariableArray.curConfig.Firerate / 2 >= 0.025 then
                 delay(
                     0.025,
                     function()
-                        Ha.recoilSpring.t = Ha.recoilSpring.t - a
-                        Ha.recoilSpring2.t = Ha.recoilSpring2.t - _
+                        recoilData.recoilSpring.t = recoilData.recoilSpring.t - a
+                        recoilData.recoilSpring2.t = recoilData.recoilSpring2.t - _
                     end
                 )
-            elseif Ka.curConfig.Firerate / 2 < 0.025 then
+            elseif massVariableArray.curConfig.Firerate / 2 < 0.025 then
                 delay(
-                    Ka.curConfig.Firerate / 2,
+                    massVariableArray.curConfig.Firerate / 2,
                     function()
-                        Ha.recoilSpring.t = Ha.recoilSpring.t - a
-                        Ha.recoilSpring2.t = Ha.recoilSpring2.t - _
+                        recoilData.recoilSpring.t = recoilData.recoilSpring.t - a
+                        recoilData.recoilSpring2.t = recoilData.recoilSpring2.t - _
                     end
                 )
             end
-            if Ka.curConfig.fireAnim then
+            if massVariableArray.curConfig.fireAnim then
                 spawn(
                     function()
                         fireAnim()
@@ -2913,14 +2911,14 @@ function fireAuto()
                 )
             end
             CreateDustUp()
-            Ea.updateCharEvent:FireServer("Shoot", true, "Auth", Ka.curConfig.Firerate / 2)
-            if Ia.globalConfig.SoundIso then
-                Ea.connectionEvent:FireServer(
-                    Fa:WaitForChild("@" .. Ka.curModel.Name):WaitForChild("Grip"):WaitForChild(
+            carbonEvents.updateCharEvent:FireServer("Shoot", true, "Auth", massVariableArray.curConfig.Firerate / 2)
+            if carbonConfigs.globalConfig.SoundIso then
+                carbonEvents.connectionEvent:FireServer(
+                    playerCharacter:WaitForChild("@" .. massVariableArray.curModel.Name):WaitForChild("Grip"):WaitForChild(
                         "Fire"
                     ).SoundId,
-                    Fa:WaitForChild("@" .. Ka.curModel.Name):WaitForChild("Grip"),
-                    Fa:WaitForChild("@" .. Ka.curModel.Name):WaitForChild("Grip"):WaitForChild(
+                    playerCharacter:WaitForChild("@" .. massVariableArray.curModel.Name):WaitForChild("Grip"),
+                    playerCharacter:WaitForChild("@" .. massVariableArray.curModel.Name):WaitForChild("Grip"):WaitForChild(
                         "Fire"
                     ).PlaybackSpeed,
                     nil,
@@ -2935,20 +2933,20 @@ function fireAuto()
                     "Auth"
                 )
             end
-            Fa:WaitForChild("@" .. Ka.curModel.Name):WaitForChild("Grip"):WaitForChild(
+            playerCharacter:WaitForChild("@" .. massVariableArray.curModel.Name):WaitForChild("Grip"):WaitForChild(
                 "Fire"
             ):Play()
-            Ka.Ammo = Ka.Ammo - 1
+            massVariableArray.Ammo = massVariableArray.Ammo - 1
             Shooting = true
             RecoilFront = true
-            _a = CreateBullet(Ka.curConfig.BulletSpread)
+            _aBullet = CreateBullet(massVariableArray.curConfig.BulletSpread)
             local _, _ =
                 spawn(
                 function()
-                    CastRay(_a)
+                    CastRay(_aBullet)
                 end
             )
-            for _, _ in pairs(Ka.FirePart:GetChildren()) do
+            for _, _ in pairs(massVariableArray.FirePart:GetChildren()) do
                 if _.Name:sub(1, 7) == "FlashFX" then
                     _.Enabled = true
                 end
@@ -2956,22 +2954,22 @@ function fireAuto()
             delay(
                 1 / 30,
                 function()
-                    for _, _ in pairs(Ka.FirePart:GetChildren()) do
+                    for _, _ in pairs(massVariableArray.FirePart:GetChildren()) do
                         if _.Name:sub(1, 7) == "FlashFX" then
                             _.Enabled = false
                         end
                     end
                 end
             )
-            if Ka.curConfig.CanBolt == true then
+            if massVariableArray.curConfig.CanBolt == true then
                 BoltingBackAnim()
                 delay(
-                    Ka.curConfig.Firerate / 2,
+                    massVariableArray.curConfig.Firerate / 2,
                     function()
-                        if Ka.curConfig.CanSlideLock == false then
+                        if massVariableArray.curConfig.CanSlideLock == false then
                             BoltingForwardAnim()
-                        elseif Ka.curConfig.CanSlideLock == true then
-                            if Ka.Ammo > 0 then
+                        elseif massVariableArray.curConfig.CanSlideLock == true then
+                            if massVariableArray.Ammo > 0 then
                                 BoltingForwardAnim()
                             end
                         end
@@ -2979,19 +2977,19 @@ function fireAuto()
                 )
             end
             delay(
-                Ka.curConfig.Firerate / 2,
+                massVariableArray.curConfig.Firerate / 2,
                 function()
                     Recoiling = false
                     RecoilFront = false
                 end
             )
-            task.wait(Ka.curConfig.Firerate)
+            task.wait(massVariableArray.curConfig.Firerate)
             Shooting = false
-            Ka.CanShoot = true
+            massVariableArray.CanShoot = true
             UpdateAmmo()
-            local _ = Ia.codeArchive.JamCalculation(Ia.globalConfig.JamChance)
+            local _ = carbonConfigs.codeArchive.JamCalculation(carbonConfigs.globalConfig.JamChance)
             if _ then
-                Ka.CanShoot = false
+                massVariableArray.CanShoot = false
                 UpdateAmmo()
             end
         end
@@ -3000,35 +2998,35 @@ function fireAuto()
     fa = false
 end
 function fireBurst()
-    if Ka.curConfig then
-        if not Shooting and Ka.Ammo > 0 and Ka.MouseHeld and Ca then
+    if massVariableArray.curConfig then
+        if not Shooting and massVariableArray.Ammo > 0 and massVariableArray.MouseHeld and Ca then
             fa = true
-            for _ = 1, Ka.curConfig.BurstNum do
-                if Ka.Ammo > 0 and Ka.MouseHeld then
-                    Ka.CanShoot = false
+            for _ = 1, massVariableArray.curConfig.BurstNum do
+                if massVariableArray.Ammo > 0 and massVariableArray.MouseHeld then
+                    massVariableArray.CanShoot = false
                     Recoiling = true
                     local a = CalculateRecoil()
                     local _ = CalculateCamRecoil()
-                    Ha.recoilSpring.t = Ha.recoilSpring.t + a
-                    Ha.recoilSpring2.t = Ha.recoilSpring2.t + _
-                    if Ka.curConfig.Firerate / 2 >= 0.025 then
+                    recoilData.recoilSpring.t = recoilData.recoilSpring.t + a
+                    recoilData.recoilSpring2.t = recoilData.recoilSpring2.t + _
+                    if massVariableArray.curConfig.Firerate / 2 >= 0.025 then
                         delay(
                             0.025,
                             function()
-                                Ha.recoilSpring.t = Ha.recoilSpring.t - a
-                                Ha.recoilSpring2.t = Ha.recoilSpring2.t - _
+                                recoilData.recoilSpring.t = recoilData.recoilSpring.t - a
+                                recoilData.recoilSpring2.t = recoilData.recoilSpring2.t - _
                             end
                         )
-                    elseif Ka.curConfig.Firerate / 2 < 0.025 then
+                    elseif massVariableArray.curConfig.Firerate / 2 < 0.025 then
                         delay(
-                            Ka.curConfig.Firerate / 2,
+                            massVariableArray.curConfig.Firerate / 2,
                             function()
-                                Ha.recoilSpring.t = Ha.recoilSpring.t - a
-                                Ha.recoilSpring2.t = Ha.recoilSpring2.t - _
+                                recoilData.recoilSpring.t = recoilData.recoilSpring.t - a
+                                recoilData.recoilSpring2.t = recoilData.recoilSpring2.t - _
                             end
                         )
                     end
-                    if Ka.curConfig.fireAnim then
+                    if massVariableArray.curConfig.fireAnim then
                         spawn(
                             function()
                                 fireAnim()
@@ -3036,19 +3034,19 @@ function fireBurst()
                         )
                     end
                     CreateDustUp()
-                    Ea.updateCharEvent:FireServer(
+                    carbonEvents.updateCharEvent:FireServer(
                         "Shoot",
                         true,
                         "Auth",
-                        Ka.curConfig.Firerate / 2
+                        massVariableArray.curConfig.Firerate / 2
                     )
-                    if Ia.globalConfig.SoundIso then
-                        Ea.connectionEvent:FireServer(
-                            Fa:WaitForChild("@" .. Ka.curModel.Name):WaitForChild("Grip"):WaitForChild(
+                    if carbonConfigs.globalConfig.SoundIso then
+                        carbonEvents.connectionEvent:FireServer(
+                            playerCharacter:WaitForChild("@" .. massVariableArray.curModel.Name):WaitForChild("Grip"):WaitForChild(
                                 "Fire"
                             ).SoundId,
-                            Fa:WaitForChild("@" .. Ka.curModel.Name):WaitForChild("Grip"),
-                            Fa:WaitForChild("@" .. Ka.curModel.Name):WaitForChild("Grip"):WaitForChild(
+                            playerCharacter:WaitForChild("@" .. massVariableArray.curModel.Name):WaitForChild("Grip"),
+                            playerCharacter:WaitForChild("@" .. massVariableArray.curModel.Name):WaitForChild("Grip"):WaitForChild(
                                 "Fire"
                             ).PlaybackSpeed,
                             nil,
@@ -3063,17 +3061,17 @@ function fireBurst()
                             "Auth"
                         )
                     end
-                    Fa:WaitForChild("@" .. Ka.curModel.Name):WaitForChild("Grip"):WaitForChild(
+                    playerCharacter:WaitForChild("@" .. massVariableArray.curModel.Name):WaitForChild("Grip"):WaitForChild(
                         "Fire"
                     ):Play()
-                    _a = CreateBullet(Ka.curConfig.BulletSpread)
+                    _aBullet = CreateBullet(massVariableArray.curConfig.BulletSpread)
                     local _, _ =
                         spawn(
                         function()
-                            CastRay(_a)
+                            CastRay(_aBullet)
                         end
                     )
-                    for _, _ in pairs(Ka.FirePart:GetChildren()) do
+                    for _, _ in pairs(massVariableArray.FirePart:GetChildren()) do
                         if _.Name:sub(1, 7) == "FlashFX" then
                             _.Enabled = true
                         end
@@ -3081,43 +3079,43 @@ function fireBurst()
                     delay(
                         1 / 30,
                         function()
-                            for _, _ in pairs(Ka.FirePart:GetChildren()) do
+                            for _, _ in pairs(massVariableArray.FirePart:GetChildren()) do
                                 if _.Name:sub(1, 7) == "FlashFX" then
                                     _.Enabled = false
                                 end
                             end
                         end
                     )
-                    if Ka.curConfig.CanBolt == true then
+                    if massVariableArray.curConfig.CanBolt == true then
                         BoltingBackAnim()
                         delay(
-                            Ka.curConfig.Firerate / 2,
+                            massVariableArray.curConfig.Firerate / 2,
                             function()
-                                if Ka.curConfig.CanSlideLock == false then
+                                if massVariableArray.curConfig.CanSlideLock == false then
                                     BoltingForwardAnim()
-                                elseif Ka.curConfig.CanSlideLock == true then
-                                    if Ka.Ammo > 0 then
+                                elseif massVariableArray.curConfig.CanSlideLock == true then
+                                    if massVariableArray.Ammo > 0 then
                                         BoltingForwardAnim()
                                     end
                                 end
                             end
                         )
                     end
-                    Ka.Ammo = Ka.Ammo - 1
+                    massVariableArray.Ammo = massVariableArray.Ammo - 1
                     RecoilFront = true
                     delay(
-                        Ka.curConfig.Firerate / 2,
+                        massVariableArray.curConfig.Firerate / 2,
                         function()
                             Recoiling = false
                             RecoilFront = false
                         end
                     )
-                    task.wait(Ka.curConfig.Firerate)
+                    task.wait(massVariableArray.curConfig.Firerate)
                 end
                 Shooting = true
             end
             Shooting = false
-            Ka.CanShoot = true
+            massVariableArray.CanShoot = true
             UpdateAmmo()
         end
         UpdateAmmo()
@@ -3125,67 +3123,67 @@ function fireBurst()
     fa = false
 end
 function UpdateAmmo()
-    if Ka.curConfig then
-        Ka.ammoDisplay.Text = Ka.Ammo
-        Ka.title.Text = Ka.curModel.Name
-        Ka.magCountDisplay.Text = math.ceil(Ka.StoredAmmo / Ka.curConfig.StoredAmmo)
-        Ka.mobileAmmo.Text = Ka.Ammo .. "/" .. math.ceil(Ka.StoredAmmo / Ka.curConfig.StoredAmmo)
-        if Ka.StanceIndex == 0 then
-            Ka.stanceDisplay.Image = "rbxassetid://" .. 1868007495
-            Ka.stanceDisplay.Position = UDim2.new(1, -102, 0, 0)
-        elseif Ka.StanceIndex == 1 then
-            Ka.stanceDisplay.Image = "rbxassetid://" .. 1868007947
-            Ka.stanceDisplay.Position = UDim2.new(1, -102, 0, 10)
-        elseif Ka.StanceIndex == 2 then
-            Ka.stanceDisplay.Image = "rbxassetid://" .. 1868008584
-            Ka.stanceDisplay.Position = UDim2.new(1, -102, 0, 23)
+    if massVariableArray.curConfig then
+        massVariableArray.ammoDisplay.Text = massVariableArray.Ammo
+        massVariableArray.title.Text = massVariableArray.curModel.Name
+        massVariableArray.magCountDisplay.Text = math.ceil(massVariableArray.StoredAmmo / massVariableArray.curConfig.StoredAmmo)
+        massVariableArray.mobileAmmo.Text = massVariableArray.Ammo .. "/" .. math.ceil(massVariableArray.StoredAmmo / massVariableArray.curConfig.StoredAmmo)
+        if massVariableArray.StanceIndex == 0 then
+            massVariableArray.stanceDisplay.Image = "rbxassetid://" .. 1868007495
+            massVariableArray.stanceDisplay.Position = UDim2.new(1, -102, 0, 0)
+        elseif massVariableArray.StanceIndex == 1 then
+            massVariableArray.stanceDisplay.Image = "rbxassetid://" .. 1868007947
+            massVariableArray.stanceDisplay.Position = UDim2.new(1, -102, 0, 10)
+        elseif massVariableArray.StanceIndex == 2 then
+            massVariableArray.stanceDisplay.Image = "rbxassetid://" .. 1868008584
+            massVariableArray.stanceDisplay.Position = UDim2.new(1, -102, 0, 23)
         end
-        if Ka.FireMode == 1 then
-            Ka.mode1.BackgroundTransparency = 0
-            Ka.mode2.BackgroundTransparency = 0.7
-            Ka.mode3.BackgroundTransparency = 0.7
-            Ka.mode4.BackgroundTransparency = 0.7
-            Ka.mode5.BackgroundTransparency = 0.7
-        elseif Ka.FireMode == 2 then
-            Ka.mode1.BackgroundTransparency = 0
-            Ka.mode2.BackgroundTransparency = 0
-            Ka.mode3.BackgroundTransparency = 0
-            Ka.mode4.BackgroundTransparency = 0
-            Ka.mode5.BackgroundTransparency = 0
-        elseif Ka.FireMode == 3 then
-            Ka.mode1.BackgroundTransparency = 0
-            Ka.mode2.BackgroundTransparency = 0
-            Ka.mode3.BackgroundTransparency = 0.7
-            Ka.mode4.BackgroundTransparency = 0.7
-            Ka.mode5.BackgroundTransparency = 0.7
-        elseif Ka.FireMode == 4 then
-            Ka.mode1.BackgroundTransparency = 0
-            Ka.mode2.BackgroundTransparency = 0
-            Ka.mode3.BackgroundTransparency = 0
-            Ka.mode4.BackgroundTransparency = 0.7
-            Ka.mode5.BackgroundTransparency = 0.7
-        elseif Ka.FireMode == 5 then
-            Ka.mode1.BackgroundTransparency = 0
-            Ka.mode2.BackgroundTransparency = 0
-            Ka.mode3.BackgroundTransparency = 0
-            Ka.mode4.BackgroundTransparency = 0
-            Ka.mode5.BackgroundTransparency = 0.7
-        elseif Ka.FireMode == 6 then
-            Ka.mode1.BackgroundTransparency = 0
-            Ka.mode2.BackgroundTransparency = 0.7
-            Ka.mode3.BackgroundTransparency = 0
-            Ka.mode4.BackgroundTransparency = 0
-            Ka.mode5.BackgroundTransparency = 0.7
+        if massVariableArray.FireMode == 1 then
+            massVariableArray.mode1.BackgroundTransparency = 0
+            massVariableArray.mode2.BackgroundTransparency = 0.7
+            massVariableArray.mode3.BackgroundTransparency = 0.7
+            massVariableArray.mode4.BackgroundTransparency = 0.7
+            massVariableArray.mode5.BackgroundTransparency = 0.7
+        elseif massVariableArray.FireMode == 2 then
+            massVariableArray.mode1.BackgroundTransparency = 0
+            massVariableArray.mode2.BackgroundTransparency = 0
+            massVariableArray.mode3.BackgroundTransparency = 0
+            massVariableArray.mode4.BackgroundTransparency = 0
+            massVariableArray.mode5.BackgroundTransparency = 0
+        elseif massVariableArray.FireMode == 3 then
+            massVariableArray.mode1.BackgroundTransparency = 0
+            massVariableArray.mode2.BackgroundTransparency = 0
+            massVariableArray.mode3.BackgroundTransparency = 0.7
+            massVariableArray.mode4.BackgroundTransparency = 0.7
+            massVariableArray.mode5.BackgroundTransparency = 0.7
+        elseif massVariableArray.FireMode == 4 then
+            massVariableArray.mode1.BackgroundTransparency = 0
+            massVariableArray.mode2.BackgroundTransparency = 0
+            massVariableArray.mode3.BackgroundTransparency = 0
+            massVariableArray.mode4.BackgroundTransparency = 0.7
+            massVariableArray.mode5.BackgroundTransparency = 0.7
+        elseif massVariableArray.FireMode == 5 then
+            massVariableArray.mode1.BackgroundTransparency = 0
+            massVariableArray.mode2.BackgroundTransparency = 0
+            massVariableArray.mode3.BackgroundTransparency = 0
+            massVariableArray.mode4.BackgroundTransparency = 0
+            massVariableArray.mode5.BackgroundTransparency = 0.7
+        elseif massVariableArray.FireMode == 6 then
+            massVariableArray.mode1.BackgroundTransparency = 0
+            massVariableArray.mode2.BackgroundTransparency = 0.7
+            massVariableArray.mode3.BackgroundTransparency = 0
+            massVariableArray.mode4.BackgroundTransparency = 0
+            massVariableArray.mode5.BackgroundTransparency = 0.7
         end
-        if Ka.CanShoot then
-            for _, _ in pairs(Ka.mainFrame:GetChildren()) do
+        if massVariableArray.CanShoot then
+            for _, _ in pairs(massVariableArray.mainFrame:GetChildren()) do
                 if _ and _.Name:sub(1, 4) == "Mode" then
                     _.BackgroundColor3 =
                         BrickColor.new("Institutional white").Color
                 end
             end
         else
-            for _, _ in pairs(Ka.mainFrame:GetChildren()) do
+            for _, _ in pairs(massVariableArray.mainFrame:GetChildren()) do
                 if _ and _.Name:sub(1, 4) == "Mode" then
                     if _.BackgroundTransparency == 0 then
                         _.BackgroundColor3 = BrickColor.new("Dusty Rose").Color
@@ -3213,11 +3211,11 @@ function OtherLaser(d, _, _, f)
                 Instance.new("Attachment")
             b.Parent = f.LaserLight
             b.Name = "Attch1"
-            local e = xa:FindFirstChild(d.Name .. "Sphere") or Instance.new("Part")
+            local e = currentCamera:FindFirstChild(d.Name .. "Sphere") or Instance.new("Part")
             e.Name = d.Name .. "Sphere"
             e.Shape = "Ball"
             e.Size = Vector3.new(0.1, 0.1, 0.1)
-            e.Parent = xa
+            e.Parent = currentCamera
             e.CanCollide = false
             e.BrickColor = BrickColor.new("Really red")
             e.Material = Enum.Material.Neon
@@ -3234,7 +3232,7 @@ function OtherLaser(d, _, _, f)
             a.Width0 = 0.01
             a.Width1 = 0.01
             local _ = Ray.new(f.LaserLight.Position, f.Grip.CFrame.lookVector * 9999)
-            local c, a, _ = workspace:FindPartOnRayWithIgnoreList(_, y)
+            local c, a, _ = workspace:FindPartOnRayWithIgnoreList(_, componentList)
             local _ = d.Character.CarbonValues:WaitForChild("CurLength").Value
             if c then
                 _ = (f.LaserLight.Position - a).magnitude
@@ -3244,12 +3242,12 @@ function OtherLaser(d, _, _, f)
             b.CFrame = CFrame.new(0, 0, -_)
             e.CFrame = b.WorldCFrame
             if c and (c and c.Transparency >= 1 or c.CanCollide == false) then
-                table.insert(y, c)
+                table.insert(componentList, c)
             end
         end
     else
-        if xa:FindFirstChild(d.Name .. "Sphere") then
-            xa[d.Name .. "Sphere"]:Destroy()
+        if currentCamera:FindFirstChild(d.Name .. "Sphere") then
+            currentCamera[d.Name .. "Sphere"]:Destroy()
         end
         if
             d.Character.CarbonValues.SModel.Value and f:FindFirstChild("LaserLight") and
@@ -3272,16 +3270,16 @@ function HandleBino()
         if ya then
             Sprint(false, false)
         end
-        I = ra:WaitForChild("Binos"):clone()
-        I.Parent = Ka.LA
+        I = carbonFx:WaitForChild("Binos"):clone()
+        I.Parent = massVariableArray.LA
         for _, _ in pairs(I:GetChildren()) do
             if _ and _:IsA("BasePart") then
                 if _.Name ~= "Grip" then
-                    Ia.utilitiesModule.Weld(_, I:WaitForChild("Grip"))
+                    carbonConfigs.utilitiesModule.Weld(_, I:WaitForChild("Grip"))
                 elseif _.Name == "Grip" then
-                    Ia.utilitiesModule.Weld(
+                    carbonConfigs.utilitiesModule.Weld(
                         _,
-                        Ka.LA,
+                        massVariableArray.LA,
                         nil,
                         CFrame.new(
                             0.800000012,
@@ -3306,8 +3304,8 @@ function HandleBino()
                 _.Anchored = false
             end
         end
-        Ja:Create(
-            Ka.LAW,
+        tweenService:Create(
+            massVariableArray.LAW,
             TweenInfo.new(0.4),
             {
                 C1 = CFrame.new(
@@ -3327,8 +3325,8 @@ function HandleBino()
             }
         ):Play()
         task.wait(0.4)
-        Ja:Create(
-            Ka.LAW,
+        tweenService:Create(
+            massVariableArray.LAW,
             TweenInfo.new(0.4),
             {
                 C1 = CFrame.new(
@@ -3347,8 +3345,8 @@ function HandleBino()
                 )
             }
         ):Play()
-        Ja:Create(
-            Ka.RAW,
+        tweenService:Create(
+            massVariableArray.RAW,
             TweenInfo.new(0.4),
             {
                 C1 = CFrame.new(
@@ -3367,8 +3365,8 @@ function HandleBino()
                 )
             }
         ):Play()
-        Ja:Create(
-            Ka.hud:WaitForChild("RangeFrame"),
+        tweenService:Create(
+            massVariableArray.hud:WaitForChild("RangeFrame"),
             TweenInfo.new(0.4),
             {BackgroundTransparency = 0}
         ):Play()
@@ -3378,25 +3376,25 @@ function HandleBino()
                 _.LocalTransparencyModifier = 1
             end
         end
-        Ka.LA.LocalTransparencyModifier = 1
-        for _, _ in pairs(Ka.hud:WaitForChild("RangeFrame"):GetChildren()) do
+        massVariableArray.LA.LocalTransparencyModifier = 1
+        for _, _ in pairs(massVariableArray.hud:WaitForChild("RangeFrame"):GetChildren()) do
             if _ then
                 _.Visible = true
             end
         end
-        Ka.hud:WaitForChild("RangeFrame"):WaitForChild("ZoomNum").Text =
-            Ia.globalConfig.BinoZoom
-        Ja:Create(xa, TweenInfo.new(0.05, Enum.EasingStyle.Quad), {FieldOfView = Ia.globalConfig.BinoZoom}):Play()
+        massVariableArray.hud:WaitForChild("RangeFrame"):WaitForChild("ZoomNum").Text =
+            carbonConfigs.globalConfig.BinoZoom
+        tweenService:Create(currentCamera, TweenInfo.new(0.05, Enum.EasingStyle.Quad), {FieldOfView = carbonConfigs.globalConfig.BinoZoom}):Play()
         task.wait(0.05)
-        Ja:Create(
-            Ka.hud:WaitForChild("RangeFrame"),
+        tweenService:Create(
+            massVariableArray.hud:WaitForChild("RangeFrame"),
             TweenInfo.new(0.4),
             {BackgroundTransparency = 1}
         ):Play()
         task.wait(0.4)
     else
-        Ja:Create(
-            Ka.hud:WaitForChild("RangeFrame"),
+        tweenService:Create(
+            massVariableArray.hud:WaitForChild("RangeFrame"),
             TweenInfo.new(0.4),
             {BackgroundTransparency = 0}
         ):Play()
@@ -3406,24 +3404,24 @@ function HandleBino()
                 _.LocalTransparencyModifier = 0
             end
         end
-        Ka.LA.LocalTransparencyModifier = 0
-        for _, _ in pairs(Ka.hud:WaitForChild("RangeFrame"):GetChildren()) do
+        massVariableArray.LA.LocalTransparencyModifier = 0
+        for _, _ in pairs(massVariableArray.hud:WaitForChild("RangeFrame"):GetChildren()) do
             if _ then
                 _.Visible = false
             end
         end
-        Ka.hud:WaitForChild("RangeFrame"):WaitForChild("ZoomNum").Text =
+        massVariableArray.hud:WaitForChild("RangeFrame"):WaitForChild("ZoomNum").Text =
             "70"
-        Ja:Create(xa, TweenInfo.new(0.05, Enum.EasingStyle.Quad), {FieldOfView = 70}):Play()
+        tweenService:Create(currentCamera, TweenInfo.new(0.05, Enum.EasingStyle.Quad), {FieldOfView = 70}):Play()
         task.wait(0.05)
-        Ja:Create(
-            Ka.hud:WaitForChild("RangeFrame"),
+        tweenService:Create(
+            massVariableArray.hud:WaitForChild("RangeFrame"),
             TweenInfo.new(0.4),
             {BackgroundTransparency = 1}
         ):Play()
         task.wait(0.4)
-        Ja:Create(
-            Ka.LAW,
+        tweenService:Create(
+            massVariableArray.LAW,
             TweenInfo.new(0.4),
             {
                 C1 = CFrame.new(
@@ -3444,91 +3442,91 @@ function HandleBino()
         ):Play()
         task.wait(0.4)
         IdleAnim()
-        Ka.LA:ClearAllChildren()
+        massVariableArray.LA:ClearAllChildren()
     end
     i = false
 end
 function HandleToggle()
     if z then
-        Fa:WaitForChild("CarbonValues"):WaitForChild(
+        playerCharacter:WaitForChild("CarbonValues"):WaitForChild(
                 "NVGActive"
             ).Value = true
-        Ka.overlay.Image = "rbxassetid://" .. Ia.globalConfig.OverlayID
-        Ja:Create(game.Lighting, TweenInfo.new(0.5), {ExposureCompensation = Ia.globalConfig.Exposure}):Play()
-        Ja:Create(
-            Ka.cc,
+        massVariableArray.overlay.Image = "rbxassetid://" .. carbonConfigs.globalConfig.OverlayID
+        tweenService:Create(game.Lighting, TweenInfo.new(0.5), {ExposureCompensation = carbonConfigs.globalConfig.Exposure}):Play()
+        tweenService:Create(
+            massVariableArray.cc,
             TweenInfo.new(0.5),
             {
-                Brightness = Ia.globalConfig.OverlayBrightness,
+                Brightness = carbonConfigs.globalConfig.OverlayBrightness,
                 Contrast = 0.8,
                 Saturation = -1,
-                TintColor = Ia.globalConfig.OverlayColor
+                TintColor = carbonConfigs.globalConfig.OverlayColor
             }
         ):Play()
-        Ja:Create(Ka.overlay, TweenInfo.new(0.5), {ImageTransparency = 0}):Play()
-        Ja:Create(Ka.noise, TweenInfo.new(0.5), {ImageTransparency = 0}):Play()
-        local _ = ra:WaitForChild("NVGToggle"):Clone()
-        _.Parent = Ba.PlayerGui
+        tweenService:Create(massVariableArray.overlay, TweenInfo.new(0.5), {ImageTransparency = 0}):Play()
+        tweenService:Create(massVariableArray.noise, TweenInfo.new(0.5), {ImageTransparency = 0}):Play()
+        local _ = carbonFx:WaitForChild("NVGToggle"):Clone()
+        _.Parent = localPlayer.PlayerGui
         _:Play()
         game.Debris:AddItem(_, _.TimeLength)
         spawn(
             function()
                 while z do
-                    cycle(b)
-                    cycle(a)
+                    cycle(darkNoiseTable)
+                    cycle(lightNoiseTableContainer)
                     task.wait(0.05)
                 end
             end
         )
         if
-            Fa:WaitForChild("CarbonValues"):WaitForChild(
+            playerCharacter:WaitForChild("CarbonValues"):WaitForChild(
                 "NVGActive"
             ).Value == true and
                 O and
-                Ka.curModel:FindFirstChild("AimPart3") and
+                massVariableArray.curModel:FindFirstChild("AimPart3") and
                 Ca and
-                Ka.CurAimPart ~= Ka.curModel.AimPart3
+                massVariableArray.CurAimPart ~= massVariableArray.curModel.AimPart3
          then
-            Ka.CurAimPart = Ka.curModel:WaitForChild("AimPart3")
-            Ka.curZoom = 60
+            massVariableArray.CurAimPart = massVariableArray.curModel:WaitForChild("AimPart3")
+            massVariableArray.curZoom = 60
             if za then
-                Ja:Create(xa, TweenInfo.new(Ka.curConfig.AimZoomSpeed, Enum.EasingStyle.Quad), {FieldOfView = 60}):Play(
+                tweenService:Create(currentCamera, TweenInfo.new(massVariableArray.curConfig.AimZoomSpeed, Enum.EasingStyle.Quad), {FieldOfView = 60}):Play(
 
                 )
             end
         end
     else
-        Fa:WaitForChild("CarbonValues"):WaitForChild(
+        playerCharacter:WaitForChild("CarbonValues"):WaitForChild(
                 "NVGActive"
             ).Value = false
         if Ca then
-            Ka.CurAimPart = Ka.lastAimPart
-            if Ka.CurAimPart.Name == "AimPart" then
+            massVariableArray.CurAimPart = massVariableArray.lastAimPart
+            if massVariableArray.CurAimPart.Name == "AimPart" then
                 if not ia then
-                    Ka.curZoom = Ka.curConfig.AimZoom
+                    massVariableArray.curZoom = massVariableArray.curConfig.AimZoom
                 else
-                    Ka.curZoom = P
+                    massVariableArray.curZoom = P
                 end
-            elseif Ka.CurAimPart.Name == "AimPart2" then
+            elseif massVariableArray.CurAimPart.Name == "AimPart2" then
                 if not ia then
-                    Ka.curZoom = Ka.curConfig.AltAimZoom
+                    massVariableArray.curZoom = massVariableArray.curConfig.AltAimZoom
                 else
-                    Ka.curZoom = R
+                    massVariableArray.curZoom = R
                 end
             end
         end
-        Ja:Create(game.Lighting, TweenInfo.new(0.5), {ExposureCompensation = 0}):Play()
-        Ja:Create(
-            Ka.cc,
+        tweenService:Create(game.Lighting, TweenInfo.new(0.5), {ExposureCompensation = 0}):Play()
+        tweenService:Create(
+            massVariableArray.cc,
             TweenInfo.new(0.5),
             {Brightness = 0, Contrast = 0, Saturation = 0, TintColor = Color3.fromRGB(255, 255, 255)}
         ):Play()
-        Ja:Create(Ka.overlay, TweenInfo.new(0.5), {ImageTransparency = 1}):Play()
-        Ja:Create(Ka.noise, TweenInfo.new(0.5), {ImageTransparency = 1}):Play()
+        tweenService:Create(massVariableArray.overlay, TweenInfo.new(0.5), {ImageTransparency = 1}):Play()
+        tweenService:Create(massVariableArray.noise, TweenInfo.new(0.5), {ImageTransparency = 1}):Play()
     end
 end
 function cycle(b)
-    local a = Ka.noise
+    local a = massVariableArray.noise
     local _ = b
     local c
     repeat
@@ -3541,9 +3539,9 @@ function cycle(b)
     b.last = c
 end
 function HandleNades()
-    if Ka.NadeMode == 1 then
-        Ja:Create(
-            Ka.LAW,
+    if massVariableArray.NadeMode == 1 then
+        tweenService:Create(
+            massVariableArray.LAW,
             TweenInfo.new(0.2),
             {
                 C1 = CFrame.new(
@@ -3562,8 +3560,8 @@ function HandleNades()
                 )
             }
         ):Play()
-        Ja:Create(
-            Ka.RAW,
+        tweenService:Create(
+            massVariableArray.RAW,
             TweenInfo.new(0.2),
             {
                 C1 = CFrame.new(
@@ -3583,16 +3581,16 @@ function HandleNades()
             }
         ):Play()
         task.wait(0.2)
-        local a = ra:WaitForChild("FRAG"):clone()
-        a.Parent = Ka.LA
+        local a = carbonFx:WaitForChild("FRAG"):clone()
+        a.Parent = massVariableArray.LA
         for _, _ in pairs(a:GetChildren()) do
             if _ and _:IsA("BasePart") then
                 if _.Name ~= "Grip" then
-                    Ia.utilitiesModule.Weld(_, a:WaitForChild("Grip"))
+                    carbonConfigs.utilitiesModule.Weld(_, a:WaitForChild("Grip"))
                 elseif _.Name == "Grip" then
-                    Ia.utilitiesModule.Weld(
+                    carbonConfigs.utilitiesModule.Weld(
                         _,
-                        Ka.LA,
+                        massVariableArray.LA,
                         nil,
                         CFrame.new(
                             0.600000024,
@@ -3617,8 +3615,8 @@ function HandleNades()
                 _.Anchored = false
             end
         end
-        Ja:Create(
-            Ka.LAW,
+        tweenService:Create(
+            massVariableArray.LAW,
             TweenInfo.new(0.4),
             {
                 C1 = CFrame.new(
@@ -3638,8 +3636,8 @@ function HandleNades()
             }
         ):Play()
         task.wait(0.15)
-        Ja:Create(
-            Ka.LAW,
+        tweenService:Create(
+            massVariableArray.LAW,
             TweenInfo.new(0.4),
             {
                 C1 = CFrame.new(
@@ -3663,8 +3661,8 @@ function HandleNades()
             a.Pin:Destroy()
             a.Lever:Destroy()
         end
-        Ja:Create(
-            Ka.LAW,
+        tweenService:Create(
+            massVariableArray.LAW,
             TweenInfo.new(0.2),
             {
                 C1 = CFrame.new(
@@ -3685,23 +3683,23 @@ function HandleNades()
         ):Play()
         task.wait(0.03)
         a.Grip:Destroy()
-        Ka.FragAmmo = Ka.FragAmmo - 1
+        massVariableArray.FragAmmo = massVariableArray.FragAmmo - 1
         local _ = a:WaitForChild("NADE"):GetMass()
         local _ = Instance.new("BodyForce", a:WaitForChild("NADE"))
-        _.Force = Ia.globalConfig.NadePhysics
-        a:WaitForChild("NADE").Velocity = xa.CFrame.LookVector * Ia.globalConfig.NadeSpeed
-        Ea.nadeEvent:FireServer(a.NADE.CFrame, "Auth", xa.CFrame.LookVector)
+        _.Force = carbonConfigs.globalConfig.NadePhysics
+        a:WaitForChild("NADE").Velocity = currentCamera.CFrame.LookVector * carbonConfigs.globalConfig.NadeSpeed
+        carbonEvents.nadeEvent:FireServer(a.NADE.CFrame, "Auth", currentCamera.CFrame.LookVector)
         local _ = a.NADE
-        _.Parent = ca
+        _.Parent = carbonAudio
         a:Destroy()
         delay(
             0.02,
             function()
                 _.CanCollide = true
-                _:WaitForChild("Indicator").MaxDistance = Ia.globalConfig.BlastRadius
+                _:WaitForChild("Indicator").MaxDistance = carbonConfigs.globalConfig.BlastRadius
                 _:WaitForChild("Indicator"):WaitForChild("Friendly").Visible =
                     true
-                if Ia.globalConfig.NadeTrailEnabled then
+                if carbonConfigs.globalConfig.NadeTrailEnabled then
                     _:WaitForChild("Trail").Enabled = true
                 end
             end
@@ -3709,13 +3707,13 @@ function HandleNades()
         delay(
             5,
             function()
-                Ea.explosiveEvent:FireServer(
+                carbonEvents.explosiveEvent:FireServer(
                     nil,
                     _.Position,
-                    Ia.globalConfig.BlastPressue,
-                    Ia.globalConfig.BlastRadius,
-                    Ia.globalConfig.DestroyJointRadius,
-                    Ia.globalConfig.ExplosionType,
+                    carbonConfigs.globalConfig.BlastPressue,
+                    carbonConfigs.globalConfig.BlastRadius,
+                    carbonConfigs.globalConfig.DestroyJointRadius,
+                    carbonConfigs.globalConfig.ExplosionType,
                     nil,
                     nil,
                     nil,
@@ -3731,12 +3729,12 @@ function HandleNades()
         task.wait(0.18)
         IdleAnim()
         pa = false
-    elseif Ka.NadeMode == 2 then
-    elseif Ka.NadeMode == 3 then
-    elseif Ka.NadeMode == 4 and not ba then
+    elseif massVariableArray.NadeMode == 2 then
+    elseif massVariableArray.NadeMode == 3 then
+    elseif massVariableArray.NadeMode == 4 and not ba then
         ba = true
-        Ja:Create(
-            Ka.LAW,
+        tweenService:Create(
+            massVariableArray.LAW,
             TweenInfo.new(0.4),
             {
                 C1 = CFrame.new(
@@ -3755,8 +3753,8 @@ function HandleNades()
                 )
             }
         ):Play()
-        Ja:Create(
-            Ka.RAW,
+        tweenService:Create(
+            massVariableArray.RAW,
             TweenInfo.new(0.3),
             {
                 C1 = CFrame.new(
@@ -3776,16 +3774,16 @@ function HandleNades()
             }
         ):Play()
         task.wait(0.4)
-        Z = ra:WaitForChild("C4"):clone()
-        Z.Parent = Ka.LA
+        Z = carbonFx:WaitForChild("C4"):clone()
+        Z.Parent = massVariableArray.LA
         for _, _ in pairs(Z:GetChildren()) do
             if _ and _:IsA("BasePart") then
                 if _.Name ~= "Grip" then
-                    Ia.utilitiesModule.Weld(_, Z:WaitForChild("Grip"))
+                    carbonConfigs.utilitiesModule.Weld(_, Z:WaitForChild("Grip"))
                 elseif _.Name == "Grip" then
-                    Ia.utilitiesModule.Weld(
+                    carbonConfigs.utilitiesModule.Weld(
                         _,
-                        Ka.LA,
+                        massVariableArray.LA,
                         nil,
                         CFrame.new(0.5, -1.4000001, -0.0999999642, 1, 0, 0, 0, 0.999999881, 0, 0, 0, 1)
                     )
@@ -3797,8 +3795,8 @@ function HandleNades()
                 _.Anchored = false
             end
         end
-        Ja:Create(
-            Ka.LAW,
+        tweenService:Create(
+            massVariableArray.LAW,
             TweenInfo.new(0.4),
             {
                 C1 = CFrame.new(
@@ -3823,7 +3821,7 @@ function HandleNades()
     end
 end
 function UpdateCamChar(_)
-    if Da.humanoid.Health > 0 then
+    if playerArms.humanoid.Health > 0 then
         ga.PrimaryPart = J
         D.CFrame = ga.PrimaryPart.CFrame * CFrame.new(0, -0.5, -5) * CFrame.Angles(0, math.rad(180), 0)
         for _, _ in pairs(ga:GetChildren()) do
@@ -3832,7 +3830,7 @@ function UpdateCamChar(_)
                     BrickColor.new("Institutional white")
             end
         end
-        for _, _ in pairs(Fa:GetDescendants()) do
+        for _, _ in pairs(playerCharacter:GetDescendants()) do
             if _ and _.Name == "Middle" and _:FindFirstChild("Middle") then
                 if ga:FindFirstChild(_.Middle.Part1.Name) then
                     ga:FindFirstChild(_.Middle.Part1.Name).BrickColor =
@@ -3844,66 +3842,66 @@ function UpdateCamChar(_)
 end
 function SelectFireMode()
     while true do
-        Ka.FireMode = Ka.FireMode + 1
-        if Ka.FireMode > 6 then
-            Ka.FireMode = 1
+        massVariableArray.FireMode = massVariableArray.FireMode + 1
+        if massVariableArray.FireMode > 6 then
+            massVariableArray.FireMode = 1
         end
-        if Ka.FireMode == 1 then
-            if Ka.curConfig.SemiEnabled then
+        if massVariableArray.FireMode == 1 then
+            if massVariableArray.curConfig.SemiEnabled then
                 break
             end
         end
-        if Ka.FireMode == 2 then
-            if Ka.curConfig.AutoEnabled then
+        if massVariableArray.FireMode == 2 then
+            if massVariableArray.curConfig.AutoEnabled then
                 break
             end
         end
-        if Ka.FireMode == 3 then
-            if Ka.curConfig.BurstEnabled then
+        if massVariableArray.FireMode == 3 then
+            if massVariableArray.curConfig.BurstEnabled then
                 break
             end
         end
-        if Ka.FireMode == 4 then
-            if Ka.curConfig.BoltAction then
+        if massVariableArray.FireMode == 4 then
+            if massVariableArray.curConfig.BoltAction then
                 break
             end
         end
-        if Ka.FireMode == 5 then
-            if Ka.curConfig.ShotEnabled then
+        if massVariableArray.FireMode == 5 then
+            if massVariableArray.curConfig.ShotEnabled then
                 break
             end
         end
-        if Ka.FireMode == 6 then
-            if Ka.curConfig.RPGEnabled then
+        if massVariableArray.FireMode == 6 then
+            if massVariableArray.curConfig.RPGEnabled then
                 break
             end
         end
-        B:Wait()
+        renderLoop:Wait()
     end
     UpdateAmmo()
 end
-Fa.ChildAdded:connect(
+playerCharacter.ChildAdded:connect(
     function(a)
         if
             a:IsA("Tool") and a:FindFirstChild("Authenticate") and
-                Da.humanoid.Health > 0 and
+                playerArms.humanoid.Health > 0 and
                 require(a.Authenticate).Type == "Gun"
          then
             if not w then
                 local _ = true
-                if Da.humanoid.Sit and Fa.Humanoid.SeatPart.Name == "DriverSeat" then
+                if playerArms.humanoid.Sit and playerCharacter.Humanoid.SeatPart.Name == "DriverSeat" then
                     _ = false
                 end
                 if _ then
-                    Ka.queued = a
+                    massVariableArray.queued = a
                     if not Ca then
-                        U.TargetFilter = workspace
+                        mouse.TargetFilter = workspace
                         EquipModel(a)
                     elseif Ca then
-                        U.TargetFilter = nil
+                        mouse.TargetFilter = nil
                         UnequipModel()
-                        U.TargetFilter = workspace
-                        EquipModel(Ka.queued)
+                        mouse.TargetFilter = workspace
+                        EquipModel(massVariableArray.queued)
                     end
                 end
             end
@@ -3914,38 +3912,38 @@ Fa.ChildAdded:connect(
         end
     end
 )
-Fa.ChildRemoved:connect(
+playerCharacter.ChildRemoved:connect(
     function(_)
-        if _ == Ka.tool then
+        if _ == massVariableArray.tool then
             if Ca then
                 if Y then
                     Y:Destroy()
                 end
-                U.TargetFilter = nil
+                mouse.TargetFilter = nil
                 UnequipModel()
             end
         end
     end
 )
-Ba.CharacterRemoving:Connect(
+localPlayer.CharacterRemoving:Connect(
     function()
         local a = 1
-        for _, _ in pairs(Ea) do
-            _.Name = r[a]
+        for _, _ in pairs(carbonEvents) do
+            _.Name = resultData[a]
             a = a + 1
         end
     end
 )
-Da.humanoid.Died:connect(
+playerArms.humanoid.Died:connect(
     function()
         print("You died idiot!")
         f = true
-        U.TargetFilter = nil
+        mouse.TargetFilter = nil
         UnequipModel()
-        Ka.cc:Destroy()
-        Ka.overlay.ImageTransparency = 1
+        massVariableArray.cc:Destroy()
+        massVariableArray.overlay.ImageTransparency = 1
         game.Lighting.ExposureCompensation = 0
-        Ea.storeDataEvent:InvokeServer(
+        carbonEvents.storeDataEvent:InvokeServer(
             "Erase",
             nil,
             nil,
@@ -3959,29 +3957,29 @@ Da.humanoid.Died:connect(
             "Auth"
         )
         local a = 1
-        for _, _ in pairs(Ea) do
-            _.Name = r[a]
+        for _, _ in pairs(carbonEvents) do
+            _.Name = resultData[a]
             a = a + 1
         end
     end
 )
-Da.humanoid.Changed:connect(
+playerArms.humanoid.Changed:connect(
     function()
-        if Da.humanoid.Sit and not Ka.StanceIndex ~= 0 then
-            Ka.StanceIndex = 0
+        if playerArms.humanoid.Sit and not massVariableArray.StanceIndex ~= 0 then
+            massVariableArray.StanceIndex = 0
             changeStance()
         end
-        if Da.humanoid.Health < h and Da.humanoid.Health ~= Da.humanoid.MaxHealth then
+        if playerArms.humanoid.Health < h and playerArms.humanoid.Health ~= playerArms.humanoid.MaxHealth then
             local _ = CalculateCamShake()
-            Ha.recoilSpring2.t = Ha.recoilSpring2.t + _
+            recoilData.recoilSpring2.t = recoilData.recoilSpring2.t + _
             delay(
                 0.025,
                 function()
-                    Ha.recoilSpring2.t = Ha.recoilSpring2.t - _
+                    recoilData.recoilSpring2.t = recoilData.recoilSpring2.t - _
                 end
             )
-            Ja:Create(
-                Ka.intenseShade,
+            tweenService:Create(
+                massVariableArray.intenseShade,
                 TweenInfo.new(0.1),
                 {
                     ImageColor3 = BrickColor.new(
@@ -3992,76 +3990,76 @@ Da.humanoid.Changed:connect(
             delay(
                 0.8,
                 function()
-                    Ja:Create(
-                        Ka.intenseShade,
+                    tweenService:Create(
+                        massVariableArray.intenseShade,
                         TweenInfo.new(0.3),
                         {ImageColor3 = BrickColor.new("Really black").Color}
                     ):Play()
                 end
             )
         end
-        h = Da.humanoid.Health
+        h = playerArms.humanoid.Health
     end
 )
-Da.humanoid.StateChanged:Connect(
+playerArms.humanoid.StateChanged:Connect(
     function(_, _)
         if _ == Enum.HumanoidStateType.Swimming then
             w = true
             if Ca then
-                Da.humanoid:UnequipTools()
+                playerArms.humanoid:UnequipTools()
             end
         else
             w = false
         end
     end
 )
-Da.humanoid.Swimming:Connect(
+playerArms.humanoid.Swimming:Connect(
     function()
         if Ca then
-            Da.humanoid:UnequipTools()
+            playerArms.humanoid:UnequipTools()
             w = true
         end
     end
 )
-ua.InputBegan:connect(
+userInputService.InputBegan:connect(
 	function(a, _)
 		prnt("Input began")
 		prnt("_:")
 		prnt("ca:")
-		if Ca and Da.humanoid.Health > 0 and Ka.curConfig then
+		if Ca and playerArms.humanoid.Health > 0 and massVariableArray.curConfig then
 			prnt("check 1 passed")
-			if a.UserInputType == Ka.curConfig.ShootKeybind and Ca and not va and not wa and not ka and not na and not T then
+			if a.UserInputType == massVariableArray.curConfig.ShootKeybind and Ca and not va and not wa and not ka and not na and not T then
 				prnt("Check 2 passed")
-                Ka.MouseHeld = true
+                massVariableArray.MouseHeld = true
                 if not pa then
                     if not ja then
-						if Ka.Ammo > 0 then
+						if massVariableArray.Ammo > 0 then
 							prnt("Shootah")
                             Shoot()
                         end
                     else
-                        if Ka.ExplosiveAmmo > 0 then
+                        if massVariableArray.ExplosiveAmmo > 0 then
                             Shoot()
                         end
                     end
-                    if Ka.Ammo <= 0 or not Ka.CanShoot then
-                        Ka.Grip:WaitForChild("Click"):Play()
+                    if massVariableArray.Ammo <= 0 or not massVariableArray.CanShoot then
+                        massVariableArray.Grip:WaitForChild("Click"):Play()
                     end
                 else
-                    if Ka.NadeMode == 4 and not ba then
+                    if massVariableArray.NadeMode == 4 and not ba then
                         ba = true
                         local d, b, c
                         if not V then
                             d, b, c =
                                 workspace:FindPartOnRayWithIgnoreList(
                                 Ray.new(Z.PrimaryPart.Position, Z.PrimaryPart.CFrame.UpVector * -2),
-                                ha
+                                componentCollection
                             )
                             local a = Vector3.new(0, 1, 0):Cross(c)
                             local _ = math.asin(a.magnitude)
                             if d then
                                 Z:Destroy()
-                                V = Ea.placeC4Event:InvokeServer(b, a, _, "Auth", c, d)
+                                V = carbonEvents.placeC4Event:InvokeServer(b, a, _, "Auth", c, d)
                                 IdleAnim()
                                 pa = false
                             end
@@ -4072,37 +4070,37 @@ ua.InputBegan:connect(
             end
             if
                 a.KeyCode == Enum.KeyCode.Minus and Ca and not va and
-                    Ka.curModel:FindFirstChild("Node_Storage")
+                    massVariableArray.curModel:FindFirstChild("Node_Storage")
              then
                 l = not l
                 if l then
                     AttachAnim()
-                    ua.MouseIconEnabled = true
-                    Ka.hud:WaitForChild("Attachment_Frame").Visible =
+                    userInputService.MouseIconEnabled = true
+                    massVariableArray.hud:WaitForChild("Attachment_Frame").Visible =
                         true
-                    Ka.hud:WaitForChild("Mouse_Release").Modal = true
+                    massVariableArray.hud:WaitForChild("Mouse_Release").Modal = true
                     for _, a in pairs(
-                        Ka.curModel:WaitForChild("Node_Storage"):GetChildren()
+                        massVariableArray.curModel:WaitForChild("Node_Storage"):GetChildren()
                     ) do
                         if a then
-                            local _ = Ka.tempFolder:WaitForChild("Node_UI"):Clone()
-                            _.Parent = Ba:WaitForChild("PlayerGui")
+                            local _ = massVariableArray.tempFolder:WaitForChild("Node_UI"):Clone()
+                            _.Parent = localPlayer:WaitForChild("PlayerGui")
                             _.Adornee = a
                             _.Enabled = true
                             _:WaitForChild("Button").MouseButton1Click:Connect(
                                 function()
-                                    for _, _ in pairs(Ka.attachFrame:GetChildren()) do
+                                    for _, _ in pairs(massVariableArray.attachFrame:GetChildren()) do
                                         if _ and _:IsA("Frame") then
                                             _:Destroy()
                                         end
                                     end
-                                    for _, b in pairs(t:GetChildren()) do
+                                    for _, b in pairs(attachmentStorage:GetChildren()) do
                                         if b and b.PrimaryPart.Name == a.Name then
                                             local c =
-                                                Ka.tempFolder:WaitForChild(
+                                                massVariableArray.tempFolder:WaitForChild(
                                                 "Attachment_Item"
                                             ):Clone()
-                                            c.Parent = Ka.attachFrame
+                                            c.Parent = massVariableArray.attachFrame
                                             c.Visible = true
                                             c:WaitForChild("Button").Text = b.Name
                                             local a = Instance.new("Camera")
@@ -4110,7 +4108,7 @@ ua.InputBegan:connect(
                                             a.CameraType = Enum.CameraType.Scriptable
                                             c:WaitForChild("ViewFrame").CurrentCamera = a
                                             a.Parent = c:WaitForChild("ViewFrame")
-                                            local _ = t:WaitForChild(b.Name):Clone()
+                                            local _ = attachmentStorage:WaitForChild(b.Name):Clone()
                                             _.Parent = c:WaitForChild("ViewFrame")
                                             a.CFrame =
                                                 _:WaitForChild("Box").CFrame *
@@ -4130,24 +4128,24 @@ ua.InputBegan:connect(
                                             end
                                             c:WaitForChild("Button").MouseButton1Click:Connect(
                                                 function()
-                                                    local _, a = Ia.attachmentAPI.AttachCELive(Ka.curModel, b.Name)
-                                                    Ia.attachmentAPI.AttachCE(
-                                                        p:FindFirstChild(Ka.curModel.Name),
+                                                    local _, a = carbonConfigs.attachmentAPI.AttachCELive(massVariableArray.curModel, b.Name)
+                                                    carbonConfigs.attachmentAPI.AttachCE(
+                                                        carbonClientResourceModels:FindFirstChild(massVariableArray.curModel.Name),
                                                         b.Name
                                                     )
-                                                    Ka.AimPart =
-                                                        Ka.curModel:FindFirstChild("AimPart")
-                                                    Ka.CurAimPart =
-                                                        Ka.curModel:FindFirstChild("AimPart")
-                                                    Ka.lastAimPart =
-                                                        Ka.curModel:FindFirstChild("AimPart")
-                                                    Ka.FirePart =
-                                                        Ka.curModel:FindFirstChild("FirePart")
-                                                    Ea.attachmentEvent:FireServer(Ka.curModel.Name, b.Name)
+                                                    massVariableArray.AimPart =
+                                                        massVariableArray.curModel:FindFirstChild("AimPart")
+                                                    massVariableArray.CurAimPart =
+                                                        massVariableArray.curModel:FindFirstChild("AimPart")
+                                                    massVariableArray.lastAimPart =
+                                                        massVariableArray.curModel:FindFirstChild("AimPart")
+                                                    massVariableArray.FirePart =
+                                                        massVariableArray.curModel:FindFirstChild("FirePart")
+                                                    carbonEvents.attachmentEvent:FireServer(massVariableArray.curModel.Name, b.Name)
                                                     if _ then
                                                         ia = true
-                                                        Ka.curZoom = a[1]
-                                                        Ka.oAimZoom = a[1]
+                                                        massVariableArray.curZoom = a[1]
+                                                        massVariableArray.oAimZoom = a[1]
                                                         R = a[2]
                                                     end
                                                 end
@@ -4159,12 +4157,12 @@ ua.InputBegan:connect(
                         end
                     end
                 else
-                    ua.MouseIconEnabled = false
-                    Ka.hud:WaitForChild("Mouse_Release").Modal = false
-                    Ka.hud:WaitForChild("Attachment_Frame").Visible =
+                    userInputService.MouseIconEnabled = false
+                    massVariableArray.hud:WaitForChild("Mouse_Release").Modal = false
+                    massVariableArray.hud:WaitForChild("Attachment_Frame").Visible =
                         false
-                    Ea.clearAttchEvent:FireServer(Ka.curModel.Name)
-                    for _, _ in pairs(Ba.PlayerGui:GetChildren()) do
+                    carbonEvents.clearAttchEvent:FireServer(massVariableArray.curModel.Name)
+                    for _, _ in pairs(localPlayer.PlayerGui:GetChildren()) do
                         if _ and _.Name == "Node_UI" then
                             _:Destroy()
                         end
@@ -4172,16 +4170,16 @@ ua.InputBegan:connect(
                     IdleAnim()
                 end
             end
-            if a.UserInputType == Ka.curConfig.ADSKeybind and Ca and not va and not wa and not ka and not na and not pa then
+            if a.UserInputType == massVariableArray.curConfig.ADSKeybind and Ca and not va and not wa and not ka and not na and not pa then
                 Aim(true, true)
             end
-            if a.KeyCode == Ka.curConfig.AltADSKey and Ca and not va and not wa and not ka and not na and not pa then
+            if a.KeyCode == massVariableArray.curConfig.AltADSKey and Ca and not va and not wa and not ka and not na and not pa then
                 Aim(true, true)
             end
             if
-                a.KeyCode == Ka.curConfig.SprintKey and Ca and not va and ua:IsKeyDown(Enum.KeyCode.W) and
-                    not ua:IsKeyDown(Enum.KeyCode.S) and
-                    (Ia.globalConfig.StaminaEnabled and Ka.Stamina > 0 or not Ia.globalConfig.StaminaEnabled) and
+                a.KeyCode == massVariableArray.curConfig.SprintKey and Ca and not va and userInputService:IsKeyDown(Enum.KeyCode.W) and
+                    not userInputService:IsKeyDown(Enum.KeyCode.S) and
+                    (carbonConfigs.globalConfig.StaminaEnabled and massVariableArray.Stamina > 0 or not carbonConfigs.globalConfig.StaminaEnabled) and
                     not qa and
                     L and
                     not wa and
@@ -4194,27 +4192,27 @@ ua.InputBegan:connect(
             if a.KeyCode == Enum.KeyCode.KeypadEight and Ca and not va then
                 if C then
                     N = "Radial_Top"
-                    for _, _ in pairs(Ka.radialInner:GetChildren()) do
-                        if _ and _ ~= Ka.radialTop then
-                            Ja:Create(_, TweenInfo.new(0.3), {Position = UDim2.new(0, 0, 0, 0)}):Play()
-                            Ja:Create(_, TweenInfo.new(0.3), {ImageColor3 = Color3.fromRGB(34, 34, 34)}):Play()
+                    for _, _ in pairs(massVariableArray.radialInner:GetChildren()) do
+                        if _ and _ ~= massVariableArray.radialTop then
+                            tweenService:Create(_, TweenInfo.new(0.3), {Position = UDim2.new(0, 0, 0, 0)}):Play()
+                            tweenService:Create(_, TweenInfo.new(0.3), {ImageColor3 = Color3.fromRGB(34, 34, 34)}):Play()
                         end
                     end
-                    Ja:Create(Ka.radialTop, TweenInfo.new(0.3), {Position = UDim2.new(0, 0, 0, -5)}):Play()
-                    Ja:Create(Ka.radialTop, TweenInfo.new(0.3), {ImageColor3 = Color3.fromRGB(135, 175, 97)}):Play()
+                    tweenService:Create(massVariableArray.radialTop, TweenInfo.new(0.3), {Position = UDim2.new(0, 0, 0, -5)}):Play()
+                    tweenService:Create(massVariableArray.radialTop, TweenInfo.new(0.3), {ImageColor3 = Color3.fromRGB(135, 175, 97)}):Play()
                 end
             end
             if a.KeyCode == Enum.KeyCode.KeypadTwo and Ca and not va then
                 if C then
                     N = "Radial_Bottom"
-                    for _, _ in pairs(Ka.radialInner:GetChildren()) do
-                        if _ and _ ~= Ka.radialBottom then
-                            Ja:Create(_, TweenInfo.new(0.3), {Position = UDim2.new(0, 0, 0, 0)}):Play()
-                            Ja:Create(_, TweenInfo.new(0.3), {ImageColor3 = Color3.fromRGB(34, 34, 34)}):Play()
+                    for _, _ in pairs(massVariableArray.radialInner:GetChildren()) do
+                        if _ and _ ~= massVariableArray.radialBottom then
+                            tweenService:Create(_, TweenInfo.new(0.3), {Position = UDim2.new(0, 0, 0, 0)}):Play()
+                            tweenService:Create(_, TweenInfo.new(0.3), {ImageColor3 = Color3.fromRGB(34, 34, 34)}):Play()
                         end
                     end
-                    Ja:Create(Ka.radialBottom, TweenInfo.new(0.3), {Position = UDim2.new(0, 0, 0, 5)}):Play()
-                    Ja:Create(Ka.radialBottom, TweenInfo.new(0.3), {ImageColor3 = Color3.fromRGB(135, 175, 97)}):Play()
+                    tweenService:Create(massVariableArray.radialBottom, TweenInfo.new(0.3), {Position = UDim2.new(0, 0, 0, 5)}):Play()
+                    tweenService:Create(massVariableArray.radialBottom, TweenInfo.new(0.3), {ImageColor3 = Color3.fromRGB(135, 175, 97)}):Play()
                 end
             end
             if a.KeyCode == Enum.KeyCode.LeftControl and Ca and not va and not wa then
@@ -4222,70 +4220,70 @@ ua.InputBegan:connect(
                     C = not C
                     if C then
                         N = "Radial_Center"
-                        Ja:Create(Ka.radialOutter, TweenInfo.new(0.5), {ImageTransparency = 0}):Play()
-                        for _, _ in pairs(Ka.radialInner:GetChildren()) do
+                        tweenService:Create(massVariableArray.radialOutter, TweenInfo.new(0.5), {ImageTransparency = 0}):Play()
+                        for _, _ in pairs(massVariableArray.radialInner:GetChildren()) do
                             if _ then
-                                Ja:Create(_, TweenInfo.new(0.5), {ImageTransparency = 0}):Play()
-                                Ja:Create(_, TweenInfo.new(0.5), {Position = UDim2.new(0, 0, 0, 0)}):Play()
-                                Ja:Create(_, TweenInfo.new(0.5), {ImageColor3 = Color3.fromRGB(34, 34, 34)}):Play()
+                                tweenService:Create(_, TweenInfo.new(0.5), {ImageTransparency = 0}):Play()
+                                tweenService:Create(_, TweenInfo.new(0.5), {Position = UDim2.new(0, 0, 0, 0)}):Play()
+                                tweenService:Create(_, TweenInfo.new(0.5), {ImageColor3 = Color3.fromRGB(34, 34, 34)}):Play()
                             end
                         end
-                        Ja:Create(Ka.radialCenter, TweenInfo.new(0.5), {ImageColor3 = Color3.fromRGB(135, 175, 97)}):Play(
+                        tweenService:Create(massVariableArray.radialCenter, TweenInfo.new(0.5), {ImageColor3 = Color3.fromRGB(135, 175, 97)}):Play(
 
                         )
-                        Ka.radialTop.MouseEnter:Connect(
+                        massVariableArray.radialTop.MouseEnter:Connect(
                             function()
                                 N = "Radial_Top"
-                                for _, _ in pairs(Ka.radialInner:GetChildren()) do
-                                    if _ and _ ~= Ka.radialTop then
-                                        Ja:Create(_, TweenInfo.new(0.5), {Position = UDim2.new(0, 0, 0, 0)}):Play()
-                                        Ja:Create(_, TweenInfo.new(0.5), {ImageColor3 = Color3.fromRGB(34, 34, 34)}):Play(
+                                for _, _ in pairs(massVariableArray.radialInner:GetChildren()) do
+                                    if _ and _ ~= massVariableArray.radialTop then
+                                        tweenService:Create(_, TweenInfo.new(0.5), {Position = UDim2.new(0, 0, 0, 0)}):Play()
+                                        tweenService:Create(_, TweenInfo.new(0.5), {ImageColor3 = Color3.fromRGB(34, 34, 34)}):Play(
 
                                         )
                                     end
                                 end
-                                Ja:Create(Ka.radialTop, TweenInfo.new(0.5), {Position = UDim2.new(0, 0, 0, -5)}):Play()
-                                Ja:Create(
-                                    Ka.radialTop,
+                                tweenService:Create(massVariableArray.radialTop, TweenInfo.new(0.5), {Position = UDim2.new(0, 0, 0, -5)}):Play()
+                                tweenService:Create(
+                                    massVariableArray.radialTop,
                                     TweenInfo.new(0.5),
                                     {ImageColor3 = Color3.fromRGB(135, 175, 97)}
                                 ):Play()
                             end
                         )
-                        Ka.radialBottom.MouseEnter:Connect(
+                        massVariableArray.radialBottom.MouseEnter:Connect(
                             function()
                                 N = "Radial_Bottom"
-                                for _, _ in pairs(Ka.radialInner:GetChildren()) do
-                                    if _ and _ ~= Ka.radialBottom then
-                                        Ja:Create(_, TweenInfo.new(0.5), {Position = UDim2.new(0, 0, 0, 0)}):Play()
-                                        Ja:Create(_, TweenInfo.new(0.5), {ImageColor3 = Color3.fromRGB(34, 34, 34)}):Play(
+                                for _, _ in pairs(massVariableArray.radialInner:GetChildren()) do
+                                    if _ and _ ~= massVariableArray.radialBottom then
+                                        tweenService:Create(_, TweenInfo.new(0.5), {Position = UDim2.new(0, 0, 0, 0)}):Play()
+                                        tweenService:Create(_, TweenInfo.new(0.5), {ImageColor3 = Color3.fromRGB(34, 34, 34)}):Play(
 
                                         )
                                     end
                                 end
-                                Ja:Create(Ka.radialBottom, TweenInfo.new(0.5), {Position = UDim2.new(0, 0, 0, 5)}):Play(
+                                tweenService:Create(massVariableArray.radialBottom, TweenInfo.new(0.5), {Position = UDim2.new(0, 0, 0, 5)}):Play(
 
                                 )
-                                Ja:Create(
-                                    Ka.radialBottom,
+                                tweenService:Create(
+                                    massVariableArray.radialBottom,
                                     TweenInfo.new(0.5),
                                     {ImageColor3 = Color3.fromRGB(135, 175, 97)}
                                 ):Play()
                             end
                         )
-                        Ka.radialCenter.MouseEnter:Connect(
+                        massVariableArray.radialCenter.MouseEnter:Connect(
                             function()
                                 N = "Radial_Center"
-                                for _, _ in pairs(Ka.radialInner:GetChildren()) do
-                                    if _ and _ ~= Ka.radialCenter then
-                                        Ja:Create(_, TweenInfo.new(0.5), {Position = UDim2.new(0, 0, 0, 0)}):Play()
-                                        Ja:Create(_, TweenInfo.new(0.5), {ImageColor3 = Color3.fromRGB(34, 34, 34)}):Play(
+                                for _, _ in pairs(massVariableArray.radialInner:GetChildren()) do
+                                    if _ and _ ~= massVariableArray.radialCenter then
+                                        tweenService:Create(_, TweenInfo.new(0.5), {Position = UDim2.new(0, 0, 0, 0)}):Play()
+                                        tweenService:Create(_, TweenInfo.new(0.5), {ImageColor3 = Color3.fromRGB(34, 34, 34)}):Play(
 
                                         )
                                     end
                                 end
-                                Ja:Create(
-                                    Ka.radialCenter,
+                                tweenService:Create(
+                                    massVariableArray.radialCenter,
                                     TweenInfo.new(0.5),
                                     {ImageColor3 = Color3.fromRGB(135, 175, 97)}
                                 ):Play()
@@ -4293,85 +4291,85 @@ ua.InputBegan:connect(
                         )
                     else
                         if N == "Radial_Top" then
-                            Ka.readyMode = Ka.readyMode + 1
-                            if Ka.readyMode > 1 then
-                                Ka.readyMode = 1
+                            massVariableArray.readyMode = massVariableArray.readyMode + 1
+                            if massVariableArray.readyMode > 1 then
+                                massVariableArray.readyMode = 1
                             end
                         elseif N == "Radial_Bottom" then
-                            Ka.readyMode = Ka.readyMode - 1
-                            if Ka.readyMode < -1 then
-                                Ka.readyMode = -1
+                            massVariableArray.readyMode = massVariableArray.readyMode - 1
+                            if massVariableArray.readyMode < -1 then
+                                massVariableArray.readyMode = -1
                             end
                         elseif N == "Radial_Center" then
-                            Ka.readyMode = 0
+                            massVariableArray.readyMode = 0
                         end
                         ChangeReady()
-                        Ja:Create(Ka.radialOutter, TweenInfo.new(0.5), {ImageTransparency = 1}):Play()
-                        for _, _ in pairs(Ka.radialInner:GetChildren()) do
+                        tweenService:Create(massVariableArray.radialOutter, TweenInfo.new(0.5), {ImageTransparency = 1}):Play()
+                        for _, _ in pairs(massVariableArray.radialInner:GetChildren()) do
                             if _ then
-                                Ja:Create(_, TweenInfo.new(0.5), {ImageTransparency = 1}):Play()
-                                Ja:Create(_, TweenInfo.new(0.5), {Position = UDim2.new(0, 0, 0, 0)}):Play()
-                                Ja:Create(_, TweenInfo.new(0.5), {ImageColor3 = Color3.fromRGB(34, 34, 34)}):Play()
+                                tweenService:Create(_, TweenInfo.new(0.5), {ImageTransparency = 1}):Play()
+                                tweenService:Create(_, TweenInfo.new(0.5), {Position = UDim2.new(0, 0, 0, 0)}):Play()
+                                tweenService:Create(_, TweenInfo.new(0.5), {ImageColor3 = Color3.fromRGB(34, 34, 34)}):Play()
                             end
                         end
                     end
                 else
-                    Ka.aimWalkSpeed = 5
+                    massVariableArray.aimWalkSpeed = 5
                 end
             end
             if a.KeyCode == Enum.KeyCode.LeftAlt then
                 x = not x
                 if x then
-                    Ja:Create(Ka.sensDisplay, TweenInfo.new(0.3), {TextTransparency = 1}):Play()
+                    tweenService:Create(massVariableArray.sensDisplay, TweenInfo.new(0.3), {TextTransparency = 1}):Play()
                 else
-                    Ja:Create(Ka.sensDisplay, TweenInfo.new(0.3), {TextTransparency = 0}):Play()
+                    tweenService:Create(massVariableArray.sensDisplay, TweenInfo.new(0.3), {TextTransparency = 0}):Play()
                 end
             end
-            if a.KeyCode == Enum.KeyCode.A and ya and not ua:IsKeyDown(Enum.KeyCode.W) then
+            if a.KeyCode == Enum.KeyCode.A and ya and not userInputService:IsKeyDown(Enum.KeyCode.W) then
                 Sprint(false)
             end
-            if a.KeyCode == Enum.KeyCode.D and ya and not ua:IsKeyDown(Enum.KeyCode.W) then
+            if a.KeyCode == Enum.KeyCode.D and ya and not userInputService:IsKeyDown(Enum.KeyCode.W) then
                 Sprint(false)
             end
             if a.KeyCode == Enum.KeyCode.S and ya then
                 Sprint(false)
             end
             if a.KeyCode == Enum.KeyCode.A then
-                S = CFrame.Angles(0, 0, math.rad(-10))
-                if ua:IsKeyDown(Enum.KeyCode.D) then
-                    S = CFrame.Angles(0, 0, 0)
+                rotation = CFrame.Angles(0, 0, math.rad(-10))
+                if userInputService:IsKeyDown(Enum.KeyCode.D) then
+                    rotation = CFrame.Angles(0, 0, 0)
                 end
             end
             if a.KeyCode == Enum.KeyCode.D then
-                S = CFrame.Angles(0, 0, math.rad(10))
-                if ua:IsKeyDown(Enum.KeyCode.A) then
-                    S = CFrame.Angles(0, 0, 0)
+                rotation = CFrame.Angles(0, 0, math.rad(10))
+                if userInputService:IsKeyDown(Enum.KeyCode.A) then
+                    rotation = CFrame.Angles(0, 0, 0)
                 end
             end
             if
-                a.KeyCode == Ia.globalConfig.GrenadeKey and Ca and not va and Ia.globalConfig.CanGrenade and not ka and
+                a.KeyCode == carbonConfigs.globalConfig.GrenadeKey and Ca and not va and carbonConfigs.globalConfig.CanGrenade and not ka and
                     not la and
                     not wa and
                     not ma and
                     not na
              then
-                if not ua:IsKeyDown(Enum.KeyCode.LeftControl) then
+                if not userInputService:IsKeyDown(Enum.KeyCode.LeftControl) then
                     if not pa then
                         local _ = false
-                        if Ka.NadeMode == 1 then
-                            if Ka.FragAmmo > 0 then
+                        if massVariableArray.NadeMode == 1 then
+                            if massVariableArray.FragAmmo > 0 then
                                 _ = true
                             end
-                        elseif Ka.NadeMode == 2 then
-                            if Ka.FlashAmmo > 0 then
+                        elseif massVariableArray.NadeMode == 2 then
+                            if massVariableArray.FlashAmmo > 0 then
                                 _ = true
                             end
-                        elseif Ka.NadeMode == 3 then
-                            if Ka.SmokeAmmo > 0 then
+                        elseif massVariableArray.NadeMode == 3 then
+                            if massVariableArray.SmokeAmmo > 0 then
                                 _ = true
                             end
-                        elseif Ka.NadeMode == 4 then
-                            if Ka.C4Ammo > 0 and not V then
+                        elseif massVariableArray.NadeMode == 4 then
+                            if massVariableArray.C4Ammo > 0 and not V then
                                 _ = true
                             end
                         end
@@ -4386,12 +4384,12 @@ ua.InputBegan:connect(
                             end
                             HandleNades()
                         end
-                        if V and Ka.NadeMode == 4 then
+                        if V and massVariableArray.NadeMode == 4 then
                             ba = true
                             m = false
                             local _ = V:WaitForChild("CEVARS"):WaitForChild("Hit").Value
-                            Ja:Create(
-                                Ka.LAW,
+                            tweenService:Create(
+                                massVariableArray.LAW,
                                 TweenInfo.new(0.2),
                                 {
                                     C1 = CFrame.new(
@@ -4411,16 +4409,16 @@ ua.InputBegan:connect(
                                 }
                             ):Play()
                             task.wait(0.2)
-                            local a = ra:WaitForChild("Phone"):clone()
-                            a.Parent = Ka.LA
+                            local a = carbonFx:WaitForChild("Phone"):clone()
+                            a.Parent = massVariableArray.LA
                             for _, _ in pairs(a:GetChildren()) do
                                 if _ and _:IsA("BasePart") then
                                     if _.Name ~= "Grip" then
-                                        Ia.utilitiesModule.Weld(_, a:WaitForChild("Grip"))
+                                        carbonConfigs.utilitiesModule.Weld(_, a:WaitForChild("Grip"))
                                     elseif _.Name == "Grip" then
-                                        Ia.utilitiesModule.Weld(
+                                        carbonConfigs.utilitiesModule.Weld(
                                             _,
-                                            Ka.LA,
+                                            massVariableArray.LA,
                                             nil,
                                             CFrame.new(
                                                 0.800000012,
@@ -4445,8 +4443,8 @@ ua.InputBegan:connect(
                                     _.Anchored = false
                                 end
                             end
-                            Ja:Create(
-                                Ka.LAW,
+                            tweenService:Create(
+                                massVariableArray.LAW,
                                 TweenInfo.new(0.4),
                                 {
                                     C1 = CFrame.new(
@@ -4467,8 +4465,8 @@ ua.InputBegan:connect(
                             ):Play()
                             task.wait(0.4)
                             a:WaitForChild("Grip"):WaitForChild("Dial"):Play()
-                            Ja:Create(
-                                Ka.LAW,
+                            tweenService:Create(
+                                massVariableArray.LAW,
                                 TweenInfo.new(0.4),
                                 {
                                     C1 = CFrame.new(
@@ -4488,14 +4486,14 @@ ua.InputBegan:connect(
                                 }
                             ):Play()
                             task.wait(0.35)
-                            Ea.explosiveEvent:FireServer(
+                            carbonEvents.explosiveEvent:FireServer(
                                 _,
                                 V:WaitForChild("Grip").Position,
-                                Ia.globalConfig.C4BlastPressue,
-                                Ia.globalConfig.C4BlastRadius,
-                                Ia.globalConfig.C4DestroyJointRadius,
-                                Ia.globalConfig.C4ExplosionType,
-                                Ia.globalConfig.C4DeletePart,
+                                carbonConfigs.globalConfig.C4BlastPressue,
+                                carbonConfigs.globalConfig.C4BlastRadius,
+                                carbonConfigs.globalConfig.C4DestroyJointRadius,
+                                carbonConfigs.globalConfig.C4ExplosionType,
+                                carbonConfigs.globalConfig.C4DeletePart,
                                 V,
                                 nil,
                                 nil,
@@ -4505,8 +4503,8 @@ ua.InputBegan:connect(
                                 nil
                             )
                             V = nil
-                            Ja:Create(
-                                Ka.LAW,
+                            tweenService:Create(
+                                massVariableArray.LAW,
                                 TweenInfo.new(0.4),
                                 {
                                     C1 = CFrame.new(
@@ -4532,11 +4530,11 @@ ua.InputBegan:connect(
                             ba = false
                         end
                     else
-                        if Ka.NadeMode == 4 and not ba then
+                        if massVariableArray.NadeMode == 4 and not ba then
                             ba = true
                             if not V then
-                                Ja:Create(
-                                    Ka.LAW,
+                                tweenService:Create(
+                                    massVariableArray.LAW,
                                     TweenInfo.new(0.2),
                                     {
                                         C1 = CFrame.new(
@@ -4568,27 +4566,27 @@ ua.InputBegan:connect(
                     end
                 else
                     while true do
-                        Ka.NadeMode = Ka.NadeMode + 1
-                        if Ka.NadeMode > 4 then
-                            Ka.NadeMode = 1
+                        massVariableArray.NadeMode = massVariableArray.NadeMode + 1
+                        if massVariableArray.NadeMode > 4 then
+                            massVariableArray.NadeMode = 1
                         end
-                        if Ka.NadeMode == 1 then
-                            if Ka.FragAmmo > 0 then
+                        if massVariableArray.NadeMode == 1 then
+                            if massVariableArray.FragAmmo > 0 then
                                 break
                             end
                         end
-                        if Ka.NadeMode == 2 then
-                            if Ka.FlashAmmo > 0 then
+                        if massVariableArray.NadeMode == 2 then
+                            if massVariableArray.FlashAmmo > 0 then
                                 break
                             end
                         end
-                        if Ka.NadeMode == 3 then
-                            if Ka.SmokeAmmo > 0 then
+                        if massVariableArray.NadeMode == 3 then
+                            if massVariableArray.SmokeAmmo > 0 then
                                 break
                             end
                         end
-                        if Ka.NadeMode == 4 then
-                            if Ka.C4Ammo > 0 then
+                        if massVariableArray.NadeMode == 4 then
+                            if massVariableArray.C4Ammo > 0 then
                                 break
                             end
                         end
@@ -4597,7 +4595,7 @@ ua.InputBegan:connect(
                 end
             end
             if
-                a.KeyCode == Ia.globalConfig.KnifeKey and Ca and not va and Ia.globalConfig.CanKnife and not za and
+                a.KeyCode == carbonConfigs.globalConfig.KnifeKey and Ca and not va and carbonConfigs.globalConfig.CanKnife and not za and
                     not ya and
                     not pa and
                     not la and
@@ -4613,16 +4611,16 @@ ua.InputBegan:connect(
                 if ya then
                     Sprint(false, false)
                 end
-                local a = ra:WaitForChild("Melee"):clone()
-                a.Parent = Ka.LA
+                local a = carbonFx:WaitForChild("Melee"):clone()
+                a.Parent = massVariableArray.LA
                 for _, _ in pairs(a:GetChildren()) do
                     if _ and _:IsA("BasePart") then
                         if _.Name ~= "Grip" then
-                            Ia.utilitiesModule.Weld(_, a:WaitForChild("Grip"))
+                            carbonConfigs.utilitiesModule.Weld(_, a:WaitForChild("Grip"))
                         elseif _.Name == "Grip" then
-                            Ia.utilitiesModule.Weld(
+                            carbonConfigs.utilitiesModule.Weld(
                                 _,
-                                Ka.LA,
+                                massVariableArray.LA,
                                 nil,
                                 CFrame.new(
                                     0.5,
@@ -4647,8 +4645,8 @@ ua.InputBegan:connect(
                         _.Anchored = false
                     end
                 end
-                Ja:Create(
-                    Ka.LAW,
+                tweenService:Create(
+                    massVariableArray.LAW,
                     TweenInfo.new(0.2),
                     {
                         C1 = CFrame.new(
@@ -4667,8 +4665,8 @@ ua.InputBegan:connect(
                         )
                     }
                 ):Play()
-                Ja:Create(
-                    Ka.RAW,
+                tweenService:Create(
+                    massVariableArray.RAW,
                     TweenInfo.new(0.2),
                     {
                         C1 = CFrame.new(
@@ -4688,12 +4686,12 @@ ua.InputBegan:connect(
                     }
                 ):Play()
                 task.wait(0.2)
-                local _ = ra:WaitForChild("KnifeJab"):clone()
-                _.Parent = Ba.PlayerGui
+                local _ = carbonFx:WaitForChild("KnifeJab"):clone()
+                _.Parent = localPlayer.PlayerGui
                 _:Play()
                 game.Debris:AddItem(_, _.TimeLength)
-                Ja:Create(
-                    Ka.LAW,
+                tweenService:Create(
+                    massVariableArray.LAW,
                     TweenInfo.new(0.1),
                     {
                         C1 = CFrame.new(
@@ -4722,16 +4720,16 @@ ua.InputBegan:connect(
                                         a:WaitForChild("Grip").Position,
                                         a:WaitForChild("Grip").CFrame.upVector * 2
                                     ),
-                                    ha
+                                    componentCollection
                                 )
                                 if a then
-                                    local _, a = Ia.utilitiesModule.CheckForHumanoid(a)
+                                    local _, a = carbonConfigs.utilitiesModule.CheckForHumanoid(a)
                                     if _ and a then
-                                        local _ = ra:WaitForChild("KnifeCut"):clone()
-                                        _.Parent = Ba.PlayerGui
+                                        local _ = carbonFx:WaitForChild("KnifeCut"):clone()
+                                        _.Parent = localPlayer.PlayerGui
                                         _:Play()
                                         game.Debris:AddItem(_, _.TimeLength)
-                                        Ea.createOwnerEvent:FireServer(
+                                        carbonEvents.createOwnerEvent:FireServer(
                                             a,
                                             nil,
                                             nil,
@@ -4742,7 +4740,7 @@ ua.InputBegan:connect(
                                             nil,
                                             "Auth"
                                         )
-                                        Ea.damageEvent:FireServer(
+                                        carbonEvents.damageEvent:FireServer(
                                             a,
                                             100,
                                             nil,
@@ -4751,7 +4749,7 @@ ua.InputBegan:connect(
                                     end
                                     break
                                 end
-                                B:Wait()
+                                renderLoop:Wait()
                             end
                         end
                     )
@@ -4762,7 +4760,7 @@ ua.InputBegan:connect(
                 ka = false
             end
             if
-                a.KeyCode == Ia.globalConfig.BinoKey and Ca and not va and not pa and not la and not wa and not ma and
+                a.KeyCode == carbonConfigs.globalConfig.BinoKey and Ca and not va and not pa and not la and not wa and not ma and
                     not ka and
                     not pa and
                     not i
@@ -4771,51 +4769,51 @@ ua.InputBegan:connect(
                 HandleBino()
             end
             if
-                a.KeyCode == Ia.globalConfig.GLKey and Ca and not va and not pa and not la and not wa and
-                    Ka.curConfig.ExplosiveEnabled and
+                a.KeyCode == carbonConfigs.globalConfig.GLKey and Ca and not va and not pa and not la and not wa and
+                    massVariableArray.curConfig.ExplosiveEnabled and
                     not pa and
                     not fa
              then
                 ja = not ja
                 if ja then
-                    Aa = Ka.CanShoot
-                    if Ka.ExplosiveAmmo > 0 and not G then
-                        Ka.CanShoot = true
+                    Aa = massVariableArray.CanShoot
+                    if massVariableArray.ExplosiveAmmo > 0 and not G then
+                        massVariableArray.CanShoot = true
                     else
-                        Ka.CanShoot = false
+                        massVariableArray.CanShoot = false
                     end
                     local _ =
-                        Ba.PlayerGui:FindFirstChild("NadeSound") or
+                        localPlayer.PlayerGui:FindFirstChild("NadeSound") or
                         Instance.new("Sound")
-                    _.Parent = Ba.PlayerGui
-                    _.SoundId = "rbxassetid://" .. u[math.random(1, #u)]
+                    _.Parent = localPlayer.PlayerGui
+                    _.SoundId = "rbxassetid://" .. aimInSounds[math.random(1, #aimInSounds)]
                     _:Play()
                     _.Name = "NadeSound"
-                    Ja:Create(Ka.LAW, TweenInfo.new(0.3), {C1 = Ka.curConfig.GLLeftPos}):Play()
+                    tweenService:Create(massVariableArray.LAW, TweenInfo.new(0.3), {C1 = massVariableArray.curConfig.GLLeftPos}):Play()
                     UpdateAmmo()
                 else
-                    Ka.CanShoot = Aa
+                    massVariableArray.CanShoot = Aa
                     local _ =
-                        Ba.PlayerGui:FindFirstChild("NadeSound") or
+                        localPlayer.PlayerGui:FindFirstChild("NadeSound") or
                         Instance.new("Sound")
-                    _.Parent = Ba.PlayerGui
-                    _.SoundId = "rbxassetid://" .. v[math.random(1, #v)]
+                    _.Parent = localPlayer.PlayerGui
+                    _.SoundId = "rbxassetid://" .. aimOutSounds[math.random(1, #aimOutSounds)]
                     _:Play()
                     _.Name = "NadeSound"
-                    Ja:Create(Ka.LAW, TweenInfo.new(0.3), {C1 = Ka.curConfig.LeftArmPos}):Play()
+                    tweenService:Create(massVariableArray.LAW, TweenInfo.new(0.3), {C1 = massVariableArray.curConfig.LeftArmPos}):Play()
                     UpdateAmmo()
                 end
             end
             if
-                a.KeyCode == Ia.globalConfig.HealKey and Ca and not va and not pa and not la and not wa and k and not ka and
+                a.KeyCode == carbonConfigs.globalConfig.HealKey and Ca and not va and not pa and not la and not wa and k and not ka and
                     not na
              then
                 wa = true
                 k = false
-                local a = ra:WaitForChild("Syringe"):clone()
-                a.Parent = Ka.LA
-                Ja:Create(
-                    Ka.LAW,
+                local a = carbonFx:WaitForChild("Syringe"):clone()
+                a.Parent = massVariableArray.LA
+                tweenService:Create(
+                    massVariableArray.LAW,
                     TweenInfo.new(0.4),
                     {
                         C1 = CFrame.new(
@@ -4838,11 +4836,11 @@ ua.InputBegan:connect(
                 for _, _ in pairs(a:GetChildren()) do
                     if _ and _:IsA("BasePart") then
                         if _.Name ~= "Glass" then
-                            Ia.utilitiesModule.Weld(_, a:WaitForChild("Glass"))
+                            carbonConfigs.utilitiesModule.Weld(_, a:WaitForChild("Glass"))
                         elseif _.Name == "Glass" then
-                            Ia.utilitiesModule.Weld(
+                            carbonConfigs.utilitiesModule.Weld(
                                 _,
-                                Ka.LA,
+                                massVariableArray.LA,
                                 nil,
                                 CFrame.new(
                                     0.5,
@@ -4867,8 +4865,8 @@ ua.InputBegan:connect(
                         _.Anchored = false
                     end
                 end
-                Ja:Create(
-                    Ka.LAW,
+                tweenService:Create(
+                    massVariableArray.LAW,
                     TweenInfo.new(0.4),
                     {
                         C1 = CFrame.new(
@@ -4888,12 +4886,12 @@ ua.InputBegan:connect(
                     }
                 ):Play()
                 task.wait(0.24)
-                local _ = ra:WaitForChild("SyringeIn"):Clone()
-                _.Parent = Ba.PlayerGui
+                local _ = carbonFx:WaitForChild("SyringeIn"):Clone()
+                _.Parent = localPlayer.PlayerGui
                 _:Play()
                 game.Debris:AddItem(_, _.TimeLength)
-                Ja:Create(
-                    Ka.LAW,
+                tweenService:Create(
+                    massVariableArray.LAW,
                     TweenInfo.new(0.28),
                     {
                         C1 = CFrame.new(
@@ -4912,39 +4910,39 @@ ua.InputBegan:connect(
                         )
                     }
                 ):Play()
-                Ka.painShade.Visible = true
-                Ja:Create(Ka.painShade, TweenInfo.new(0.1), {ImageTransparency = 0}):Play()
+                massVariableArray.painShade.Visible = true
+                tweenService:Create(massVariableArray.painShade, TweenInfo.new(0.1), {ImageTransparency = 0}):Play()
                 delay(
                     0.7,
                     function()
-                        Ja:Create(Ka.painShade, TweenInfo.new(3), {ImageTransparency = 1}):Play()
+                        tweenService:Create(massVariableArray.painShade, TweenInfo.new(3), {ImageTransparency = 1}):Play()
                     end
                 )
                 task.wait(0.35)
-                Ja:Create(
+                tweenService:Create(
                     a:WaitForChild("Push"):WaitForChild("Push"),
                     TweenInfo.new(0.3),
                     {C1 = CFrame.new(-0.65829581, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1)}
                 ):Play()
-                Ja:Create(
+                tweenService:Create(
                     a:WaitForChild("Liquid"):WaitForChild("Liquid"),
                     TweenInfo.new(0.3),
                     {C1 = CFrame.new(-0.64000386, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1)}
                 ):Play()
                 task.wait(0.5)
-                Ea.medEvent:FireServer(true, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, "Auth")
+                carbonEvents.medEvent:FireServer(true, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, "Auth")
                 a:WaitForChild("Liquid").Transparency = 1
                 IdleAnim()
                 a:Destroy()
                 wa = false
             end
             if
-                a.KeyCode == Ka.curConfig.LaserKey and not wa and Ca and Ka.curModel and
-                    Ka.curModel:FindFirstChild("LaserLight") and
-                    Ka.curConfig.LaserAttached
+                a.KeyCode == massVariableArray.curConfig.LaserKey and not wa and Ca and massVariableArray.curModel and
+                    massVariableArray.curModel:FindFirstChild("LaserLight") and
+                    massVariableArray.curConfig.LaserAttached
              then
                 O = not O
-                Ea.manipEvent:FireServer(
+                carbonEvents.manipEvent:FireServer(
                     O,
                     "Laser",
                     nil,
@@ -4959,56 +4957,56 @@ ua.InputBegan:connect(
                 Y = Instance.new("Part")
                 Y.Shape = "Ball"
                 Y.Size = Vector3.new(0.1, 0.1, 0.1)
-                Y.Parent = xa
+                Y.Parent = currentCamera
                 Y.CanCollide = false
-                Y.BrickColor = Ka.curConfig.LaserColor
+                Y.BrickColor = massVariableArray.curConfig.LaserColor
                 Y.Material = Enum.Material.Neon
                 if O then
                     E = Instance.new("Attachment")
-                    E.Parent = Ka.curModel.LaserLight
+                    E.Parent = massVariableArray.curModel.LaserLight
                     M = Instance.new("Attachment")
-                    M.Parent = Ka.curModel.LaserLight
+                    M.Parent = massVariableArray.curModel.LaserLight
                     aa = Instance.new("Beam")
-                    aa.Parent = Ka.curModel.LaserLight
+                    aa.Parent = massVariableArray.curModel.LaserLight
                     aa.Attachment0 = E
                     aa.Attachment1 = M
-                    aa.Color = ColorSequence.new(Ka.curConfig.LaserColor.Color)
-                    aa.LightEmission = Ka.curConfig.LaserEmission
-                    aa.LightInfluence = Ka.curConfig.LaserInfluence
-                    aa.Transparency = Ka.curConfig.LaserTransparency
+                    aa.Color = ColorSequence.new(massVariableArray.curConfig.LaserColor.Color)
+                    aa.LightEmission = massVariableArray.curConfig.LaserEmission
+                    aa.LightInfluence = massVariableArray.curConfig.LaserInfluence
+                    aa.Transparency = massVariableArray.curConfig.LaserTransparency
                     aa.FaceCamera = true
                     aa.Width0 = 0.01
                     aa.Width1 = 0.01
                     if
-                        Fa:WaitForChild("CarbonValues"):WaitForChild(
+                        playerCharacter:WaitForChild("CarbonValues"):WaitForChild(
                             "NVGActive"
                         ).Value == true and
-                            Ka.curModel:FindFirstChild("AimPart3") and
-                            Ka.CurAimPart ~= Ka.curModel.AimPart3
+                            massVariableArray.curModel:FindFirstChild("AimPart3") and
+                            massVariableArray.CurAimPart ~= massVariableArray.curModel.AimPart3
                      then
-                        Ka.CurAimPart = Ka.curModel.AimPart3
-                        Ka.curZoom = 60
+                        massVariableArray.CurAimPart = massVariableArray.curModel.AimPart3
+                        massVariableArray.curZoom = 60
                         if za then
-                            Ja:Create(
-                                xa,
-                                TweenInfo.new(Ka.curConfig.AimZoomSpeed, Enum.EasingStyle.Quad),
+                            tweenService:Create(
+                                currentCamera,
+                                TweenInfo.new(massVariableArray.curConfig.AimZoomSpeed, Enum.EasingStyle.Quad),
                                 {FieldOfView = 60}
                             ):Play()
                         end
                     end
                 else
-                    Ka.CurAimPart = Ka.lastAimPart
-                    if Ka.CurAimPart.Name == "AimPart" then
+                    massVariableArray.CurAimPart = massVariableArray.lastAimPart
+                    if massVariableArray.CurAimPart.Name == "AimPart" then
                         if not ia then
-                            Ka.curZoom = Ka.curConfig.AimZoom
+                            massVariableArray.curZoom = massVariableArray.curConfig.AimZoom
                         else
-                            Ka.curZoom = P
+                            massVariableArray.curZoom = P
                         end
-                    elseif Ka.CurAimPart.Name == "AimPart2" then
+                    elseif massVariableArray.CurAimPart.Name == "AimPart2" then
                         if not ia then
-                            Ka.curZoom = Ka.curConfig.AltAimZoom
+                            massVariableArray.curZoom = massVariableArray.curConfig.AltAimZoom
                         else
-                            Ka.curZoom = R
+                            massVariableArray.curZoom = R
                         end
                     end
                     E:Destroy()
@@ -5018,17 +5016,17 @@ ua.InputBegan:connect(
                 end
             end
             if
-                a.KeyCode == Ka.curConfig.LightKey and not wa and Ka.curConfig.LightAttached and
-                    Ka.curModel:FindFirstChild("FlashLight")
+                a.KeyCode == massVariableArray.curConfig.LightKey and not wa and massVariableArray.curConfig.LightAttached and
+                    massVariableArray.curModel:FindFirstChild("FlashLight")
              then
                 A = not A
-                for _, _ in pairs(Ka.curModel:WaitForChild("FlashLight"):GetChildren()) do
+                for _, _ in pairs(massVariableArray.curModel:WaitForChild("FlashLight"):GetChildren()) do
                     if _ and _.Name == "Enable" then
                         _.Enabled = A
                     end
                 end
-                if Ia.globalConfig.ReplicatedFlashlight then
-                    Ea.manipEvent:FireServer(
+                if carbonConfigs.globalConfig.ReplicatedFlashlight then
+                    carbonEvents.manipEvent:FireServer(
                         A,
                         "FlashLight",
                         nil,
@@ -5043,25 +5041,25 @@ ua.InputBegan:connect(
                 end
             end
             if
-                a.KeyCode == Ka.curConfig.BoltKey and not ea and Ca and not va and not pa and not ma and not ka and
+                a.KeyCode == massVariableArray.curConfig.BoltKey and not ea and Ca and not va and not pa and not ma and not ka and
                     not wa and
                     not na and
-                    Ka.FireMode ~= 6
+                    massVariableArray.FireMode ~= 6
              then
                 ea = true
                 la = not la
                 if la then
                     BoltBackAnim()
-                    if ta and Ka.Ammo > 0 then
+                    if ta and massVariableArray.Ammo > 0 then
                         CreateShell()
                     end
                     ea = false
                 else
-                    if Ka.Ammo > 0 then
-                        Ka.CanShoot = true
+                    if massVariableArray.Ammo > 0 then
+                        massVariableArray.CanShoot = true
                         Aa = true
                         if ta then
-                            Ka.Ammo = Ka.Ammo - 1
+                            massVariableArray.Ammo = massVariableArray.Ammo - 1
                         end
                         ta = true
                     end
@@ -5072,7 +5070,7 @@ ua.InputBegan:connect(
                 UpdateAmmo()
             end
             if
-                a.KeyCode == Ka.curConfig.PatrolKey and not wa and Ka.curConfig and not ka and not na and not pa and
+                a.KeyCode == massVariableArray.curConfig.PatrolKey and not wa and massVariableArray.curConfig and not ka and not na and not pa and
                     not wa
              then
                 oa = not oa
@@ -5084,11 +5082,11 @@ ua.InputBegan:connect(
                         Sprint(false)
                     end
                     if da then
-                        Ka.readyMode = 0
+                        massVariableArray.readyMode = 0
                         ChangeReady()
                     end
-                    Ja:Create(
-                        Ka.AnimBaseW,
+                    tweenService:Create(
+                        massVariableArray.AnimBaseW,
                         TweenInfo.new(0.5, Enum.EasingStyle.Quad),
                         {
                             C1 = CFrame.new(
@@ -5107,34 +5105,34 @@ ua.InputBegan:connect(
                             )
                         }
                     ):Play()
-                    Ea.updateCharEvent:FireServer("Patrol", true, "Auth")
+                    carbonEvents.updateCharEvent:FireServer("Patrol", true, "Auth")
                     W = true
                     task.wait(0.5)
                 else
-                    Ea.updateCharEvent:FireServer("Patrol", false, "Auth")
+                    carbonEvents.updateCharEvent:FireServer("Patrol", false, "Auth")
                     W = false
                 end
             end
             if
-                a.KeyCode == Ka.curConfig.CycleSightKey and not wa and Ca and
-                    not (Fa:WaitForChild("CarbonValues"):WaitForChild(
+                a.KeyCode == massVariableArray.curConfig.CycleSightKey and not wa and Ca and
+                    not (playerCharacter:WaitForChild("CarbonValues"):WaitForChild(
                         "NVGActive"
                     ).Value == true and O)
              then
-                if Ka.curModel:FindFirstChild("AimPart2") then
+                if massVariableArray.curModel:FindFirstChild("AimPart2") then
                     Q = not Q
                     if Q then
-                        Ka.CurAimPart = Ka.curModel:FindFirstChild("AimPart2")
-                        Ka.lastAimPart = Ka.CurAimPart
-                        Ka.AimPart2 = Ka.curModel:FindFirstChild("AimPart2")
+                        massVariableArray.CurAimPart = massVariableArray.curModel:FindFirstChild("AimPart2")
+                        massVariableArray.lastAimPart = massVariableArray.CurAimPart
+                        massVariableArray.AimPart2 = massVariableArray.curModel:FindFirstChild("AimPart2")
                         if not ia then
-                            Ka.curZoom = Ka.curConfig.AltAimZoom
+                            massVariableArray.curZoom = massVariableArray.curConfig.AltAimZoom
                         else
-                            Ka.curZoom = R
+                            massVariableArray.curZoom = R
                         end
-                        if Ka.curModel:FindFirstChild("Magni") then
-                            Ja:Create(
-                                Ka.LAW,
+                        if massVariableArray.curModel:FindFirstChild("Magni") then
+                            tweenService:Create(
+                                massVariableArray.LAW,
                                 TweenInfo.new(0.3),
                                 {
                                     C1 = CFrame.new(
@@ -5154,8 +5152,8 @@ ua.InputBegan:connect(
                                 }
                             ):Play()
                             task.wait(0.3)
-                            Ja:Create(
-                                Ka.curModel.Magni.Magni,
+                            tweenService:Create(
+                                massVariableArray.curModel.Magni.Magni,
                                 TweenInfo.new(0.3),
                                 {
                                     C1 = CFrame.new(
@@ -5174,8 +5172,8 @@ ua.InputBegan:connect(
                                     )
                                 }
                             ):Play()
-                            Ja:Create(
-                                Ka.LAW,
+                            tweenService:Create(
+                                massVariableArray.LAW,
                                 TweenInfo.new(0.3),
                                 {
                                     C1 = CFrame.new(
@@ -5205,19 +5203,19 @@ ua.InputBegan:connect(
                             end
                         end
                     else
-                        Ka.CurAimPart = Ka.AimPart
-                        Ka.lastAimPart = Ka.CurAimPart
+                        massVariableArray.CurAimPart = massVariableArray.AimPart
+                        massVariableArray.lastAimPart = massVariableArray.CurAimPart
                         if not ia then
-                            Ka.curZoom = Ka.curConfig.AimZoom
+                            massVariableArray.curZoom = massVariableArray.curConfig.AimZoom
                         else
-                            Ka.curZoom = P
+                            massVariableArray.curZoom = P
                         end
                         if za then
                             Aim(true, false)
                         end
-                        if Ka.curModel:FindFirstChild("Magni") then
-                            Ja:Create(
-                                Ka.LAW,
+                        if massVariableArray.curModel:FindFirstChild("Magni") then
+                            tweenService:Create(
+                                massVariableArray.LAW,
                                 TweenInfo.new(0.3),
                                 {
                                     C1 = CFrame.new(
@@ -5237,9 +5235,9 @@ ua.InputBegan:connect(
                                 }
                             ):Play()
                             task.wait(0.3)
-                            Ja:Create(Ka.curModel.Magni.Magni, TweenInfo.new(0.3), {C1 = CFrame.new()}):Play()
-                            Ja:Create(
-                                Ka.LAW,
+                            tweenService:Create(massVariableArray.curModel.Magni.Magni, TweenInfo.new(0.3), {C1 = CFrame.new()}):Play()
+                            tweenService:Create(
+                                massVariableArray.LAW,
                                 TweenInfo.new(0.3),
                                 {
                                     C1 = CFrame.new(
@@ -5268,58 +5266,58 @@ ua.InputBegan:connect(
                     end
                 end
             end
-            if a.KeyCode == Enum.KeyCode.Q and Ka.StanceIndex ~= 2 and not Ka.Seated then
-                if Ia.globalConfig.ToggleableLeaning then
-                    if Ha.dirPeek ~= 1 then
-                        Ha.dirPeek = 1
+            if a.KeyCode == Enum.KeyCode.Q and massVariableArray.StanceIndex ~= 2 and not massVariableArray.Seated then
+                if carbonConfigs.globalConfig.ToggleableLeaning then
+                    if recoilData.dirPeek ~= 1 then
+                        recoilData.dirPeek = 1
                     else
-                        Ha.dirPeek = 0
+                        recoilData.dirPeek = 0
                     end
                 else
-                    Ha.dirPeek = 1
+                    recoilData.dirPeek = 1
                 end
                 Lean()
             end
-            if a.KeyCode == Enum.KeyCode.E and Ka.StanceIndex ~= 2 and not Ka.Seated then
-                if Ia.globalConfig.ToggleableLeaning then
-                    if Ha.dirPeek ~= -1 then
-                        Ha.dirPeek = -1
+            if a.KeyCode == Enum.KeyCode.E and massVariableArray.StanceIndex ~= 2 and not massVariableArray.Seated then
+                if carbonConfigs.globalConfig.ToggleableLeaning then
+                    if recoilData.dirPeek ~= -1 then
+                        recoilData.dirPeek = -1
                     else
-                        Ha.dirPeek = 0
+                        recoilData.dirPeek = 0
                     end
                 else
-                    Ha.dirPeek = -1
+                    recoilData.dirPeek = -1
                 end
                 Lean()
             end
-            if a.KeyCode == Ka.curConfig.ReloadKey and not wa and Ca and not ma and not Shooting and not ya and not la then
-                local _ = xa.FieldOfView
-                if xa.FieldOfView ~= 70 then
-                    Ja:Create(xa, TweenInfo.new(0.5, Enum.EasingStyle.Quad), {FieldOfView = 70}):Play()
+            if a.KeyCode == massVariableArray.curConfig.ReloadKey and not wa and Ca and not ma and not Shooting and not ya and not la then
+                local _ = currentCamera.FieldOfView
+                if currentCamera.FieldOfView ~= 70 then
+                    tweenService:Create(currentCamera, TweenInfo.new(0.5, Enum.EasingStyle.Quad), {FieldOfView = 70}):Play()
                 end
-                if not ja and Ka.Ammo < Ka.curConfig.Ammo then
-                    Aa = Ka.CanShoot
-                    Ka.CanShoot = false
-                    if Ka.Ammo > 0 then
+                if not ja and massVariableArray.Ammo < massVariableArray.curConfig.Ammo then
+                    Aa = massVariableArray.CanShoot
+                    massVariableArray.CanShoot = false
+                    if massVariableArray.Ammo > 0 then
                         ta = true
                         Aa = true
                     else
                         ta = false
                         Aa = false
                     end
-                    if Ka.StoredAmmo > 0 and Ka.Ammo < Ka.curConfig.Ammo then
+                    if massVariableArray.StoredAmmo > 0 and massVariableArray.Ammo < massVariableArray.curConfig.Ammo then
                         Shooting = false
                         ma = true
                         ReloadAnim()
-                        if Ka.curConfig.CanAutoBolt then
-                            if Ka.Ammo <= 0 then
-                                if not Ka.curConfig.CanSlideLock then
+                        if massVariableArray.curConfig.CanAutoBolt then
+                            if massVariableArray.Ammo <= 0 then
+                                if not massVariableArray.curConfig.CanSlideLock then
                                     BoltBackAnim()
                                     BoltForwardAnim()
                                 end
-                            elseif Ka.Ammo > 0 then
-                                if not Ka.curConfig.CanSlideLock then
-                                    if Ka.BoltW.C1 ~= (CFrame.new() or CFrame.new(0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1)) then
+                            elseif massVariableArray.Ammo > 0 then
+                                if not massVariableArray.curConfig.CanSlideLock then
+                                    if massVariableArray.BoltW.C1 ~= (CFrame.new() or CFrame.new(0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1)) then
                                         BoltBackAnim()
                                         BoltForwardAnim()
                                     end
@@ -5327,60 +5325,60 @@ ua.InputBegan:connect(
                             end
                         end
                         IdleAnim()
-                        if Ka.Ammo <= 0 then
-                            if (Ka.StoredAmmo - (Ka.curConfig.Ammo - Ka.Ammo)) < 0 then
-                                Ka.Ammo = Ka.Ammo + Ka.StoredAmmo
-                                Ka.StoredAmmo = 0
+                        if massVariableArray.Ammo <= 0 then
+                            if (massVariableArray.StoredAmmo - (massVariableArray.curConfig.Ammo - massVariableArray.Ammo)) < 0 then
+                                massVariableArray.Ammo = massVariableArray.Ammo + massVariableArray.StoredAmmo
+                                massVariableArray.StoredAmmo = 0
                             else
-                                Ka.StoredAmmo = Ka.StoredAmmo - (Ka.curConfig.Ammo - Ka.Ammo)
-                                Ka.Ammo = Ka.curConfig.Ammo
+                                massVariableArray.StoredAmmo = massVariableArray.StoredAmmo - (massVariableArray.curConfig.Ammo - massVariableArray.Ammo)
+                                massVariableArray.Ammo = massVariableArray.curConfig.Ammo
                             end
-                        elseif Ka.Ammo > 0 then
-                            if (Ka.StoredAmmo - (Ka.curConfig.Ammo - Ka.Ammo)) < 0 then
-                                Ka.Ammo = Ka.Ammo + Ka.StoredAmmo + 1
-                                Ka.StoredAmmo = 0
+                        elseif massVariableArray.Ammo > 0 then
+                            if (massVariableArray.StoredAmmo - (massVariableArray.curConfig.Ammo - massVariableArray.Ammo)) < 0 then
+                                massVariableArray.Ammo = massVariableArray.Ammo + massVariableArray.StoredAmmo + 1
+                                massVariableArray.StoredAmmo = 0
                             else
-                                Ka.StoredAmmo = Ka.StoredAmmo - (Ka.curConfig.Ammo - Ka.Ammo)
-                                Ka.Ammo = Ka.curConfig.Ammo + 1
+                                massVariableArray.StoredAmmo = massVariableArray.StoredAmmo - (massVariableArray.curConfig.Ammo - massVariableArray.Ammo)
+                                massVariableArray.Ammo = massVariableArray.curConfig.Ammo + 1
                             end
                         end
                         ma = false
-                        if Ka.curConfig.CanAutoBolt or ta or Ka.curConfig.CanSlideLock or Ka.FireMode == 6 then
-                            Ka.CanShoot = true
+                        if massVariableArray.curConfig.CanAutoBolt or ta or massVariableArray.curConfig.CanSlideLock or massVariableArray.FireMode == 6 then
+                            massVariableArray.CanShoot = true
                             Aa = true
                         end
                     end
                 elseif ja then
-                    if Ka.ExplosiveAmmo > 0 then
+                    if massVariableArray.ExplosiveAmmo > 0 then
                         Shooting = false
                         ma = true
                         nadeReload()
                         if not ja then
                             IdleAnim()
                         else
-                            Ja:Create(
-                                Ka.RAW,
+                            tweenService:Create(
+                                massVariableArray.RAW,
                                 TweenInfo.new(0.25, Enum.EasingStyle.Quad),
-                                {C1 = Ka.curConfig.RightArmPos}
+                                {C1 = massVariableArray.curConfig.RightArmPos}
                             ):Play()
-                            Ja:Create(Ka.LAW, TweenInfo.new(0.25, Enum.EasingStyle.Quad), {C1 = Ka.curConfig.GLLeftPos}):Play(
+                            tweenService:Create(massVariableArray.LAW, TweenInfo.new(0.25, Enum.EasingStyle.Quad), {C1 = massVariableArray.curConfig.GLLeftPos}):Play(
 
                             )
                             task.wait(0.25)
                         end
                         ma = false
-                        Ka.CanShoot = true
+                        massVariableArray.CanShoot = true
                         G = false
                     end
                 end
                 UpdateAmmo()
                 if _ ~= 70 and za then
-                    Ja:Create(xa, TweenInfo.new(0.5, Enum.EasingStyle.Quad), {FieldOfView = _}):Play()
+                    tweenService:Create(currentCamera, TweenInfo.new(0.5, Enum.EasingStyle.Quad), {FieldOfView = _}):Play()
                 end
             end
             if
-                Ca and a.KeyCode == Ka.curConfig.FireSelectKey and not wa and not T and not fa and
-                    Ka.curConfig.CanSelectFire and
+                Ca and a.KeyCode == massVariableArray.curConfig.FireSelectKey and not wa and not T and not fa and
+                    massVariableArray.curConfig.CanSelectFire and
                     not ja and
                     not la and
                     not pa and
@@ -5402,40 +5400,40 @@ ua.InputBegan:connect(
             W = false
         end
         if not _ then
-            if a.KeyCode == Ia.globalConfig.NVGKey and Ia.globalConfig.NVGEnabled then
+            if a.KeyCode == carbonConfigs.globalConfig.NVGKey and carbonConfigs.globalConfig.NVGEnabled then
                 z = not z
                 HandleToggle()
             end
         end
     end
 )
-ua.InputBegan:connect(
+userInputService.InputBegan:connect(
     function(a, _)
         if not _ then
-            if Ca or Ia.globalConfig.UniversalStances and not oa and not Ka.Seated then
-                if a.KeyCode == Enum.KeyCode.C and not Ka.Seated then
+            if Ca or carbonConfigs.globalConfig.UniversalStances and not oa and not massVariableArray.Seated then
+                if a.KeyCode == Enum.KeyCode.C and not massVariableArray.Seated then
                     ya = false
-                    if Ka.StanceIndex == 0 then
-                        Ka.StanceIndex = 1
+                    if massVariableArray.StanceIndex == 0 then
+                        massVariableArray.StanceIndex = 1
                         changeStance()
-                    elseif Ka.StanceIndex == 1 then
-                        Ka.StanceIndex = 2
+                    elseif massVariableArray.StanceIndex == 1 then
+                        massVariableArray.StanceIndex = 2
                         changeStance()
-                    elseif Ka.StanceIndex == 2 then
-                        Ka.StanceIndex = 1
+                    elseif massVariableArray.StanceIndex == 2 then
+                        massVariableArray.StanceIndex = 1
                         changeStance()
                     end
                 end
-                if a.KeyCode == Enum.KeyCode.X and not Ka.Seated then
+                if a.KeyCode == Enum.KeyCode.X and not massVariableArray.Seated then
                     ya = false
-                    if Ka.StanceIndex == 0 then
-                        Ka.StanceIndex = 1
+                    if massVariableArray.StanceIndex == 0 then
+                        massVariableArray.StanceIndex = 1
                         changeStance()
-                    elseif Ka.StanceIndex == 1 then
-                        Ka.StanceIndex = 0
+                    elseif massVariableArray.StanceIndex == 1 then
+                        massVariableArray.StanceIndex = 0
                         changeStance()
-                    elseif Ka.StanceIndex == 2 then
-                        Ka.StanceIndex = 1
+                    elseif massVariableArray.StanceIndex == 2 then
+                        massVariableArray.StanceIndex = 1
                         changeStance()
                     end
                 end
@@ -5443,28 +5441,28 @@ ua.InputBegan:connect(
         end
     end
 )
-ua.InputBegan:connect(
+userInputService.InputBegan:connect(
     function(a, _)
         if not _ then
-            if Ca or Ia.globalConfig.UniversalStances and not oa and not Ka.Seated then
-                if a.KeyCode == Enum.KeyCode.ButtonB and not Ka.Seated then
+            if Ca or carbonConfigs.globalConfig.UniversalStances and not oa and not massVariableArray.Seated then
+                if a.KeyCode == Enum.KeyCode.ButtonB and not massVariableArray.Seated then
                     ya = false
-                    if Ka.StanceIndex == 0 then
-                        Ka.StanceIndex = 1
+                    if massVariableArray.StanceIndex == 0 then
+                        massVariableArray.StanceIndex = 1
                         changeStance()
-                    elseif Ka.StanceIndex == 1 then
-                        Ka.StanceIndex = 2
+                    elseif massVariableArray.StanceIndex == 1 then
+                        massVariableArray.StanceIndex = 2
                         changeStance()
-                    elseif Ka.StanceIndex == 2 then
-                        Ka.StanceIndex = 1
+                    elseif massVariableArray.StanceIndex == 2 then
+                        massVariableArray.StanceIndex = 1
                         changeStance()
                     end
                     delay(
                         0.3,
                         function()
-                            if ua:IsGamepadButtonDown(Enum.UserInputType.Gamepad1, Enum.KeyCode.ButtonB) then
+                            if userInputService:IsGamepadButtonDown(Enum.UserInputType.Gamepad1, Enum.KeyCode.ButtonB) then
                                 ya = false
-                                Ka.StanceIndex = 0
+                                massVariableArray.StanceIndex = 0
                                 changeStance()
                             end
                         end
@@ -5474,54 +5472,54 @@ ua.InputBegan:connect(
         end
     end
 )
-ua.InputEnded:connect(
+userInputService.InputEnded:connect(
     function(a, _)
-        if not _ and Ca and Ka.curConfig then
-            if a.UserInputType == Ka.curConfig.ShootKeybind then
-                Ka.MouseHeld = false
+        if not _ and Ca and massVariableArray.curConfig then
+            if a.UserInputType == massVariableArray.curConfig.ShootKeybind then
+                massVariableArray.MouseHeld = false
             end
-            if a.UserInputType == Ka.curConfig.ADSKeybind and not ya then
+            if a.UserInputType == massVariableArray.curConfig.ADSKeybind and not ya then
                 Aim(false, true)
             end
-            if a.KeyCode == Ka.curConfig.AltADSKey and not ya then
+            if a.KeyCode == massVariableArray.curConfig.AltADSKey and not ya then
                 Aim(false, true)
             end
-            if a.KeyCode == Ka.curConfig.SprintKey and Ca and not va and not qa and not za and not oa and not da then
+            if a.KeyCode == massVariableArray.curConfig.SprintKey and Ca and not va and not qa and not za and not oa and not da then
                 Sprint(false)
             end
             if
-                a.KeyCode == Enum.KeyCode.Q and Ka.StanceIndex ~= 2 and not Ka.Seated and
-                    not Ia.globalConfig.ToggleableLeaning
+                a.KeyCode == Enum.KeyCode.Q and massVariableArray.StanceIndex ~= 2 and not massVariableArray.Seated and
+                    not carbonConfigs.globalConfig.ToggleableLeaning
              then
-                Ha.dirPeek = 0
+                recoilData.dirPeek = 0
                 Lean()
             end
             if
-                a.KeyCode == Enum.KeyCode.E and Ka.StanceIndex ~= 2 and not Ka.Seated and
-                    not Ia.globalConfig.ToggleableLeaning
+                a.KeyCode == Enum.KeyCode.E and massVariableArray.StanceIndex ~= 2 and not massVariableArray.Seated and
+                    not carbonConfigs.globalConfig.ToggleableLeaning
              then
-                Ha.dirPeek = 0
+                recoilData.dirPeek = 0
                 Lean()
             end
             if a.KeyCode == Enum.KeyCode.LeftControl and za then
-                Ka.aimWalkSpeed = 9
+                massVariableArray.aimWalkSpeed = 9
             end
             if a.KeyCode == Enum.KeyCode.A then
-                if ua:IsKeyDown(Enum.KeyCode.A) then
-                    S = CFrame.Angles(0, 0, math.rad(-10))
-                elseif ua:IsKeyDown(Enum.KeyCode.D) then
-                    S = CFrame.Angles(0, 0, math.rad(10))
+                if userInputService:IsKeyDown(Enum.KeyCode.A) then
+                    rotation = CFrame.Angles(0, 0, math.rad(-10))
+                elseif userInputService:IsKeyDown(Enum.KeyCode.D) then
+                    rotation = CFrame.Angles(0, 0, math.rad(10))
                 else
-                    S = CFrame.Angles(0, 0, 0)
+                    rotation = CFrame.Angles(0, 0, 0)
                 end
             end
             if a.KeyCode == Enum.KeyCode.D then
-                if ua:IsKeyDown(Enum.KeyCode.A) then
-                    S = CFrame.Angles(0, 0, math.rad(-10))
-                elseif ua:IsKeyDown(Enum.KeyCode.D) then
-                    S = CFrame.Angles(0, 0, math.rad(10))
+                if userInputService:IsKeyDown(Enum.KeyCode.A) then
+                    rotation = CFrame.Angles(0, 0, math.rad(-10))
+                elseif userInputService:IsKeyDown(Enum.KeyCode.D) then
+                    rotation = CFrame.Angles(0, 0, math.rad(10))
                 else
-                    S = CFrame.Angles(0, 0, 0)
+                    rotation = CFrame.Angles(0, 0, 0)
                 end
             end
             if a.KeyCode == Enum.KeyCode.W and ya then
@@ -5530,50 +5528,50 @@ ua.InputEnded:connect(
         end
     end
 )
-ua.InputChanged:connect(
+userInputService.InputChanged:connect(
     function(a, _)
         if not _ and Ca then
             if a.UserInputType == Enum.UserInputType.MouseWheel then
                 if not ka and not na and not wa and not x then
                     if za then
                         if a.Position.Z == 1 then
-                            Ka.aimSens = Ka.aimSens + 0.1
-                            if Ka.aimSens > 1 then
-                                Ka.aimSens = 1
+                            massVariableArray.aimSens = massVariableArray.aimSens + 0.1
+                            if massVariableArray.aimSens > 1 then
+                                massVariableArray.aimSens = 1
                             end
-                            Ka.aimSens = Ka.aimSens
+                            massVariableArray.aimSens = massVariableArray.aimSens
                         elseif a.Position.Z == -1 then
-                            Ka.aimSens = Ka.aimSens - 0.1
-                            if Ka.aimSens < 0.1 then
-                                Ka.aimSens = 0.1
+                            massVariableArray.aimSens = massVariableArray.aimSens - 0.1
+                            if massVariableArray.aimSens < 0.1 then
+                                massVariableArray.aimSens = 0.1
                             end
-                            Ka.aimSens = Ka.aimSens
+                            massVariableArray.aimSens = massVariableArray.aimSens
                         end
                     else
                         if a.Position.Z == 1 then
-                            Ka.baseSens = Ka.baseSens + 0.1
-                            if Ka.baseSens > 1 then
-                                Ka.baseSens = 1
+                            massVariableArray.baseSens = massVariableArray.baseSens + 0.1
+                            if massVariableArray.baseSens > 1 then
+                                massVariableArray.baseSens = 1
                             end
-                            e.Value = Ka.baseSens
+                            e.Value = massVariableArray.baseSens
                         elseif a.Position.Z == -1 then
-                            Ka.baseSens = Ka.baseSens - 0.1
-                            if Ka.baseSens < 0.1 then
-                                Ka.baseSens = 0.1
+                            massVariableArray.baseSens = massVariableArray.baseSens - 0.1
+                            if massVariableArray.baseSens < 0.1 then
+                                massVariableArray.baseSens = 0.1
                             end
-                            e.Value = Ka.baseSens
+                            e.Value = massVariableArray.baseSens
                         end
                     end
                 end
             end
         end
         if a.UserInputType == Enum.UserInputType.MouseMovement then
-            Ga.desiredXOffset = math.min(math.max(a.Delta.x, -Ga.swayInputLimit), Ga.swayInputLimit)
-            Ga.desiredYOffset = math.min(math.max(a.Delta.y, -Ga.swayInputLimit), Ga.swayInputLimit)
+            mathVariables.desiredXOffset = math.min(math.max(a.Delta.x, -mathVariables.swayInputLimit), mathVariables.swayInputLimit)
+            mathVariables.desiredYOffset = math.min(math.max(a.Delta.y, -mathVariables.swayInputLimit), mathVariables.swayInputLimit)
         end
     end
 )
-ua.InputBegan:connect(
+userInputService.InputBegan:connect(
     function(a, _)
         if not _ and Ca then
             if a.KeyCode == Enum.KeyCode.ButtonL2 and Ca and not va and not wa then
@@ -5583,44 +5581,44 @@ ua.InputBegan:connect(
                 Sprint(true)
             end
             if a.KeyCode == Enum.KeyCode.ButtonR2 and Ca and not va and not wa then
-                Ka.MouseHeld = true
-                if Ka.Ammo > 0 then
+                massVariableArray.MouseHeld = true
+                if massVariableArray.Ammo > 0 then
                     Shoot()
                 end
-                if Ka.Ammo <= 0 or not Ka.CanShoot then
-                    Ka.Grip:WaitForChild("Click"):Play()
+                if massVariableArray.Ammo <= 0 or not massVariableArray.CanShoot then
+                    massVariableArray.Grip:WaitForChild("Click"):Play()
                 end
             end
             if
                 a.KeyCode == Enum.KeyCode.ButtonX and Ca and not va and not ma and not Shooting and not ya and
-                    Ka.Ammo < Ka.curConfig.Ammo
+                    massVariableArray.Ammo < massVariableArray.curConfig.Ammo
              then
-                local _ = xa.FieldOfView
-                if xa.FieldOfView ~= 70 then
-                    Ja:Create(xa, TweenInfo.new(0.5, Enum.EasingStyle.Quad), {FieldOfView = 70}):Play()
+                local _ = currentCamera.FieldOfView
+                if currentCamera.FieldOfView ~= 70 then
+                    tweenService:Create(currentCamera, TweenInfo.new(0.5, Enum.EasingStyle.Quad), {FieldOfView = 70}):Play()
                 end
-                Aa = Ka.CanShoot
-                Ka.CanShoot = false
-                if Ka.Ammo > 0 then
+                Aa = massVariableArray.CanShoot
+                massVariableArray.CanShoot = false
+                if massVariableArray.Ammo > 0 then
                     ta = true
                     Aa = true
                 else
                     ta = false
                     Aa = false
                 end
-                if Ka.StoredAmmo > 0 and Ka.Ammo < Ka.curConfig.Ammo then
+                if massVariableArray.StoredAmmo > 0 and massVariableArray.Ammo < massVariableArray.curConfig.Ammo then
                     Shooting = false
                     ma = true
                     ReloadAnim()
-                    if Ka.curConfig.CanAutoBolt then
-                        if Ka.Ammo <= 0 then
-                            if not Ka.curConfig.CanSlideLock then
+                    if massVariableArray.curConfig.CanAutoBolt then
+                        if massVariableArray.Ammo <= 0 then
+                            if not massVariableArray.curConfig.CanSlideLock then
                                 BoltBackAnim()
                                 BoltForwardAnim()
                             end
-                        elseif Ka.Ammo > 0 then
-                            if not Ka.curConfig.CanSlideLock then
-                                if Ka.BoltW.C1 ~= (CFrame.new() or CFrame.new(0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1)) then
+                        elseif massVariableArray.Ammo > 0 then
+                            if not massVariableArray.curConfig.CanSlideLock then
+                                if massVariableArray.BoltW.C1 ~= (CFrame.new() or CFrame.new(0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1)) then
                                     BoltBackAnim()
                                     BoltForwardAnim()
                                 end
@@ -5628,32 +5626,32 @@ ua.InputBegan:connect(
                         end
                     end
                     IdleAnim()
-                    if Ka.Ammo <= 0 then
-                        if (Ka.StoredAmmo - (Ka.curConfig.Ammo - Ka.Ammo)) < 0 then
-                            Ka.Ammo = Ka.Ammo + Ka.StoredAmmo
-                            Ka.StoredAmmo = 0
+                    if massVariableArray.Ammo <= 0 then
+                        if (massVariableArray.StoredAmmo - (massVariableArray.curConfig.Ammo - massVariableArray.Ammo)) < 0 then
+                            massVariableArray.Ammo = massVariableArray.Ammo + massVariableArray.StoredAmmo
+                            massVariableArray.StoredAmmo = 0
                         else
-                            Ka.StoredAmmo = Ka.StoredAmmo - (Ka.curConfig.Ammo - Ka.Ammo)
-                            Ka.Ammo = Ka.curConfig.Ammo
+                            massVariableArray.StoredAmmo = massVariableArray.StoredAmmo - (massVariableArray.curConfig.Ammo - massVariableArray.Ammo)
+                            massVariableArray.Ammo = massVariableArray.curConfig.Ammo
                         end
-                    elseif Ka.Ammo > 0 then
-                        if (Ka.StoredAmmo - (Ka.curConfig.Ammo - Ka.Ammo)) < 0 then
-                            Ka.Ammo = Ka.Ammo + Ka.StoredAmmo + 1
-                            Ka.StoredAmmo = 0
+                    elseif massVariableArray.Ammo > 0 then
+                        if (massVariableArray.StoredAmmo - (massVariableArray.curConfig.Ammo - massVariableArray.Ammo)) < 0 then
+                            massVariableArray.Ammo = massVariableArray.Ammo + massVariableArray.StoredAmmo + 1
+                            massVariableArray.StoredAmmo = 0
                         else
-                            Ka.StoredAmmo = Ka.StoredAmmo - (Ka.curConfig.Ammo - Ka.Ammo)
-                            Ka.Ammo = Ka.curConfig.Ammo + 1
+                            massVariableArray.StoredAmmo = massVariableArray.StoredAmmo - (massVariableArray.curConfig.Ammo - massVariableArray.Ammo)
+                            massVariableArray.Ammo = massVariableArray.curConfig.Ammo + 1
                         end
                     end
                     ma = false
-                    if Ka.curConfig.CanAutoBolt or ta then
-                        Ka.CanShoot = true
+                    if massVariableArray.curConfig.CanAutoBolt or ta then
+                        massVariableArray.CanShoot = true
                         Aa = true
                     end
                 end
                 UpdateAmmo()
                 if _ ~= 70 and za then
-                    Ja:Create(xa, TweenInfo.new(0.5, Enum.EasingStyle.Quad), {FieldOfView = _}):Play()
+                    tweenService:Create(currentCamera, TweenInfo.new(0.5, Enum.EasingStyle.Quad), {FieldOfView = _}):Play()
                 end
             end
             if a.KeyCode == Enum.KeyCode.ButtonY and Ca and not va and not ea then
@@ -5661,16 +5659,16 @@ ua.InputBegan:connect(
                 la = not la
                 if la then
                     BoltBackAnim()
-                    if ta and Ka.Ammo > 0 then
+                    if ta and massVariableArray.Ammo > 0 then
                         CreateShell()
                     end
                     ea = false
                 else
-                    if Ka.Ammo > 0 then
-                        Ka.CanShoot = true
+                    if massVariableArray.Ammo > 0 then
+                        massVariableArray.CanShoot = true
                         Aa = true
                         if ta then
-                            Ka.Ammo = Ka.Ammo - 1
+                            massVariableArray.Ammo = massVariableArray.Ammo - 1
                         end
                         ta = true
                     end
@@ -5682,138 +5680,138 @@ ua.InputBegan:connect(
             end
             if
                 a.KeyCode == Enum.KeyCode.DPadDown and Ca and not va and not T and not Shooting and
-                    Ka.curConfig.CanSelectFire
+                    massVariableArray.curConfig.CanSelectFire
              then
                 T = true
-                if Ka.FireMode == 1 then
+                if massVariableArray.FireMode == 1 then
                     if Shooting then
                         Shooting = false
                     end
-                    if Ka.curConfig.AutoEnabled then
-                        Ka.FireMode = 2
-                        Ka.CanShoot = Aa
-                    elseif not Ka.curConfig.AutoEnabled and Ka.curConfig.BurstEnabled then
-                        Ka.FireMode = 3
-                        Ka.CanShoot = Aa
-                    elseif not Ka.curConfig.AutoEnabled and not Ka.curConfig.BurstEnabled and Ka.curConfig.BoltAction then
-                        Ka.FireMode = 4
-                        Ka.FireMode = Aa
+                    if massVariableArray.curConfig.AutoEnabled then
+                        massVariableArray.FireMode = 2
+                        massVariableArray.CanShoot = Aa
+                    elseif not massVariableArray.curConfig.AutoEnabled and massVariableArray.curConfig.BurstEnabled then
+                        massVariableArray.FireMode = 3
+                        massVariableArray.CanShoot = Aa
+                    elseif not massVariableArray.curConfig.AutoEnabled and not massVariableArray.curConfig.BurstEnabled and massVariableArray.curConfig.BoltAction then
+                        massVariableArray.FireMode = 4
+                        massVariableArray.FireMode = Aa
                     elseif
-                        not Ka.curConfig.AutoEnabled and not Ka.curConfig.BurstEnabled and not Ka.curConfig.BoltAction and
-                            Ka.curConfig.ExplosiveEnabled
+                        not massVariableArray.curConfig.AutoEnabled and not massVariableArray.curConfig.BurstEnabled and not massVariableArray.curConfig.BoltAction and
+                            massVariableArray.curConfig.ExplosiveEnabled
                      then
-                        Ka.FireMode = 6
-                        Aa = Ka.CanShoot
-                        Ka.CanShoot = H
+                        massVariableArray.FireMode = 6
+                        Aa = massVariableArray.CanShoot
+                        massVariableArray.CanShoot = H
                     elseif
-                        not Ka.curConfig.AutoEnabled and not Ka.curConfig.BurstEnabled and not Ka.curConfig.BoltAction and
-                            not Ka.curConfig.ExplosiveEnabled
+                        not massVariableArray.curConfig.AutoEnabled and not massVariableArray.curConfig.BurstEnabled and not massVariableArray.curConfig.BoltAction and
+                            not massVariableArray.curConfig.ExplosiveEnabled
                      then
-                        Ka.FireMode = 1
-                        Ka.CanShoot = Aa
+                        massVariableArray.FireMode = 1
+                        massVariableArray.CanShoot = Aa
                     end
-                elseif Ka.FireMode == 2 then
+                elseif massVariableArray.FireMode == 2 then
                     if Shooting then
                         Shooting = false
                     end
-                    if Ka.curConfig.BurstEnabled then
-                        Ka.FireMode = 3
-                        Ka.CanShoot = Aa
-                    elseif not Ka.curConfig.BurstEnabled and Ka.curConfig.BoltAction then
-                        Ka.FireMode = 4
-                        Ka.CanShoot = Aa
+                    if massVariableArray.curConfig.BurstEnabled then
+                        massVariableArray.FireMode = 3
+                        massVariableArray.CanShoot = Aa
+                    elseif not massVariableArray.curConfig.BurstEnabled and massVariableArray.curConfig.BoltAction then
+                        massVariableArray.FireMode = 4
+                        massVariableArray.CanShoot = Aa
                     elseif
-                        not Ka.curConfig.BurstEnabled and not Ka.curConfig.BoltAction and Ka.curConfig.ExplosiveEnabled
+                        not massVariableArray.curConfig.BurstEnabled and not massVariableArray.curConfig.BoltAction and massVariableArray.curConfig.ExplosiveEnabled
                      then
-                        Ka.FireMode = 6
-                        Aa = Ka.CanShoot
-                        Ka.CanShoot = H
+                        massVariableArray.FireMode = 6
+                        Aa = massVariableArray.CanShoot
+                        massVariableArray.CanShoot = H
                     elseif
-                        not Ka.curConfig.BurstEnabled and not Ka.curConfig.BoltAction and
-                            not Ka.curConfig.ExplosiveEnabled and
-                            Ka.curConfig.SemiEnabled
+                        not massVariableArray.curConfig.BurstEnabled and not massVariableArray.curConfig.BoltAction and
+                            not massVariableArray.curConfig.ExplosiveEnabled and
+                            massVariableArray.curConfig.SemiEnabled
                      then
-                        Ka.FireMode = 1
-                        Ka.CanShoot = Aa
+                        massVariableArray.FireMode = 1
+                        massVariableArray.CanShoot = Aa
                     elseif
-                        not Ka.curConfig.BurstEnabled and not Ka.curConfig.BoltAction and not Ka.curConfig.SemiEnabled
+                        not massVariableArray.curConfig.BurstEnabled and not massVariableArray.curConfig.BoltAction and not massVariableArray.curConfig.SemiEnabled
                      then
-                        Ka.FireMode = 2
-                        Ka.CanShoot = Aa
+                        massVariableArray.FireMode = 2
+                        massVariableArray.CanShoot = Aa
                     end
-                elseif Ka.FireMode == 3 then
+                elseif massVariableArray.FireMode == 3 then
                     if Shooting then
                         Shooting = false
                     end
-                    if Ka.curConfig.BoltAction then
-                        Ka.FireMode = 4
-                        Ka.CanShoot = Aa
-                    elseif not Ka.curConfig.BoltAction and Ka.curConfig.ExplosiveEnabled then
-                        Ka.FireMode = 6
-                        Aa = Ka.CanShoot
-                        Ka.CanShoot = H
+                    if massVariableArray.curConfig.BoltAction then
+                        massVariableArray.FireMode = 4
+                        massVariableArray.CanShoot = Aa
+                    elseif not massVariableArray.curConfig.BoltAction and massVariableArray.curConfig.ExplosiveEnabled then
+                        massVariableArray.FireMode = 6
+                        Aa = massVariableArray.CanShoot
+                        massVariableArray.CanShoot = H
                     elseif
-                        not Ka.curConfig.BoltAction and not Ka.curConfig.ExplosiveEnabled and Ka.curConfig.SemiEnabled
+                        not massVariableArray.curConfig.BoltAction and not massVariableArray.curConfig.ExplosiveEnabled and massVariableArray.curConfig.SemiEnabled
                      then
-                        Ka.FireMode = 1
-                        Ka.CanShoot = Aa
-                    elseif not Ka.curConfig.BoltAction and not Ka.curConfig.SemiEnabled and Ka.curConfig.AutoEnabled then
-                        Ka.FireMode = 2
-                        Ka.CanShoot = Aa
-                    elseif not Ka.curConfig.BoltAction and not Ka.curConfig.SemiEnabled and not Ka.curConfig.AutoEnabled then
-                        Ka.FireMode = 3
-                        Ka.CanShoot = Aa
+                        massVariableArray.FireMode = 1
+                        massVariableArray.CanShoot = Aa
+                    elseif not massVariableArray.curConfig.BoltAction and not massVariableArray.curConfig.SemiEnabled and massVariableArray.curConfig.AutoEnabled then
+                        massVariableArray.FireMode = 2
+                        massVariableArray.CanShoot = Aa
+                    elseif not massVariableArray.curConfig.BoltAction and not massVariableArray.curConfig.SemiEnabled and not massVariableArray.curConfig.AutoEnabled then
+                        massVariableArray.FireMode = 3
+                        massVariableArray.CanShoot = Aa
                     end
-                elseif Ka.FireMode == 4 then
+                elseif massVariableArray.FireMode == 4 then
                     if Shooting then
                         Shooting = false
                     end
-                    if Ka.curConfig.ExplosiveEnabled then
-                        Ka.FireMode = 6
-                        Aa = Ka.CanShoot
-                        Ka.CanShoot = H
-                    elseif not Ka.curConfig.ExplosiveEnabled and Ka.curConfig.SemiEnabled then
-                        Ka.FireMode = 1
-                        Ka.CanShoot = Aa
-                    elseif not Ka.curConfig.SemiEnabled and Ka.curConfig.AutoEnabled then
-                        Ka.FireMode = 2
-                        Ka.CanShoot = Aa
-                    elseif not Ka.curConfig.SemiEnabled and not Ka.curConfig.AutoEnabled and Ka.curConfig.BurstEnabled then
-                        Ka.FireMode = 3
-                        Ka.CanShoot = Aa
+                    if massVariableArray.curConfig.ExplosiveEnabled then
+                        massVariableArray.FireMode = 6
+                        Aa = massVariableArray.CanShoot
+                        massVariableArray.CanShoot = H
+                    elseif not massVariableArray.curConfig.ExplosiveEnabled and massVariableArray.curConfig.SemiEnabled then
+                        massVariableArray.FireMode = 1
+                        massVariableArray.CanShoot = Aa
+                    elseif not massVariableArray.curConfig.SemiEnabled and massVariableArray.curConfig.AutoEnabled then
+                        massVariableArray.FireMode = 2
+                        massVariableArray.CanShoot = Aa
+                    elseif not massVariableArray.curConfig.SemiEnabled and not massVariableArray.curConfig.AutoEnabled and massVariableArray.curConfig.BurstEnabled then
+                        massVariableArray.FireMode = 3
+                        massVariableArray.CanShoot = Aa
                     elseif
-                        not Ka.curConfig.SemiEnabled and not Ka.curConfig.AutoEnabled and not Ka.curConfig.BurstEnabled
+                        not massVariableArray.curConfig.SemiEnabled and not massVariableArray.curConfig.AutoEnabled and not massVariableArray.curConfig.BurstEnabled
                      then
-                        Ka.FireMode = 4
-                        Ka.CanShoot = Aa
+                        massVariableArray.FireMode = 4
+                        massVariableArray.CanShoot = Aa
                     end
-                elseif Ka.FireMode == 6 then
+                elseif massVariableArray.FireMode == 6 then
                     if Shooting then
                         Shooting = false
                     end
-                    H = Ka.CanShoot
-                    if Ka.curConfig.SemiEnabled then
-                        Ka.FireMode = 1
-                        Ka.CanShoot = Aa
-                    elseif not Ka.curConfig.SemiEnabled and Ka.curConfig.AutoEnabled then
-                        Ka.FireMode = 2
-                        Ka.CanShoot = Aa
-                    elseif not Ka.curConfig.SemiEnabled and not Ka.curConfig.AutoEnabled and Ka.curConfig.BurstEnabled then
-                        Ka.FireMode = 3
-                        Ka.CanShoot = Aa
+                    H = massVariableArray.CanShoot
+                    if massVariableArray.curConfig.SemiEnabled then
+                        massVariableArray.FireMode = 1
+                        massVariableArray.CanShoot = Aa
+                    elseif not massVariableArray.curConfig.SemiEnabled and massVariableArray.curConfig.AutoEnabled then
+                        massVariableArray.FireMode = 2
+                        massVariableArray.CanShoot = Aa
+                    elseif not massVariableArray.curConfig.SemiEnabled and not massVariableArray.curConfig.AutoEnabled and massVariableArray.curConfig.BurstEnabled then
+                        massVariableArray.FireMode = 3
+                        massVariableArray.CanShoot = Aa
                     elseif
-                        not Ka.curConfig.SemiEnabled and not Ka.curConfig.AutoEnabled and not Ka.curConfig.BurstEnabled and
-                            Ka.curConfig.BoltAction
+                        not massVariableArray.curConfig.SemiEnabled and not massVariableArray.curConfig.AutoEnabled and not massVariableArray.curConfig.BurstEnabled and
+                            massVariableArray.curConfig.BoltAction
                      then
-                        Ka.FireMode = 4
-                        Ka.CanShoot = Aa
+                        massVariableArray.FireMode = 4
+                        massVariableArray.CanShoot = Aa
                     elseif
-                        not Ka.curConfig.SemiEnabled and not Ka.curConfig.AutoEnabled and not Ka.curConfig.BurstEnabled and
-                            not Ka.curConfig.BoltAction
+                        not massVariableArray.curConfig.SemiEnabled and not massVariableArray.curConfig.AutoEnabled and not massVariableArray.curConfig.BurstEnabled and
+                            not massVariableArray.curConfig.BoltAction
                      then
-                        Ka.FireMode = 6
-                        Aa = Ka.CanShoot
-                        Ka.CanShoot = H
+                        massVariableArray.FireMode = 6
+                        Aa = massVariableArray.CanShoot
+                        massVariableArray.CanShoot = H
                     end
                 end
                 UpdateAmmo()
@@ -5822,22 +5820,22 @@ ua.InputBegan:connect(
                 T = false
             end
             if a.KeyCode == Enum.KeyCode.DPadUp then
-                if Ka.curModel:FindFirstChild("AimPart2") then
+                if massVariableArray.curModel:FindFirstChild("AimPart2") then
                     Q = not Q
                     if Q then
-                        Ka.CurAimPart = Ka.curModel:FindFirstChild("AimPart2")
-                        Ka.AimPart2 = Ka.curModel:FindFirstChild("AimPart2")
+                        massVariableArray.CurAimPart = massVariableArray.curModel:FindFirstChild("AimPart2")
+                        massVariableArray.AimPart2 = massVariableArray.curModel:FindFirstChild("AimPart2")
                         if not ia then
-                            Ka.curZoom = Ka.curConfig.AltAimZoom
+                            massVariableArray.curZoom = massVariableArray.curConfig.AltAimZoom
                         else
-                            Ka.curZoom = R
+                            massVariableArray.curZoom = R
                         end
                     else
-                        Ka.CurAimPart = Ka.AimPart
+                        massVariableArray.CurAimPart = massVariableArray.AimPart
                         if not ia then
-                            Ka.curZoom = Ka.curConfig.AimZoom
+                            massVariableArray.curZoom = massVariableArray.curConfig.AimZoom
                         else
-                            Ka.curZoom = P
+                            massVariableArray.curZoom = P
                         end
                     end
                     if za then
@@ -5848,7 +5846,7 @@ ua.InputBegan:connect(
         end
     end
 )
-ua.InputEnded:connect(
+userInputService.InputEnded:connect(
     function(a, _)
         if not _ and Ca then
             if a.KeyCode == Enum.KeyCode.ButtonL2 and not ya then
@@ -5858,14 +5856,14 @@ ua.InputEnded:connect(
                 Sprint(false)
             end
             if a.KeyCode == Enum.KeyCode.ButtonR2 and Ca and not va then
-                Ka.MouseHeld = false
+                massVariableArray.MouseHeld = false
             end
         end
     end
 )
-Da.humanoid.Running:connect(
+playerArms.humanoid.Running:connect(
     function(_)
-        if Da.humanoid.FloorMaterial ~= Enum.Material.Air then
+        if playerArms.humanoid.FloorMaterial ~= Enum.Material.Air then
             if _ > 1 then
                 L = true
             else
@@ -5877,152 +5875,152 @@ Da.humanoid.Running:connect(
         end
     end
 )
-Ga.gunSway.s = 15
-Ga.gunSway.d = 0.4
-B:Connect(
+mathVariables.gunSway.s = 15
+mathVariables.gunSway.d = 0.4
+renderLoop:Connect(
     function(d)
-        if Ca and Ka.AnimBaseW then
-            Ga.deltaX, Ga.deltaY = Ga.deltaX or 0, Ga.deltaY or 0
-            if Ga.oc0 == nil or Ga.oc1 == nil then
-                Ga.oc0 = Ka.AnimBaseW.C0
-                Ga.oc1 = Ka.AnimBaseW.C1
+        if Ca and massVariableArray.AnimBaseW then
+            mathVariables.deltaX, mathVariables.deltaY = mathVariables.deltaX or 0, mathVariables.deltaY or 0
+            if mathVariables.oc0 == nil or mathVariables.oc1 == nil then
+                mathVariables.oc0 = massVariableArray.AnimBaseW.C0
+                mathVariables.oc1 = massVariableArray.AnimBaseW.C1
             end
-            local a = (math.cos(Ga.walkTick * Ga.walkAnimSpeed / 2) * Ga.walkAnimIntensity)
-            local _ = (math.cos(Ga.walkTick * Ga.walkAnimSpeed) * Ga.walkAnimIntensity)
+            local a = (math.cos(mathVariables.walkTick * mathVariables.walkAnimSpeed / 2) * mathVariables.walkAnimIntensity)
+            local _ = (math.cos(mathVariables.walkTick * mathVariables.walkAnimSpeed) * mathVariables.walkAnimIntensity)
             local _ =
                 CFrame.new(a, _, 0.02) *
                 CFrame.Angles(
-                    (math.sin(Ga.walkTick * Ga.walkAnimSpeed) * Ga.walkAnimIntensity),
-                    (math.sin(Ga.walkTick * Ga.walkAnimSpeed / 2) * Ga.walkAnimIntensity),
+                    (math.sin(mathVariables.walkTick * mathVariables.walkAnimSpeed) * mathVariables.walkAnimIntensity),
+                    (math.sin(mathVariables.walkTick * mathVariables.walkAnimSpeed / 2) * mathVariables.walkAnimIntensity),
                     0
                 )
-            local a = (math.sin(Ga.idleTick * Ga.idleSpeed / 2) * Ga.idleIntensity)
-            local b = (math.cos(Ga.idleTick * Ga.idleSpeed) * Ga.idleIntensity)
+            local a = (math.sin(mathVariables.idleTick * mathVariables.idleSpeed / 2) * mathVariables.idleIntensity)
+            local b = (math.cos(mathVariables.idleTick * mathVariables.idleSpeed) * mathVariables.idleIntensity)
             local a = CFrame.new(a, b, 0.02)
-            if L and Da.humanoid.FloorMaterial ~= Enum.Material.Air then
-                Ga.walkTick = Ga.walkTick + .017
-                Ga.movinganim = _
+            if L and playerArms.humanoid.FloorMaterial ~= Enum.Material.Air then
+                mathVariables.walkTick = mathVariables.walkTick + .017
+                mathVariables.movinganim = _
             else
-                Ga.walkTick = 0
-                Ga.movinganim = CFrame.new()
+                mathVariables.walkTick = 0
+                mathVariables.movinganim = CFrame.new()
             end
-            Ga.gunSway.t = Vector3.new(Ga.desiredXOffset, Ga.desiredYOffset, 0)
-            local _ = Ga.gunSway.p
-            local b = _.X / Ga.swayInputLimit * (za and Ga.aimSway or Ga.hipSway)
-            local _ = _.Y / Ga.swayInputLimit * (za and Ga.aimSway or Ga.hipSway)
+            mathVariables.gunSway.t = Vector3.new(mathVariables.desiredXOffset, mathVariables.desiredYOffset, 0)
+            local _ = mathVariables.gunSway.p
+            local b = _.X / mathVariables.swayInputLimit * (za and mathVariables.aimSway or mathVariables.hipSway)
+            local _ = _.Y / mathVariables.swayInputLimit * (za and mathVariables.aimSway or mathVariables.hipSway)
             if za then
-                Ga.swayCF = CFrame.new(math.rad(-b), math.rad(_), 0) * CFrame.Angles(0, 0, math.rad(-b))
-                Ga.idleTick = 0
-                Ga.idleAnimation = CFrame.new()
+                mathVariables.swayCF = CFrame.new(math.rad(-b), math.rad(_), 0) * CFrame.Angles(0, 0, math.rad(-b))
+                mathVariables.idleTick = 0
+                mathVariables.idleAnimation = CFrame.new()
             else
-                Ga.swayCF = CFrame.new(math.rad(-b), math.rad(_), 0) * CFrame.Angles(0, 0, math.rad(-b))
-                Ga.idleTick = Ga.idleTick + 0.003
-                Ga.idleAnimation = a
+                mathVariables.swayCF = CFrame.new(math.rad(-b), math.rad(_), 0) * CFrame.Angles(0, 0, math.rad(-b))
+                mathVariables.idleTick = mathVariables.idleTick + 0.003
+                mathVariables.idleAnimation = a
             end
-            local c = Ha.recoilSpring.p
+            local c = recoilData.recoilSpring.p
             local b = CFrame.new(0, 0, c.z)
             local a = CFrame.fromAxisAngle(Vector3.new(1, 0, 0), c.x / 7)
             local _ = CFrame.fromAxisAngle(Vector3.new(0, 1, 0), c.y / 10)
             c = b * a * _
-            Ka.newCamOffset = Ka.newCamOffset:Lerp(Ka.camC1, d * 5)
-            Ka.BasePart.CFrame = xa.CFrame * c
-            Ka.PrimeAnimBaseW.C0 = Ka.PrimeAnimBaseW.C0:lerp(S, d * 5)
-            Ka.AnimBaseW.C0 = Ka.AnimBaseW.C0:lerp(Ga.oc0 * Ga.movinganim * Ga.idleAnimation, d * 5)
+            massVariableArray.newCamOffset = massVariableArray.newCamOffset:Lerp(massVariableArray.camC1, d * 5)
+            massVariableArray.BasePart.CFrame = currentCamera.CFrame * c
+            massVariableArray.PrimeAnimBaseW.C0 = massVariableArray.PrimeAnimBaseW.C0:lerp(rotation, d * 5)
+            massVariableArray.AnimBaseW.C0 = massVariableArray.AnimBaseW.C0:lerp(mathVariables.oc0 * mathVariables.movinganim * mathVariables.idleAnimation, d * 5)
             UpdateCamChar(d)
             if za then
-                ua.MouseDeltaSensitivity = Ka.aimSens
-                Ka.sensDisplay.Text = Ka.aimSens
+                userInputService.MouseDeltaSensitivity = massVariableArray.aimSens
+                massVariableArray.sensDisplay.Text = massVariableArray.aimSens
             else
-                ua.MouseDeltaSensitivity = Ka.baseSens
-                Ka.sensDisplay.Text = Ka.baseSens
+                userInputService.MouseDeltaSensitivity = massVariableArray.baseSens
+                massVariableArray.sensDisplay.Text = massVariableArray.baseSens
             end
             if not za and not ya and not da and not oa then
-                Ka.AnimBaseW.C1 = Ka.AnimBaseW.C1:lerp(CFrame.new() * Ga.swayCF, d)
+                massVariableArray.AnimBaseW.C1 = massVariableArray.AnimBaseW.C1:lerp(CFrame.new() * mathVariables.swayCF, d)
             end
-            if Ka.StanceIndex == 0 and not ya then
+            if massVariableArray.StanceIndex == 0 and not ya then
                 if not za then
-                    Fa:WaitForChild("Humanoid").WalkSpeed = Ka.baseWalkspeed
+                    playerCharacter:WaitForChild("Humanoid").WalkSpeed = massVariableArray.baseWalkspeed
                 else
-                    Fa:WaitForChild("Humanoid").WalkSpeed = Ka.aimWalkSpeed
+                    playerCharacter:WaitForChild("Humanoid").WalkSpeed = massVariableArray.aimWalkSpeed
                 end
             end
             if za and not ya and not da and not oa then
                 if not qa then
-                    Ga.walkAnimIntensity = Ia.globalConfig.AimWalkIntensity
-                    Ga.walkAnimSpeed = Ia.globalConfig.AimWalkAnimSpeed
+                    mathVariables.walkAnimIntensity = carbonConfigs.globalConfig.AimWalkIntensity
+                    mathVariables.walkAnimSpeed = carbonConfigs.globalConfig.AimWalkAnimSpeed
                 end
-                Ga.idleSpeed = 0
-                Ka.AnimBaseW.C1 =
-                    Ka.AnimBaseW.C1:lerp(
-                    Ka.CurAimPart.CFrame:toObjectSpace(Ka.AnimBase.CFrame) * Ga.oc0 * Ga.swayCF,
-                    d * Ka.curConfig.AimSpeedMult
+                mathVariables.idleSpeed = 0
+                massVariableArray.AnimBaseW.C1 =
+                    massVariableArray.AnimBaseW.C1:lerp(
+                    massVariableArray.CurAimPart.CFrame:toObjectSpace(massVariableArray.AnimBase.CFrame) * mathVariables.oc0 * mathVariables.swayCF,
+                    d * massVariableArray.curConfig.AimSpeedMult
                 )
             end
             if ya and not qa and L then
-                Ga.walkAnimIntensity = Ka.curConfig.SprintWalkIntensity
-                Ga.walkAnimSpeed = Ka.curConfig.SprintWalkAnimSpeed
-                Da.humanoid.WalkSpeed = 21
-                Ka.AnimBaseW.C1 = Ka.AnimBaseW.C1:lerp(Ga.swayCF * Ka.curConfig.SprintPos, d * 5)
+                mathVariables.walkAnimIntensity = massVariableArray.curConfig.SprintWalkIntensity
+                mathVariables.walkAnimSpeed = massVariableArray.curConfig.SprintWalkAnimSpeed
+                playerArms.humanoid.WalkSpeed = 21
+                massVariableArray.AnimBaseW.C1 = massVariableArray.AnimBaseW.C1:lerp(mathVariables.swayCF * massVariableArray.curConfig.SprintPos, d * 5)
             end
             if not za and not ya and not da and not oa then
-                Ga.walkAnimIntensity = Ia.globalConfig.WalkIntensity
-                Ga.walkAnimSpeed = Ia.globalConfig.WalkAnimSpeed
-                Ga.idleSpeed = 2
-                Ka.AnimBaseW.C1 = Ka.AnimBaseW.C1:lerp(CFrame.new() * Ga.swayCF, d * 7)
+                mathVariables.walkAnimIntensity = carbonConfigs.globalConfig.WalkIntensity
+                mathVariables.walkAnimSpeed = carbonConfigs.globalConfig.WalkAnimSpeed
+                mathVariables.idleSpeed = 2
+                massVariableArray.AnimBaseW.C1 = massVariableArray.AnimBaseW.C1:lerp(CFrame.new() * mathVariables.swayCF, d * 7)
             end
-            for _, a in pairs(Ka.curModel:GetChildren()) do
+            for _, a in pairs(massVariableArray.curModel:GetChildren()) do
                 if a and string.match(a.Name, "ProjectorSight") then
                     local _ = a.SurfaceGui
                     _.Adornee = a
                     local _ = _.ClippingFrame.Reticle
-                    local a = a.CFrame:pointToObjectSpace(xa.CFrame.Position) / a.Size
+                    local a = a.CFrame:pointToObjectSpace(currentCamera.CFrame.Position) / a.Size
                     _.Position = UDim2.new(.5 + a.x, 0, .5 - a.y, 0)
                 end
             end
             if
-                na and Ka.LA:FindFirstChild("Binos") and
-                    Ka.LA.Binos:FindFirstChild("AimPart")
+                na and massVariableArray.LA:FindFirstChild("Binos") and
+                    massVariableArray.LA.Binos:FindFirstChild("AimPart")
              then
-                if U.Hit then
+                if mouse.Hit then
                     local b, a, _ =
                         workspace:FindPartOnRayWithIgnoreList(
-                        Ray.new(Da.head.Position, (U.Hit.p - Da.head.Position)),
-                        ha
+                        Ray.new(playerArms.head.Position, (mouse.Hit.p - playerArms.head.Position)),
+                        componentCollection
                     )
                     if b then
-                        Ka.hud:WaitForChild("RangeFrame"):WaitForChild("Dist").Text =
-                            math.ceil((Da.head.Position - a).magnitude) .. "m"
+                        massVariableArray.hud:WaitForChild("RangeFrame"):WaitForChild("Dist").Text =
+                            math.ceil((playerArms.head.Position - a).magnitude) .. "m"
                     end
                 end
             end
         end
         if qa then
-            if Ka.StanceIndex == 0 then
-                Ga.walkAnimIntensity = 0.08
-                Ga.walkAnimSpeed = 12
-            elseif Ka.StanceIndex == 1 then
-                if Da.humanoid.Jump then
-                    Da.humanoid.Jump = false
+            if massVariableArray.StanceIndex == 0 then
+                mathVariables.walkAnimIntensity = 0.08
+                mathVariables.walkAnimSpeed = 12
+            elseif massVariableArray.StanceIndex == 1 then
+                if playerArms.humanoid.Jump then
+                    playerArms.humanoid.Jump = false
                 end
-                Da.humanoid.WalkSpeed = 6
-                Ga.walkAnimIntensity = 0.005
-                Ga.walkAnimSpeed = 6
-            elseif Ka.StanceIndex == 2 then
-                if Da.humanoid.Jump then
-                    Da.humanoid.Jump = false
+                playerArms.humanoid.WalkSpeed = 6
+                mathVariables.walkAnimIntensity = 0.005
+                mathVariables.walkAnimSpeed = 6
+            elseif massVariableArray.StanceIndex == 2 then
+                if playerArms.humanoid.Jump then
+                    playerArms.humanoid.Jump = false
                 end
-                Da.humanoid.WalkSpeed = 3
-                Ga.walkAnimIntensity = 0.003
-                Ga.walkAnimSpeed = 3
+                playerArms.humanoid.WalkSpeed = 3
+                mathVariables.walkAnimIntensity = 0.003
+                mathVariables.walkAnimSpeed = 3
             end
         end
-        if Ka.progressBar and Ia.globalConfig.StaminaEnabled then
-            Ka.progressBar.Size = Ka.progressBar.Size:Lerp(UDim2.new(Ka.Stamina, 0, 1, -4), d * 5)
+        if massVariableArray.progressBar and carbonConfigs.globalConfig.StaminaEnabled then
+            massVariableArray.progressBar.Size = massVariableArray.progressBar.Size:Lerp(UDim2.new(massVariableArray.Stamina, 0, 1, -4), d * 5)
         end
-        HalfStepFunc(-math.asin((U.Hit.p - U.Origin.p).unit.y))
+        HalfStepFunc(-math.asin((mouse.Hit.p - mouse.Origin.p).unit.y))
         for _, b in pairs(game.Players:GetChildren()) do
             if
-                b and b:IsA("Player") and b ~= Ba and b.Character and
+                b and b:IsA("Player") and b ~= localPlayer and b.Character and
                     b.Character:WaitForChild("CarbonValues"):FindFirstChild(
                         "yRot"
                     ) and
@@ -6034,7 +6032,7 @@ B:Connect(
                     b.Character:FindFirstChild("Torso") and
                     b.Character.Torso:FindFirstChild("Neck") and
                     (b.Character:WaitForChild("HumanoidRootPart").Position -
-                        Da.rootPart.Position).magnitude <= Ia.globalConfig.RenderDist
+                        playerArms.rootPart.Position).magnitude <= carbonConfigs.globalConfig.RenderDist
              then
                 local a = b.Character:WaitForChild("Torso"):WaitForChild("Neck")
                 local _ =
@@ -6060,23 +6058,23 @@ B:Connect(
             end
         end
         if O then
-            local _ = Ray.new(Ka.curModel.LaserLight.Position, Ka.curModel.Grip.CFrame.lookVector * 9999)
-            local b, a, _ = workspace:FindPartOnRayWithIgnoreList(_, y)
+            local _ = Ray.new(massVariableArray.curModel.LaserLight.Position, massVariableArray.curModel.Grip.CFrame.lookVector * 9999)
+            local b, a, _ = workspace:FindPartOnRayWithIgnoreList(_, componentList)
             M.CFrame = CFrame.new(0, 0, -j)
             Y.CFrame = M.WorldCFrame
             if b and (b and b.Transparency >= 1 or b.CanCollide == false) then
-                table.insert(y, b)
+                table.insert(componentList, b)
             end
             if b then
-                j = (Ka.curModel.LaserLight.Position - a).magnitude
+                j = (massVariableArray.curModel.LaserLight.Position - a).magnitude
             else
                 j = 9999
             end
         end
-        if Ia.globalConfig.ReplicatedLaser then
+        if carbonConfigs.globalConfig.ReplicatedLaser then
             for _, _ in pairs(game.Players:GetChildren()) do
                 if
-                    _ and _:IsA("Player") and _ ~= Ba and _.Character and
+                    _ and _:IsA("Player") and _ ~= localPlayer and _.Character and
                         _.Character.CarbonValues:FindFirstChild("Equipped") and
                         _.Character.CarbonValues.Equipped.Value and
                         _.Character.CarbonValues:FindFirstChild("SModel") and
@@ -6103,18 +6101,18 @@ coroutine.resume(
         function()
             while true do
                 task.wait(1)
-                if Ia.globalConfig.StaminaEnabled then
+                if carbonConfigs.globalConfig.StaminaEnabled then
                     if ya then
-                        Ka.Stamina = Ka.Stamina - Ka.StaminaMult
-                        if Ka.Stamina <= 0 then
-                            Ka.Stamina = 0
+                        massVariableArray.Stamina = massVariableArray.Stamina - massVariableArray.StaminaMult
+                        if massVariableArray.Stamina <= 0 then
+                            massVariableArray.Stamina = 0
                             Sprint(false)
                         end
-                    elseif not ya and Ka.Stamina < 1 then
-                        task.wait(Ia.globalConfig.StaminaRegenTime - 1)
-                        Ka.Stamina = Ka.Stamina + Ia.globalConfig.StaminaRegenMult
-                        if Ka.Stamina > 1 then
-                            Ka.Stamina = 1
+                    elseif not ya and massVariableArray.Stamina < 1 then
+                        task.wait(carbonConfigs.globalConfig.StaminaRegenTime - 1)
+                        massVariableArray.Stamina = massVariableArray.Stamina + carbonConfigs.globalConfig.StaminaRegenMult
+                        if massVariableArray.Stamina > 1 then
+                            massVariableArray.Stamina = 1
                         end
                     end
                 end
@@ -6122,18 +6120,18 @@ coroutine.resume(
         end
     )
 )
-U.Idle:connect(
+mouse.Idle:connect(
     function()
-        Ga.desiredXOffset = 0
-        Ga.desiredYOffset = 0
+        mathVariables.desiredXOffset = 0
+        mathVariables.desiredYOffset = 0
     end
 )
-Ea.updateCharEvent.OnClientEvent:connect(
+carbonEvents.updateCharEvent.OnClientEvent:connect(
     function(e, d, c, _, b, a)
         if
-            e ~= Ba and e.Character and e.Character:FindFirstChild("BasePart") and
+            e ~= localPlayer and e.Character and e.Character:FindFirstChild("BasePart") and
                 (e.Character:WaitForChild("HumanoidRootPart").Position -
-                    Da.rootPart.Position).magnitude <= Ia.globalConfig.RenderDist
+                    playerArms.rootPart.Position).magnitude <= carbonConfigs.globalConfig.RenderDist
          then
             local a
             if _ ~= nil then
@@ -6143,38 +6141,38 @@ Ea.updateCharEvent.OnClientEvent:connect(
             end
             if d == "Aim" then
                 if c then
-                    Ja:Create(e.Character.BasePart.RAW, TweenInfo.new(0.5, Enum.EasingStyle.Quad), {C1 = a.RightAimPos}):Play(
+                    tweenService:Create(e.Character.BasePart.RAW, TweenInfo.new(0.5, Enum.EasingStyle.Quad), {C1 = a.RightAimPos}):Play(
 
                     )
-                    Ja:Create(e.Character.BasePart.LAW, TweenInfo.new(0.5, Enum.EasingStyle.Quad), {C1 = a.LeftAimPos}):Play(
+                    tweenService:Create(e.Character.BasePart.LAW, TweenInfo.new(0.5, Enum.EasingStyle.Quad), {C1 = a.LeftAimPos}):Play(
 
                     )
                 else
-                    Ja:Create(e.Character.BasePart.RAW, TweenInfo.new(0.5, Enum.EasingStyle.Quad), {C1 = a.RightArmPos}):Play(
+                    tweenService:Create(e.Character.BasePart.RAW, TweenInfo.new(0.5, Enum.EasingStyle.Quad), {C1 = a.RightArmPos}):Play(
 
                     )
-                    Ja:Create(e.Character.BasePart.LAW, TweenInfo.new(0.5, Enum.EasingStyle.Quad), {C1 = a.LeftArmPos}):Play(
+                    tweenService:Create(e.Character.BasePart.LAW, TweenInfo.new(0.5, Enum.EasingStyle.Quad), {C1 = a.LeftArmPos}):Play(
 
                     )
                 end
             end
             if d == "Sprint" then
                 if c then
-                    Ja:Create(
+                    tweenService:Create(
                         e.Character.BasePart.RAW,
                         TweenInfo.new(0.5, Enum.EasingStyle.Quad),
                         {C1 = a.RightSprintPos}
                     ):Play()
-                    Ja:Create(
+                    tweenService:Create(
                         e.Character.BasePart.LAW,
                         TweenInfo.new(0.5, Enum.EasingStyle.Quad),
                         {C1 = a.LeftSprintPos}
                     ):Play()
                 else
-                    Ja:Create(e.Character.BasePart.RAW, TweenInfo.new(0.5, Enum.EasingStyle.Quad), {C1 = a.RightArmPos}):Play(
+                    tweenService:Create(e.Character.BasePart.RAW, TweenInfo.new(0.5, Enum.EasingStyle.Quad), {C1 = a.RightArmPos}):Play(
 
                     )
-                    Ja:Create(e.Character.BasePart.LAW, TweenInfo.new(0.5, Enum.EasingStyle.Quad), {C1 = a.LeftArmPos}):Play(
+                    tweenService:Create(e.Character.BasePart.LAW, TweenInfo.new(0.5, Enum.EasingStyle.Quad), {C1 = a.LeftArmPos}):Play(
 
                     )
                 end
@@ -6185,7 +6183,7 @@ Ea.updateCharEvent.OnClientEvent:connect(
                         e.Character:FindFirstChild("BasePart") and
                             e.Character.BasePart:FindFirstChild("BasePartW")
                      then
-                        Ja:Create(
+                        tweenService:Create(
                             e.Character:WaitForChild("BasePart"):WaitForChild(
                                 "BasePartW"
                             ),
@@ -6226,7 +6224,7 @@ Ea.updateCharEvent.OnClientEvent:connect(
                         e.Character:FindFirstChild("BasePart") and
                             e.Character.BasePart:FindFirstChild("BasePartW")
                      then
-                        Ja:Create(
+                        tweenService:Create(
                             e.Character:WaitForChild("BasePart"):WaitForChild(
                                 "BasePartW"
                             ),
@@ -6238,7 +6236,7 @@ Ea.updateCharEvent.OnClientEvent:connect(
             end
             if d == "ReadyHigh" then
                 if c then
-                    Ja:Create(
+                    tweenService:Create(
                         e.Character.BasePart.BasePartW,
                         TweenInfo.new(0.5, Enum.EasingStyle.Quad),
                         {C1 = a.ReadyHighPos}
@@ -6247,7 +6245,7 @@ Ea.updateCharEvent.OnClientEvent:connect(
             end
             if d == "ReadyLow" then
                 if c then
-                    Ja:Create(
+                    tweenService:Create(
                         e.Character.BasePart.BasePartW,
                         TweenInfo.new(0.5, Enum.EasingStyle.Quad),
                         {C1 = a.ReadyLowPos}
@@ -6256,15 +6254,15 @@ Ea.updateCharEvent.OnClientEvent:connect(
             end
             if d == "Idle" then
                 if c then
-                    Ja:Create(
+                    tweenService:Create(
                         e.Character.BasePart.RAW,
                         TweenInfo.new(0.15, Enum.EasingStyle.Quad),
                         {C1 = a.RightArmPos}
                     ):Play()
-                    Ja:Create(e.Character.BasePart.LAW, TweenInfo.new(0.15, Enum.EasingStyle.Quad), {C1 = a.LeftArmPos}):Play(
+                    tweenService:Create(e.Character.BasePart.LAW, TweenInfo.new(0.15, Enum.EasingStyle.Quad), {C1 = a.LeftArmPos}):Play(
 
                     )
-                    Ja:Create(
+                    tweenService:Create(
                         e.Character.BasePart.BasePartW,
                         TweenInfo.new(0.5, Enum.EasingStyle.Quad),
                         {C1 = CFrame.new()}
@@ -6273,60 +6271,60 @@ Ea.updateCharEvent.OnClientEvent:connect(
             end
             if d == "Patrol" then
                 if c then
-                    Ja:Create(
+                    tweenService:Create(
                         e.Character.BasePart.RAW,
                         TweenInfo.new(0.5, Enum.EasingStyle.Quad),
                         {C1 = a.RightPatrolPos}
                     ):Play()
-                    Ja:Create(
+                    tweenService:Create(
                         e.Character.BasePart.LAW,
                         TweenInfo.new(0.5, Enum.EasingStyle.Quad),
                         {C1 = a.LeftPatrolPos}
                     ):Play()
                 else
-                    Ja:Create(e.Character.BasePart.RAW, TweenInfo.new(0.5, Enum.EasingStyle.Quad), {C1 = a.RightArmPos}):Play(
+                    tweenService:Create(e.Character.BasePart.RAW, TweenInfo.new(0.5, Enum.EasingStyle.Quad), {C1 = a.RightArmPos}):Play(
 
                     )
-                    Ja:Create(e.Character.BasePart.LAW, TweenInfo.new(0.5, Enum.EasingStyle.Quad), {C1 = a.LeftArmPos}):Play(
+                    tweenService:Create(e.Character.BasePart.LAW, TweenInfo.new(0.5, Enum.EasingStyle.Quad), {C1 = a.LeftArmPos}):Play(
 
                     )
                 end
             end
         end
         if
-            d == "Stance" and e ~= Ba and e.Character and
+            d == "Stance" and e ~= localPlayer and e.Character and
                 e.Character:FindFirstChild("Humanoid") and
                 e.Character.Humanoid.Health > 0
          then
             if b == 0 then
-                Ja:Create(
+                tweenService:Create(
                     e.Character:WaitForChild("HumanoidRootPart"):WaitForChild(
                         "RootJoint"
                     ),
                     TweenInfo.new(0.6),
                     {C0 = CFrame.new(0, 0, 0, -1, 0, 0, 0, 0, 1, 0, 1, -0)}
                 ):Play()
-                Ja:Create(
+                tweenService:Create(
                     e.Character:WaitForChild("Torso"):WaitForChild(
                         "Right Hip"
                     ),
                     TweenInfo.new(0.6),
                     {C0 = CFrame.new(1, -1, 0, 0, 0, 1, 0, 1, -0, -1, 0, 0)}
                 ):Play()
-                Ja:Create(
+                tweenService:Create(
                     e.Character:WaitForChild("Torso"):WaitForChild("Left Hip"),
                     TweenInfo.new(0.6),
                     {C0 = CFrame.new(-1, -1, 0, 0, 0, -1, 0, 1, 0, 1, 0, 0)}
                 ):Play()
             elseif b == 1 then
-                Ja:Create(
+                tweenService:Create(
                     e.Character:WaitForChild("HumanoidRootPart"):WaitForChild(
                         "RootJoint"
                     ),
                     TweenInfo.new(0.6),
                     {C0 = CFrame.new(0, -1.20000005, 0, -1, 0, 0, 0, 0, 1, 0, 1, 0)}
                 ):Play()
-                Ja:Create(
+                tweenService:Create(
                     e.Character:WaitForChild("Torso"):WaitForChild(
                         "Right Hip"
                     ),
@@ -6348,7 +6346,7 @@ Ea.updateCharEvent.OnClientEvent:connect(
                         )
                     }
                 ):Play()
-                Ja:Create(
+                tweenService:Create(
                     e.Character:WaitForChild("Torso"):WaitForChild("Left Hip"),
                     TweenInfo.new(0.6),
                     {
@@ -6369,14 +6367,14 @@ Ea.updateCharEvent.OnClientEvent:connect(
                     }
                 ):Play()
             elseif b == 2 then
-                Ja:Create(
+                tweenService:Create(
                     e.Character:WaitForChild("HumanoidRootPart"):WaitForChild(
                         "RootJoint"
                     ),
                     TweenInfo.new(0.6),
                     {C0 = CFrame.new(0, -2.5999999, 0, -1, 0, 0, 0, 1, 1.19248806e-08, 0, 1.19248806e-08, -1)}
                 ):Play()
-                Ja:Create(
+                tweenService:Create(
                     e.Character:WaitForChild("Torso"):WaitForChild(
                         "Right Hip"
                     ),
@@ -6398,7 +6396,7 @@ Ea.updateCharEvent.OnClientEvent:connect(
                         )
                     }
                 ):Play()
-                Ja:Create(
+                tweenService:Create(
                     e.Character:WaitForChild("Torso"):WaitForChild("Left Hip"),
                     TweenInfo.new(0.6),
                     {
@@ -6421,12 +6419,12 @@ Ea.updateCharEvent.OnClientEvent:connect(
             end
         end
         if
-            d == "Lean" and e ~= Ba and e.Character and
+            d == "Lean" and e ~= localPlayer and e.Character and
                 e.Character:FindFirstChild("Humanoid") and
                 e.Character.Humanoid.Health > 0
          then
             if a == 1 then
-                Ja:Create(
+                tweenService:Create(
                     e.Character:WaitForChild("HumanoidRootPart"):WaitForChild(
                         "RootJoint"
                     ),
@@ -6448,14 +6446,14 @@ Ea.updateCharEvent.OnClientEvent:connect(
                         )
                     }
                 ):Play()
-                Ja:Create(
+                tweenService:Create(
                     e.Character:WaitForChild("Torso"):WaitForChild(
                         "Right Hip"
                     ),
                     TweenInfo.new(0.6),
                     {C1 = CFrame.new(0.5, 1, 0, 0, 0.087155737, 0.99619472, 0, 0.99619472, -0.087155737, -1, 0, 0)}
                 ):Play()
-                Ja:Create(
+                tweenService:Create(
                     e.Character:WaitForChild("Torso"):WaitForChild("Left Hip"),
                     TweenInfo.new(0.6),
                     {
@@ -6476,7 +6474,7 @@ Ea.updateCharEvent.OnClientEvent:connect(
                     }
                 ):Play()
             elseif a == -1 then
-                Ja:Create(
+                tweenService:Create(
                     e.Character:WaitForChild("HumanoidRootPart"):WaitForChild(
                         "RootJoint"
                     ),
@@ -6498,7 +6496,7 @@ Ea.updateCharEvent.OnClientEvent:connect(
                         )
                     }
                 ):Play()
-                Ja:Create(
+                tweenService:Create(
                     e.Character:WaitForChild("Torso"):WaitForChild(
                         "Right Hip"
                     ),
@@ -6520,27 +6518,27 @@ Ea.updateCharEvent.OnClientEvent:connect(
                         )
                     }
                 ):Play()
-                Ja:Create(
+                tweenService:Create(
                     e.Character:WaitForChild("Torso"):WaitForChild("Left Hip"),
                     TweenInfo.new(0.6),
                     {C1 = CFrame.new(-0.5, 1, 0, 0, 0, -0.99999994, 0, 0.99999994, 0, 1, 0, 0)}
                 ):Play()
             elseif a == 0 then
-                Ja:Create(
+                tweenService:Create(
                     e.Character:WaitForChild("HumanoidRootPart"):WaitForChild(
                         "RootJoint"
                     ),
                     TweenInfo.new(0.6),
                     {C1 = CFrame.new(0, 0, 0, -1, 0, 0, 0, 0, 1, 0, 1, -0)}
                 ):Play()
-                Ja:Create(
+                tweenService:Create(
                     e.Character:WaitForChild("Torso"):WaitForChild(
                         "Right Hip"
                     ),
                     TweenInfo.new(0.6),
                     {C1 = CFrame.new(0.5, 1, 0, 0, 0, 1, 0, 1, -0, -1, 0, 0)}
                 ):Play()
-                Ja:Create(
+                tweenService:Create(
                     e.Character:WaitForChild("Torso"):WaitForChild("Left Hip"),
                     TweenInfo.new(0.6),
                     {C1 = CFrame.new(-0.5, 1, 0, 0, 0, -1, 0, 1, 0, 1, 0, 0)}
@@ -6549,24 +6547,24 @@ Ea.updateCharEvent.OnClientEvent:connect(
         end
     end
 )
-Ea.whizEvent.OnClientEvent:connect(
+carbonEvents.whizEvent.OnClientEvent:connect(
     function(_, a, c, g, h, e, f, d, b)
-        if Ba ~= _ then
+        if localPlayer ~= _ then
             CreateExternalBullet(a, c, g, h, e, f, d, b)
         end
     end
 )
-Ea.serverFXEvent.OnClientEvent:connect(
+carbonEvents.serverFXEvent.OnClientEvent:connect(
     function(a, _)
-        if Ka.hud then
-            if Ia.globalConfig.OverlayEnabled and Ka.painShade.ImageTransparency == 1 then
-                if (Fa.HumanoidRootPart.Position - a).magnitude <= 10 then
-                    Ka.intenseShade.Visible = true
-                    Ja:Create(Ka.intenseShade, TweenInfo.new(0.1), {ImageTransparency = 0}):Play()
+        if massVariableArray.hud then
+            if carbonConfigs.globalConfig.OverlayEnabled and massVariableArray.painShade.ImageTransparency == 1 then
+                if (playerCharacter.HumanoidRootPart.Position - a).magnitude <= 10 then
+                    massVariableArray.intenseShade.Visible = true
+                    tweenService:Create(massVariableArray.intenseShade, TweenInfo.new(0.1), {ImageTransparency = 0}):Play()
                     delay(
                         0.7,
                         function()
-                            Ja:Create(Ka.intenseShade, TweenInfo.new(3), {ImageTransparency = 1}):Play()
+                            tweenService:Create(massVariableArray.intenseShade, TweenInfo.new(3), {ImageTransparency = 1}):Play()
                         end
                     )
                 end
@@ -6574,9 +6572,9 @@ Ea.serverFXEvent.OnClientEvent:connect(
         end
     end
 )
-Ea.manipEvent.OnClientEvent:Connect(
+carbonEvents.manipEvent.OnClientEvent:Connect(
     function(c, b, a, _)
-        if Ba ~= c then
+        if localPlayer ~= c then
             for _, _ in pairs(b:WaitForChild("FlashLight"):GetChildren()) do
                 if _ and _.Name == "Enable" then
                     _.Enabled = a
@@ -6585,14 +6583,14 @@ Ea.manipEvent.OnClientEvent:Connect(
         end
     end
 )
-Ea.resupplyEvent.OnClientEvent:Connect(
+carbonEvents.resupplyEvent.OnClientEvent:Connect(
     function()
         q = true
     end
 )
-Ea.connectionEvent.OnClientEvent:Connect(
+carbonEvents.connectionEvent.OnClientEvent:Connect(
     function(_, b, c, a)
-        if c ~= Ba then
+        if c ~= localPlayer then
             spawn(
                 function()
                     SpawnIso(_, b, c, a)
@@ -6601,10 +6599,10 @@ Ea.connectionEvent.OnClientEvent:Connect(
         end
     end
 )
-Ea.nadeEvent.OnClientEvent:Connect(
+carbonEvents.nadeEvent.OnClientEvent:Connect(
     function(b, _, a)
-        if b ~= Ba then
-            local c = ra:WaitForChild("FRAG"):WaitForChild("NADE"):Clone()
+        if b ~= localPlayer then
+            local c = carbonFx:WaitForChild("FRAG"):WaitForChild("NADE"):Clone()
             c.Parent = workspace
             c.CFrame = _
             c.Anchored = false
@@ -6612,29 +6610,29 @@ Ea.nadeEvent.OnClientEvent:Connect(
             game.Debris:AddItem(c, 5)
             local _ = c:GetMass()
             local _ = Instance.new("BodyForce", c)
-            _.Force = Ia.globalConfig.NadePhysics
-            c.Velocity = a * Ia.globalConfig.NadeSpeed
-            c:WaitForChild("Indicator").MaxDistance = Ia.globalConfig.BlastRadius
-            if b.TeamColor ~= Ba.TeamColor then
+            _.Force = carbonConfigs.globalConfig.NadePhysics
+            c.Velocity = a * carbonConfigs.globalConfig.NadeSpeed
+            c:WaitForChild("Indicator").MaxDistance = carbonConfigs.globalConfig.BlastRadius
+            if b.TeamColor ~= localPlayer.TeamColor then
                 c:WaitForChild("Indicator"):WaitForChild("Enemy").Visible =
                     true
             else
                 c:WaitForChild("Indicator"):WaitForChild("Friendly").Visible =
                     true
             end
-            if Ia.globalConfig.NadeTrailEnabled then
+            if carbonConfigs.globalConfig.NadeTrailEnabled then
                 c:WaitForChild("Trail").Enabled = true
             end
         end
     end
 )
-Ea.attachmentEvent.OnClientEvent:Connect(
+carbonEvents.attachmentEvent.OnClientEvent:Connect(
     function(a, _, b)
         if _ == "OpticNode" then
             ia = a
             P = b[1]
             R = b[2]
-            Ka.oHopUp = b[3]
+            massVariableArray.oHopUp = b[3]
         elseif _ == "GripNode" then
             K = a
             F = b
@@ -6643,274 +6641,274 @@ Ea.attachmentEvent.OnClientEvent:Connect(
 )
 local a
 function IdleAnim(_)
-    Ka.curConfig.IdleAnim(Fa, a, {Ka.AnimBaseW, Ka.RAW, Ka.LAW, Ka.GripW, Ka.GripW2}, {K, F})
+    massVariableArray.curConfig.IdleAnim(playerCharacter, a, {massVariableArray.AnimBaseW, massVariableArray.RAW, massVariableArray.LAW, massVariableArray.GripW, massVariableArray.GripW2}, {K, F})
 end
 function AttachAnim(_)
-    Ia.globalConfig.AttachAnim(Fa, a, {Ka.RAW, Ka.LAW})
+    carbonConfigs.globalConfig.AttachAnim(playerCharacter, a, {massVariableArray.RAW, massVariableArray.LAW})
 end
 function BoltBackAnim(_)
-    Ka.curConfig.BoltBackAnim(
-        Fa,
+    massVariableArray.curConfig.BoltBackAnim(
+        playerCharacter,
         a,
-        {Ka.BoltW, Ka.LAW, Ka.RAW, Ka.AnimBaseW, Ka.Bolt, Ka.RA, Ka.LA, Ka.Grip, Ka.Grip.GripW, Ka.GripW2}
+        {massVariableArray.BoltW, massVariableArray.LAW, massVariableArray.RAW, massVariableArray.AnimBaseW, massVariableArray.Bolt, massVariableArray.RA, massVariableArray.LA, massVariableArray.Grip, massVariableArray.Grip.GripW, massVariableArray.GripW2}
     )
 end
 function BoltForwardAnim(_)
-    Ka.curConfig.BoltForwardAnim(
-        Fa,
+    massVariableArray.curConfig.BoltForwardAnim(
+        playerCharacter,
         a,
-        {Ka.BoltW, Ka.LAW, Ka.RAW, Ka.AnimBaseW, Ka.Bolt, Ka.RA, Ka.LA, Ka.Grip, Ka.Grip.GripW, Ka.GripW2}
+        {massVariableArray.BoltW, massVariableArray.LAW, massVariableArray.RAW, massVariableArray.AnimBaseW, massVariableArray.Bolt, massVariableArray.RA, massVariableArray.LA, massVariableArray.Grip, massVariableArray.Grip.GripW, massVariableArray.GripW2}
     )
 end
 function BoltingBackAnim(_)
-    Ka.curConfig.BoltingBackAnim(Fa, a, {Ka.BoltW, Ka.Mag, Ka.Ammo, Ka.GripW2})
+    massVariableArray.curConfig.BoltingBackAnim(playerCharacter, a, {massVariableArray.BoltW, massVariableArray.Mag, massVariableArray.Ammo, massVariableArray.GripW2})
 end
 function BoltingForwardAnim(_)
-    Ka.curConfig.BoltingForwardAnim(Fa, a, {Ka.BoltW, Ka.Mag, Ka.Ammo, Ka.GripW2})
+    massVariableArray.curConfig.BoltingForwardAnim(playerCharacter, a, {massVariableArray.BoltW, massVariableArray.Mag, massVariableArray.Ammo, massVariableArray.GripW2})
 end
 function ReloadAnim(_)
-    Ka.curConfig.ReloadAnim(
-        Fa,
+    massVariableArray.curConfig.ReloadAnim(
+        playerCharacter,
         a,
         {
-            Ka.AnimBaseW,
-            Ka.RAW,
-            Ka.LAW,
-            Ka.Mag,
-            Ka.LA,
-            Ka.Grip,
-            Ka.BoltW,
-            Ka.RA,
-            Ka.GripW,
-            Ka.curModel,
-            Ka.Bolt,
-            Ka.Ammo,
-            Ka.curConfig.Ammo,
-            Ka.GripW2
+            massVariableArray.AnimBaseW,
+            massVariableArray.RAW,
+            massVariableArray.LAW,
+            massVariableArray.Mag,
+            massVariableArray.LA,
+            massVariableArray.Grip,
+            massVariableArray.BoltW,
+            massVariableArray.RA,
+            massVariableArray.GripW,
+            massVariableArray.curModel,
+            massVariableArray.Bolt,
+            massVariableArray.Ammo,
+            massVariableArray.curConfig.Ammo,
+            massVariableArray.GripW2
         }
     )
 end
 function FireModeAnim(_)
-    Ka.curConfig.FireModeAnim(Fa, a, {Ka.AnimBaseW, Ka.LAW, Ka.RAW, Ka.Grip, Ka.GripW2})
+    massVariableArray.curConfig.FireModeAnim(playerCharacter, a, {massVariableArray.AnimBaseW, massVariableArray.LAW, massVariableArray.RAW, massVariableArray.Grip, massVariableArray.GripW2})
 end
 function nadeReload(_)
-    Ka.curConfig.nadeReload(Fa, a, {Ka.RAW, Ka.LAW, Ka.GripW2})
+    massVariableArray.curConfig.nadeReload(playerCharacter, a, {massVariableArray.RAW, massVariableArray.LAW, massVariableArray.GripW2})
 end
 function fireAnim(_)
-    Ka.curConfig.fireAnim(Fa, a, {Ka.curModel, Ka.RAW, Ka.LAW, Ka.GripW, Ka.BoltW, Ka.Mag, Ka.GripW2, Ka.AnimBaseW})
+    massVariableArray.curConfig.fireAnim(playerCharacter, a, {massVariableArray.curModel, massVariableArray.RAW, massVariableArray.LAW, massVariableArray.GripW, massVariableArray.BoltW, massVariableArray.Mag, massVariableArray.GripW2, massVariableArray.AnimBaseW})
 end
 function aimAnim(_)
-    Ka.curConfig.aimAnim(Fa, a, {Ka.curModel, Ka.RAW, Ka.LAW, Ka.GripW, Ka.BoltW, Ka.Mag, Ka.GripW2, Ka.AnimBaseW})
+    massVariableArray.curConfig.aimAnim(playerCharacter, a, {massVariableArray.curModel, massVariableArray.RAW, massVariableArray.LAW, massVariableArray.GripW, massVariableArray.BoltW, massVariableArray.Mag, massVariableArray.GripW2, massVariableArray.AnimBaseW})
 end
 function unaimAnim(_)
-    Ka.curConfig.unaimAnim(Fa, a, {Ka.curModel, Ka.RAW, Ka.LAW, Ka.GripW, Ka.BoltW, Ka.Mag, Ka.GripW2, Ka.AnimBaseW})
+    massVariableArray.curConfig.unaimAnim(playerCharacter, a, {massVariableArray.curModel, massVariableArray.RAW, massVariableArray.LAW, massVariableArray.GripW, massVariableArray.BoltW, massVariableArray.Mag, massVariableArray.GripW2, massVariableArray.AnimBaseW})
 end
 function sprintAnim(_)
-    Ka.curConfig.sprintAnim(Fa, a, {Ka.curModel, Ka.RAW, Ka.LAW, Ka.GripW, Ka.BoltW, Ka.Mag, Ka.GripW2, Ka.AnimBaseW})
+    massVariableArray.curConfig.sprintAnim(playerCharacter, a, {massVariableArray.curModel, massVariableArray.RAW, massVariableArray.LAW, massVariableArray.GripW, massVariableArray.BoltW, massVariableArray.Mag, massVariableArray.GripW2, massVariableArray.AnimBaseW})
 end
 function unsprintAnim(_)
-    Ka.curConfig.unsprintAnim(Fa, a, {Ka.curModel, Ka.RAW, Ka.LAW, Ka.GripW, Ka.BoltW, Ka.Mag, Ka.GripW2, Ka.AnimBaseW})
+    massVariableArray.curConfig.unsprintAnim(playerCharacter, a, {massVariableArray.curModel, massVariableArray.RAW, massVariableArray.LAW, massVariableArray.GripW, massVariableArray.BoltW, massVariableArray.Mag, massVariableArray.GripW2, massVariableArray.AnimBaseW})
 end
-Ka.optionButton.MouseEnter:connect(
+massVariableArray.optionButton.MouseEnter:connect(
     function()
-        Ja:Create(
-            Ka.optionButton:WaitForChild("Detail"),
+        tweenService:Create(
+            massVariableArray.optionButton:WaitForChild("Detail"),
             TweenInfo.new(0.3),
             {BackgroundTransparency = 0.3}
         ):Play()
     end
 )
-Ka.optionButton.MouseLeave:connect(
+massVariableArray.optionButton.MouseLeave:connect(
     function()
         if X ~= "Option" then
-            Ja:Create(
-                Ka.optionButton:WaitForChild("Detail"),
+            tweenService:Create(
+                massVariableArray.optionButton:WaitForChild("Detail"),
                 TweenInfo.new(0.3),
                 {BackgroundTransparency = 1}
             ):Play()
         end
     end
 )
-Ka.optionButton.MouseButton1Click:connect(
+massVariableArray.optionButton.MouseButton1Click:connect(
     function()
         X = "Option"
-        Ia.codeArchive.OptionFunc(Ka, X)
+        carbonConfigs.codeArchive.OptionFunc(massVariableArray, X)
     end
 )
-Ka.keybindButton.MouseEnter:connect(
+massVariableArray.keybindButton.MouseEnter:connect(
     function()
-        Ja:Create(
-            Ka.keybindButton:WaitForChild("Detail"),
+        tweenService:Create(
+            massVariableArray.keybindButton:WaitForChild("Detail"),
             TweenInfo.new(0.3),
             {BackgroundTransparency = 0.3}
         ):Play()
     end
 )
-Ka.keybindButton.MouseLeave:connect(
+massVariableArray.keybindButton.MouseLeave:connect(
     function()
         if X ~= "Keybind" then
-            Ja:Create(
-                Ka.keybindButton:WaitForChild("Detail"),
+            tweenService:Create(
+                massVariableArray.keybindButton:WaitForChild("Detail"),
                 TweenInfo.new(0.3),
                 {BackgroundTransparency = 1}
             ):Play()
         end
     end
 )
-Ka.keybindButton.MouseButton1Click:connect(
+massVariableArray.keybindButton.MouseButton1Click:connect(
     function()
         X = "Keybind"
-        Ia.codeArchive.KeybindFunc(Ka, X)
+        carbonConfigs.codeArchive.KeybindFunc(massVariableArray, X)
     end
 )
-Ka.patchButton.MouseEnter:connect(
+massVariableArray.patchButton.MouseEnter:connect(
     function()
-        Ja:Create(
-            Ka.patchButton:WaitForChild("Detail"),
+        tweenService:Create(
+            massVariableArray.patchButton:WaitForChild("Detail"),
             TweenInfo.new(0.3),
             {BackgroundTransparency = 0.3}
         ):Play()
     end
 )
-Ka.patchButton.MouseLeave:connect(
+massVariableArray.patchButton.MouseLeave:connect(
     function()
         if X ~= "Patch" then
-            Ja:Create(
-                Ka.patchButton:WaitForChild("Detail"),
+            tweenService:Create(
+                massVariableArray.patchButton:WaitForChild("Detail"),
                 TweenInfo.new(0.3),
                 {BackgroundTransparency = 1}
             ):Play()
         end
     end
 )
-Ka.patchButton.MouseButton1Click:connect(
+massVariableArray.patchButton.MouseButton1Click:connect(
     function()
         X = "Patch"
-        Ja:Create(Ka.patchButton:WaitForChild("Hover"), TweenInfo.new(0.3), {ImageTransparency = 0.6}):Play(
+        tweenService:Create(massVariableArray.patchButton:WaitForChild("Hover"), TweenInfo.new(0.3), {ImageTransparency = 0.6}):Play(
 
         )
-        Ka.menuFrame:WaitForChild("PagesFrame"):WaitForChild(
+        massVariableArray.menuFrame:WaitForChild("PagesFrame"):WaitForChild(
             "PageLayout"
-        ):JumpTo(Ka.menuFrame:WaitForChild("PagesFrame"):WaitForChild(X))
-        for _, _ in pairs(Ka.menuFrame:WaitForChild("Buttons"):GetDescendants()) do
-            if _ and _.Name == "Hover" and _.Parent ~= Ka.patchButton then
-                Ja:Create(_, TweenInfo.new(0.3), {ImageTransparency = 1}):Play()
+        ):JumpTo(massVariableArray.menuFrame:WaitForChild("PagesFrame"):WaitForChild(X))
+        for _, _ in pairs(massVariableArray.menuFrame:WaitForChild("Buttons"):GetDescendants()) do
+            if _ and _.Name == "Hover" and _.Parent ~= massVariableArray.patchButton then
+                tweenService:Create(_, TweenInfo.new(0.3), {ImageTransparency = 1}):Play()
             end
-            if _ and _.Name == "Detail" and _.Parent ~= Ka.patchButton then
-                Ja:Create(_, TweenInfo.new(0.3), {BackgroundTransparency = 1}):Play()
+            if _ and _.Name == "Detail" and _.Parent ~= massVariableArray.patchButton then
+                tweenService:Create(_, TweenInfo.new(0.3), {BackgroundTransparency = 1}):Play()
             end
         end
     end
 )
-Ka.storeButton.MouseEnter:connect(
+massVariableArray.storeButton.MouseEnter:connect(
     function()
-        Ja:Create(
-            Ka.storeButton:WaitForChild("Detail"),
+        tweenService:Create(
+            massVariableArray.storeButton:WaitForChild("Detail"),
             TweenInfo.new(0.3),
             {BackgroundTransparency = 0.3}
         ):Play()
     end
 )
-Ka.storeButton.MouseLeave:connect(
+massVariableArray.storeButton.MouseLeave:connect(
     function()
         if X ~= "Store" then
-            Ja:Create(
-                Ka.storeButton:WaitForChild("Detail"),
+            tweenService:Create(
+                massVariableArray.storeButton:WaitForChild("Detail"),
                 TweenInfo.new(0.3),
                 {BackgroundTransparency = 1}
             ):Play()
         end
     end
 )
-Ka.storeButton.MouseButton1Click:connect(
+massVariableArray.storeButton.MouseButton1Click:connect(
     function()
         X = "Store"
-        Ja:Create(Ka.storeButton:WaitForChild("Hover"), TweenInfo.new(0.3), {ImageTransparency = 0.6}):Play(
+        tweenService:Create(massVariableArray.storeButton:WaitForChild("Hover"), TweenInfo.new(0.3), {ImageTransparency = 0.6}):Play(
 
         )
-        Ka.menuFrame:WaitForChild("PagesFrame"):WaitForChild(
+        massVariableArray.menuFrame:WaitForChild("PagesFrame"):WaitForChild(
             "PageLayout"
-        ):JumpTo(Ka.menuFrame:WaitForChild("PagesFrame"):WaitForChild(X))
-        for _, _ in pairs(Ka.menuFrame:WaitForChild("Buttons"):GetDescendants()) do
-            if _ and _.Name == "Hover" and _.Parent ~= Ka.storeButton then
-                Ja:Create(_, TweenInfo.new(0.3), {ImageTransparency = 1}):Play()
+        ):JumpTo(massVariableArray.menuFrame:WaitForChild("PagesFrame"):WaitForChild(X))
+        for _, _ in pairs(massVariableArray.menuFrame:WaitForChild("Buttons"):GetDescendants()) do
+            if _ and _.Name == "Hover" and _.Parent ~= massVariableArray.storeButton then
+                tweenService:Create(_, TweenInfo.new(0.3), {ImageTransparency = 1}):Play()
             end
-            if _ and _.Name == "Detail" and _.Parent ~= Ka.storeButton then
-                Ja:Create(_, TweenInfo.new(0.3), {BackgroundTransparency = 1}):Play()
+            if _ and _.Name == "Detail" and _.Parent ~= massVariableArray.storeButton then
+                tweenService:Create(_, TweenInfo.new(0.3), {BackgroundTransparency = 1}):Play()
             end
         end
     end
 )
-Ka.menuFrame:WaitForChild("PagesFrame"):WaitForChild("Option"):WaitForChild(
+massVariableArray.menuFrame:WaitForChild("PagesFrame"):WaitForChild("Option"):WaitForChild(
     "BaseSens"
 ):WaitForChild("Context").FocusLost:connect(
     function(_)
         if _ then
             local _ =
                 tonumber(
-                Ka.menuFrame:WaitForChild("PagesFrame"):WaitForChild(
+                massVariableArray.menuFrame:WaitForChild("PagesFrame"):WaitForChild(
                     "Option"
                 ):WaitForChild("BaseSens"):WaitForChild("Context").Text
             )
             if _ > 0 and _ <= 1 then
-                Ka.baseSens = _
+                massVariableArray.baseSens = _
                 e.Value = _
             end
         else
-            Ka.menuFrame:WaitForChild("PagesFrame"):WaitForChild(
+            massVariableArray.menuFrame:WaitForChild("PagesFrame"):WaitForChild(
                     "Option"
                 ):WaitForChild("BaseSens"):WaitForChild("Context").Text =
-                Ka.baseSens
-            Ka.menuFrame:WaitForChild("PagesFrame"):WaitForChild(
+                massVariableArray.baseSens
+            massVariableArray.menuFrame:WaitForChild("PagesFrame"):WaitForChild(
                     "Option"
                 ):WaitForChild("AimSens"):WaitForChild("Context").Text =
-                Ka.aimSens
+                massVariableArray.aimSens
         end
     end
 )
-Ka.menuFrame:WaitForChild("PagesFrame"):WaitForChild("Option"):WaitForChild(
+massVariableArray.menuFrame:WaitForChild("PagesFrame"):WaitForChild("Option"):WaitForChild(
     "AimSens"
 ):WaitForChild("Context").FocusLost:connect(
     function(_)
         if _ then
             local _ =
                 tonumber(
-                Ka.menuFrame:WaitForChild("PagesFrame"):WaitForChild(
+                massVariableArray.menuFrame:WaitForChild("PagesFrame"):WaitForChild(
                     "Option"
                 ):WaitForChild("AimSens"):WaitForChild("Context").Text
             )
             if _ > 0 and _ <= 1 then
-                Ka.aimSens = _
+                massVariableArray.aimSens = _
                 c.Value = _
             end
         else
-            Ka.menuFrame:WaitForChild("PagesFrame"):WaitForChild(
+            massVariableArray.menuFrame:WaitForChild("PagesFrame"):WaitForChild(
                     "Option"
                 ):WaitForChild("BaseSens"):WaitForChild("Context").Text =
-                Ka.baseSens
-            Ka.menuFrame:WaitForChild("PagesFrame"):WaitForChild(
+                massVariableArray.baseSens
+            massVariableArray.menuFrame:WaitForChild("PagesFrame"):WaitForChild(
                     "Option"
                 ):WaitForChild("AimSens"):WaitForChild("Context").Text =
-                Ka.aimSens
+                massVariableArray.aimSens
         end
     end
 )
-Ka.menuButton.MouseButton1Click:connect(
+massVariableArray.menuButton.MouseButton1Click:connect(
     function()
-        Ka.menuFrame.Visible = not Ka.menuFrame.Visible
-        if Ka.menuFrame.Visible then
-            Ka.menuFrame:WaitForChild("PagesFrame"):WaitForChild(
+        massVariableArray.menuFrame.Visible = not massVariableArray.menuFrame.Visible
+        if massVariableArray.menuFrame.Visible then
+            massVariableArray.menuFrame:WaitForChild("PagesFrame"):WaitForChild(
                     "Option"
                 ):WaitForChild("BaseSens"):WaitForChild("Context").Text =
-                Ka.baseSens
-            Ka.menuFrame:WaitForChild("PagesFrame"):WaitForChild(
+                massVariableArray.baseSens
+            massVariableArray.menuFrame:WaitForChild("PagesFrame"):WaitForChild(
                     "Option"
                 ):WaitForChild("AimSens"):WaitForChild("Context").Text =
-                Ka.aimSens
+                massVariableArray.aimSens
         end
     end
 )
-Ka.aimButton.TouchTap:Connect(
+massVariableArray.aimButton.TouchTap:Connect(
     function()
         if Ca and not va then
             if not za then
@@ -6921,12 +6919,12 @@ Ka.aimButton.TouchTap:Connect(
         end
     end
 )
-Ka.sprintButton.TouchTap:Connect(
+massVariableArray.sprintButton.TouchTap:Connect(
     function()
         if Ca and not va then
             if not ya then
                 if
-                    ((Ia.globalConfig.StaminaEnabled and Ka.Stamina > 0) or not Ia.globalConfig.StaminaEnabled) and
+                    ((carbonConfigs.globalConfig.StaminaEnabled and massVariableArray.Stamina > 0) or not carbonConfigs.globalConfig.StaminaEnabled) and
                         not qa and
                         L and
                         not wa and
@@ -6946,36 +6944,36 @@ Ka.sprintButton.TouchTap:Connect(
 )
 function MobileShoot(_, a, _)
     if a == Enum.UserInputState.Begin then
-        if not Ka.MouseHeld and Ca and not va and not wa and not ka and not na and not T then
-            Ka.MouseHeld = true
+        if not massVariableArray.MouseHeld and Ca and not va and not wa and not ka and not na and not T then
+            massVariableArray.MouseHeld = true
             if not pa then
                 if not ja then
-                    if Ka.Ammo > 0 then
+                    if massVariableArray.Ammo > 0 then
                         Shoot()
                     end
                 else
-                    if Ka.ExplosiveAmmo > 0 then
+                    if massVariableArray.ExplosiveAmmo > 0 then
                         Shoot()
                     end
                 end
-                if Ka.Ammo <= 0 or not Ka.CanShoot then
-                    Ka.Grip:WaitForChild("Click"):Play()
+                if massVariableArray.Ammo <= 0 or not massVariableArray.CanShoot then
+                    massVariableArray.Grip:WaitForChild("Click"):Play()
                 end
             else
-                if Ka.NadeMode == 4 and not ba then
+                if massVariableArray.NadeMode == 4 and not ba then
                     ba = true
                     local d, b, c
                     if not V then
                         d, b, c =
                             workspace:FindPartOnRayWithIgnoreList(
                             Ray.new(Z.PrimaryPart.Position, Z.PrimaryPart.CFrame.UpVector * -2),
-                            ha
+                            componentCollection
                         )
                         local a = Vector3.new(0, 1, 0):Cross(c)
                         local _ = math.asin(a.magnitude)
                         if d then
                             Z:Destroy()
-                            V = Ea.placeC4Event:InvokeServer(b, a, _, "Auth", c, d)
+                            V = carbonEvents.placeC4Event:InvokeServer(b, a, _, "Auth", c, d)
                             IdleAnim()
                             pa = false
                         end
@@ -6985,13 +6983,13 @@ function MobileShoot(_, a, _)
             end
         end
     elseif a == Enum.UserInputState.End or a == Enum.UserInputState.Cancel then
-        Ka.MouseHeld = false
+        massVariableArray.MouseHeld = false
     end
 end
 function MobileSelectFire(_, a, _)
     if a == Enum.UserInputState.Begin then
         if
-            not wa and not T and not fa and Ka.curConfig.CanSelectFire and not ja and not la and not pa and not wa and
+            not wa and not T and not fa and massVariableArray.curConfig.CanSelectFire and not ja and not la and not pa and not wa and
                 not ka and
                 not da
          then
@@ -7011,21 +7009,21 @@ function MobileSelectFire(_, a, _)
 end
 function MobileBolt(_, a, _)
     if a == Enum.UserInputState.Begin then
-        if not ea and Ca and not va and not pa and not ma and not ka and not wa and not na and Ka.FireMode ~= 6 then
+        if not ea and Ca and not va and not pa and not ma and not ka and not wa and not na and massVariableArray.FireMode ~= 6 then
             ea = true
             la = not la
             if la then
                 BoltBackAnim()
-                if ta and Ka.Ammo > 0 then
+                if ta and massVariableArray.Ammo > 0 then
                     CreateShell()
                 end
                 ea = false
             else
-                if Ka.Ammo > 0 then
-                    Ka.CanShoot = true
+                if massVariableArray.Ammo > 0 then
+                    massVariableArray.CanShoot = true
                     Aa = true
                     if ta then
-                        Ka.Ammo = Ka.Ammo - 1
+                        massVariableArray.Ammo = massVariableArray.Ammo - 1
                     end
                     ta = true
                 end
@@ -7039,33 +7037,33 @@ function MobileBolt(_, a, _)
 end
 function MobileReload(_, _, _)
     if not wa and Ca and not ma and not Shooting and not ya and not la then
-        local _ = xa.FieldOfView
-        if xa.FieldOfView ~= 70 then
-            Ja:Create(xa, TweenInfo.new(0.5, Enum.EasingStyle.Quad), {FieldOfView = 70}):Play()
+        local _ = currentCamera.FieldOfView
+        if currentCamera.FieldOfView ~= 70 then
+            tweenService:Create(currentCamera, TweenInfo.new(0.5, Enum.EasingStyle.Quad), {FieldOfView = 70}):Play()
         end
-        if not ja and Ka and Ka.Ammo and Ka.curConfig and Ka.curConfig.Ammo and Ka.Ammo < Ka.curConfig.Ammo then
-            Aa = Ka.CanShoot
-            Ka.CanShoot = false
-            if Ka.Ammo > 0 then
+        if not ja and massVariableArray and massVariableArray.Ammo and massVariableArray.curConfig and massVariableArray.curConfig.Ammo and massVariableArray.Ammo < massVariableArray.curConfig.Ammo then
+            Aa = massVariableArray.CanShoot
+            massVariableArray.CanShoot = false
+            if massVariableArray.Ammo > 0 then
                 ta = true
                 Aa = true
             else
                 ta = false
                 Aa = false
             end
-            if Ka.StoredAmmo > 0 and Ka.Ammo < Ka.curConfig.Ammo then
+            if massVariableArray.StoredAmmo > 0 and massVariableArray.Ammo < massVariableArray.curConfig.Ammo then
                 Shooting = false
                 ma = true
                 ReloadAnim()
-                if Ka.curConfig.CanAutoBolt then
-                    if Ka.Ammo <= 0 then
-                        if not Ka.curConfig.CanSlideLock then
+                if massVariableArray.curConfig.CanAutoBolt then
+                    if massVariableArray.Ammo <= 0 then
+                        if not massVariableArray.curConfig.CanSlideLock then
                             BoltBackAnim()
                             BoltForwardAnim()
                         end
-                    elseif Ka.Ammo > 0 then
-                        if not Ka.curConfig.CanSlideLock then
-                            if Ka.BoltW.C1 ~= (CFrame.new() or CFrame.new(0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1)) then
+                    elseif massVariableArray.Ammo > 0 then
+                        if not massVariableArray.curConfig.CanSlideLock then
+                            if massVariableArray.BoltW.C1 ~= (CFrame.new() or CFrame.new(0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1)) then
                                 BoltBackAnim()
                                 BoltForwardAnim()
                             end
@@ -7073,51 +7071,51 @@ function MobileReload(_, _, _)
                     end
                 end
                 IdleAnim()
-                if Ka.Ammo <= 0 then
-                    if (Ka.StoredAmmo - (Ka.curConfig.Ammo - Ka.Ammo)) < 0 then
-                        Ka.Ammo = Ka.Ammo + Ka.StoredAmmo
-                        Ka.StoredAmmo = 0
+                if massVariableArray.Ammo <= 0 then
+                    if (massVariableArray.StoredAmmo - (massVariableArray.curConfig.Ammo - massVariableArray.Ammo)) < 0 then
+                        massVariableArray.Ammo = massVariableArray.Ammo + massVariableArray.StoredAmmo
+                        massVariableArray.StoredAmmo = 0
                     else
-                        Ka.StoredAmmo = Ka.StoredAmmo - (Ka.curConfig.Ammo - Ka.Ammo)
-                        Ka.Ammo = Ka.curConfig.Ammo
+                        massVariableArray.StoredAmmo = massVariableArray.StoredAmmo - (massVariableArray.curConfig.Ammo - massVariableArray.Ammo)
+                        massVariableArray.Ammo = massVariableArray.curConfig.Ammo
                     end
-                elseif Ka.Ammo > 0 then
-                    if (Ka.StoredAmmo - (Ka.curConfig.Ammo - Ka.Ammo)) < 0 then
-                        Ka.Ammo = Ka.Ammo + Ka.StoredAmmo + 1
-                        Ka.StoredAmmo = 0
+                elseif massVariableArray.Ammo > 0 then
+                    if (massVariableArray.StoredAmmo - (massVariableArray.curConfig.Ammo - massVariableArray.Ammo)) < 0 then
+                        massVariableArray.Ammo = massVariableArray.Ammo + massVariableArray.StoredAmmo + 1
+                        massVariableArray.StoredAmmo = 0
                     else
-                        Ka.StoredAmmo = Ka.StoredAmmo - (Ka.curConfig.Ammo - Ka.Ammo)
-                        Ka.Ammo = Ka.curConfig.Ammo + 1
+                        massVariableArray.StoredAmmo = massVariableArray.StoredAmmo - (massVariableArray.curConfig.Ammo - massVariableArray.Ammo)
+                        massVariableArray.Ammo = massVariableArray.curConfig.Ammo + 1
                     end
                 end
                 ma = false
-                if Ka.curConfig.CanAutoBolt or ta or Ka.curConfig.CanSlideLock or Ka.FireMode == 6 then
-                    Ka.CanShoot = true
+                if massVariableArray.curConfig.CanAutoBolt or ta or massVariableArray.curConfig.CanSlideLock or massVariableArray.FireMode == 6 then
+                    massVariableArray.CanShoot = true
                     Aa = true
                 end
             end
         elseif ja then
-            if Ka.ExplosiveAmmo > 0 then
+            if massVariableArray.ExplosiveAmmo > 0 then
                 Shooting = false
                 ma = true
                 nadeReload()
                 if not ja then
                     IdleAnim()
                 else
-                    Ja:Create(Ka.RAW, TweenInfo.new(0.25, Enum.EasingStyle.Quad), {C1 = Ka.curConfig.RightArmPos}):Play(
+                    tweenService:Create(massVariableArray.RAW, TweenInfo.new(0.25, Enum.EasingStyle.Quad), {C1 = massVariableArray.curConfig.RightArmPos}):Play(
 
                     )
-                    Ja:Create(Ka.LAW, TweenInfo.new(0.25, Enum.EasingStyle.Quad), {C1 = Ka.curConfig.GLLeftPos}):Play()
+                    tweenService:Create(massVariableArray.LAW, TweenInfo.new(0.25, Enum.EasingStyle.Quad), {C1 = massVariableArray.curConfig.GLLeftPos}):Play()
                     task.wait(0.25)
                 end
                 ma = false
-                Ka.CanShoot = true
+                massVariableArray.CanShoot = true
                 G = false
             end
         end
         UpdateAmmo()
         if _ ~= 70 and za then
-            Ja:Create(xa, TweenInfo.new(0.5, Enum.EasingStyle.Quad), {FieldOfView = _}):Play()
+            tweenService:Create(currentCamera, TweenInfo.new(0.5, Enum.EasingStyle.Quad), {FieldOfView = _}):Play()
         end
     end
 end
@@ -7132,7 +7130,7 @@ function MobileJump(_, a, _)
                             if not n then
                                 break
                             end
-                            Da.humanoid.Jump = true
+                            playerArms.humanoid.Jump = true
                         end
                     end
                 )
@@ -7140,21 +7138,21 @@ function MobileJump(_, a, _)
         elseif a == Enum.UserInputState.End or a == Enum.UserInputState.Cancel then
             n = false
             task.wait()
-            Da.humanoid.Jump = false
+            playerArms.humanoid.Jump = false
         end
     end
 end
 function MobileProne(_, a, _)
     if Ca and not va then
         if a == Enum.UserInputState.Begin then
-            if Ca or Ia.globalConfig.UniversalStances and not oa and not Ka.Seated then
-                if not Ka.Seated then
+            if Ca or carbonConfigs.globalConfig.UniversalStances and not oa and not massVariableArray.Seated then
+                if not massVariableArray.Seated then
                     ya = false
-                    if Ka.StanceIndex == 0 or Ka.StanceIndex == 1 then
-                        Ka.StanceIndex = 2
+                    if massVariableArray.StanceIndex == 0 or massVariableArray.StanceIndex == 1 then
+                        massVariableArray.StanceIndex = 2
                         changeStance()
-                    elseif Ka.StanceIndex == 2 then
-                        Ka.StanceIndex = 1
+                    elseif massVariableArray.StanceIndex == 2 then
+                        massVariableArray.StanceIndex = 1
                         changeStance()
                     end
                 end
@@ -7165,17 +7163,17 @@ end
 function MobileCrouch(_, a, _)
     if Ca and not va then
         if a == Enum.UserInputState.Begin then
-            if Ca or Ia.globalConfig.UniversalStances and not oa and not Ka.Seated then
-                if not Ka.Seated then
+            if Ca or carbonConfigs.globalConfig.UniversalStances and not oa and not massVariableArray.Seated then
+                if not massVariableArray.Seated then
                     ya = false
-                    if Ka.StanceIndex == 0 then
-                        Ka.StanceIndex = 1
+                    if massVariableArray.StanceIndex == 0 then
+                        massVariableArray.StanceIndex = 1
                         changeStance()
-                    elseif Ka.StanceIndex == 1 then
-                        Ka.StanceIndex = 0
+                    elseif massVariableArray.StanceIndex == 1 then
+                        massVariableArray.StanceIndex = 0
                         changeStance()
-                    elseif Ka.StanceIndex == 2 then
-                        Ka.StanceIndex = 1
+                    elseif massVariableArray.StanceIndex == 2 then
+                        massVariableArray.StanceIndex = 1
                         changeStance()
                     end
                 end
